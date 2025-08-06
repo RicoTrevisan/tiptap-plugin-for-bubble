@@ -1,5 +1,4 @@
-
-  if (!instance.data.editor_is_ready)
+if (!instance.data.editor_is_ready)
     return instance.data.returnAndReportErrorIfEditorNotReady("Task List");
 
   if (instance.data.active_nodes.includes("TaskList")) {

@@ -1,8 +1,4 @@
-
-
-  
-
-    try {
+try {
         // add display: flex to main element
         instance.canvas.css("display", "flex");
 
@@ -706,4 +702,3 @@
         return extensions;
     }
     instance.data.getConfiguredExtensions = getConfiguredExtensions;
-

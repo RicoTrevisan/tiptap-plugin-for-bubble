@@ -1,6 +1,4 @@
-
-
-    const jsonwebtoken = require('jsonwebtoken');
+const jsonwebtoken = require('jsonwebtoken');
     const { inspect } = require('node:util');
 
     const doc = properties.docID;
@@ -32,5 +30,5 @@
             error: "there was an error retrieving the jwt keys.\n" + inspect(error),
             returned_an_error: true
         }
-
+ 
     }

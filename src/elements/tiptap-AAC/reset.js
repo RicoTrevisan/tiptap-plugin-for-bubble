@@ -1,2 +1,1 @@
-
-  console.log("reset running");
+console.log("reset running");
