@@ -27,58 +27,71 @@ if (!instance.data.isEditorSetup) {
 
     // pull the libraries that were loaded on Header
 
-    const Heading = window.tiptapHeading;
-    const Bold = window.tiptapBold;
-    const Code = window.tiptapCode;
-    const Italic = window.tiptapItalic;
-    const Strike = window.tiptapStrike;
-    const Dropcursor = window.tiptapDropcursor;
-    const Gapcursor = window.tiptapGapcursor;
-    const History = window.tiptapHistory;
-    const Blockquote = window.tiptapBlockquote;
-    const BulletList = window.tiptapBulletList;
-    const CodeBlock = window.tiptapCodeBlock;
-    const HorizontalRule = window.tiptapHorizontalRule;
-    const ListItem = window.tiptapListItem;
-    const OrderedList = window.tiptapOrderedList;
-
     const {
         Editor,
         Node,
         Extension,
         mergeAttributes,
+        generateHTML,
+
+        // Basic nodes
         Document,
         HardBreak,
         Paragraph,
         Text,
+
+        // Formatting
+        Bold,
+        Italic,
+        Strike,
+        Underline,
+        Code,
+
+        // Block elements
+        Heading,
+        Blockquote,
+        CodeBlock,
+        CodeBlockLowlight,
+        HorizontalRule,
+
+        // Lists
+        BulletList,
+        OrderedList,
+        ListItem,
+        TaskList,
+        TaskItem,
+
+        // Advanced
+        Image,
+        Link,
+        Youtube,
+        Table,
+        TableRow,
+        TableHeader,
+        TableCell,
+
+        // Styling
         FontFamily,
         Color,
         TextStyle,
+        TextAlign,
+        Highlight,
+
+        // Interaction
+        BubbleMenu,
+        FloatingMenu,
+        Mention,
+        Suggestion,
+        Placeholder,
+
+        // Utilities
+        Dropcursor,
+        Gapcursor,
+        UndoRedo,
+        CharacterCount,
         FileHandler,
-        generateHTML,
-        DragHandle,
         UniqueID,
-        Image,
-        Resizable,
     } = window.tiptap;
-
-    const TaskList = window.tiptapTaskList;
-    const TaskItem = window.tiptapTaskItem;
-    const Placeholder = window.tiptapPlaceholder;
-    const CharacterCount = window.tiptapCharacterCount;
-    const BubbleMenu = window.tiptapBubbleMenu;
-    const FloatingMenu = window.tiptapFloatingMenu;
-    const Link = window.tiptapLink;
-    const TextAlign = window.tiptapTextAlign;
-    const Highlight = window.tiptapHighlight;
-    const Table = window.tiptapTable;
-    const TableCell = window.tiptapTableCell;
-    const TableHeader = window.tiptapTableHeader;
-    const TableRow = window.tiptapTableRow;
-    const Underline = window.tiptapUnderline;
-    const Youtube = window.tiptapYoutube;
-
-    const Mention = window.tiptapMention;
 
     instance.data.headings = [];
     properties.headings.split(",").map((item) => {
@@ -86,7 +99,7 @@ if (!instance.data.isEditorSetup) {
     });
 
     instance.data.active_nodes = properties.nodes.split(",").map((item) => item.trim());
-
+    console.log("characterCount", CharacterCount);
     const extensions = [
         Document,
         Paragraph,
@@ -137,7 +150,7 @@ if (!instance.data.isEditorSetup) {
         );
     }
     if (instance.data.active_nodes.includes("History")) {
-        extensions.push(History);
+        extensions.push(UndoRedo);
     }
 
     if (instance.data.active_nodes.includes("Bold")) {
@@ -221,10 +234,10 @@ if (!instance.data.isEditorSetup) {
         extensions.push(Youtube.configure({ nocookie: true }));
     }
     if (instance.data.active_nodes.includes("Table")) {
-        extensions.push(Table.configure({ resizable: true }), TableRow, TableHeader, TableCell);
+        extensions.push(Table.configure({ resizable: true }), TableRow, TableCell, TableHeader);
     }
     if (instance.data.active_nodes.includes("Image")) {
-        extensions.push(Image.configure({ inline: false, allowBase64: properties.allowBase64 }), Resizable);
+        extensions.push(Image.configure({ inline: false, allowBase64: properties.allowBase64 }));
     }
     if (instance.data.active_nodes.includes("Link")) {
         extensions.push(Link);
