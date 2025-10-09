@@ -31,6 +31,10 @@
     "AGS": {
       "name": "dist-v04.js",
       "url": "//meta-q.cdn.bubble.io/f1760011328100x588591081155661800/dist-v04.js"
+    },
+    "AGT": {
+      "name": "dist-v05.js",
+      "url": "//meta-q.cdn.bubble.io/f1760014510929x703705299498335200/dist-v05.js"
     }
   },
   "dependencies": {
