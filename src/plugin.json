@@ -28,17 +28,9 @@
       "name": "2.11.2-preserve",
       "url": "//meta-q.cdn.bubble.io/f1751454052316x514680040614802240/dist.js"
     },
-    "LNG": {
-      "name": "dist-v01.js",
-      "url": "//meta-q.cdn.bubble.io/f1754511144638x660993827241957800/dist-v01.js"
-    },
-    "NZH": {
-      "name": "dist-v03.js",
-      "url": "//meta-q.cdn.bubble.io/f1754514393885x943650788412155900/dist-v03.js"
-    },
-    "RUN": {
-      "name": "dist-v02.js",
-      "url": "//meta-q.cdn.bubble.io/f1754512790417x404097552740119800/dist-v02.js"
+    "AGS": {
+      "name": "dist-v04.js",
+      "url": "//meta-q.cdn.bubble.io/f1760011328100x588591081155661800/dist-v04.js"
     }
   },
   "dependencies": {
@@ -46,7 +38,7 @@
     "plugin_api_version": "4",
     "use_jquery": true
   },
-  "editor_counter": 330,
+  "editor_counter": 329,
   "human": "🤌 Rich text editor (Tiptap.dev)",
   "meta_data": {
     "categories": {
