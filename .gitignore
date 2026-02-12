@@ -2,3 +2,4 @@ lib/node_modules*
 lib/.npmrc
 lib/dist*.js
 .envrc
+erl_crash.dump

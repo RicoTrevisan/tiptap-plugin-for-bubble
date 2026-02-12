@@ -72,6 +72,9 @@
     "ABS": {
       "caption": "Task list"
     },
+    "AGU": {
+      "caption": "Unset all marks"
+    },
     "ABC": {
       "caption": "Bullet list"
     },
