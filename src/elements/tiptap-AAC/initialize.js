@@ -1,4 +1,3 @@
-console.log("test");
 try {
     // add display: flex to main element
     instance.canvas.css("display", "flex");

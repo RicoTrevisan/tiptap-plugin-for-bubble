@@ -776,7 +776,16 @@ if (
         // Clear any pending debounce timeout before programmatic update
         clearTimeout(instance.data.debounceTimeout);
 
+        // Save cursor position before setContent
+        const { from, to } = instance.data.editor.state.selection;
+
         instance.data.editor.commands.setContent(content, true);
+
+        // Restore cursor position (clamped to document bounds)
+        const docSize = instance.data.editor.state.doc.content.size;
+        const newFrom = Math.min(from, Math.max(1, docSize - 1));
+        const newTo = Math.min(to, Math.max(1, docSize - 1));
+        instance.data.editor.commands.setTextSelection({ from: newFrom, to: newTo });
     } else {
         console.log("initialContent has changed but collaboration is active -- not updating content");
     }
@@ -797,7 +806,17 @@ if (
     clearTimeout(instance.data.debounceTimeout);
     let editor = instance.data.editor;
 
+    // Save cursor position before setContent
+    const { from, to } = editor.state.selection;
+
     editor.commands.setContent(properties.autobinding, false);
+
+    // Restore cursor position (clamped to document bounds)
+    const docSize = editor.state.doc.content.size;
+    const newFrom = Math.min(from, Math.max(1, docSize - 1));
+    const newTo = Math.min(to, Math.max(1, docSize - 1));
+    editor.commands.setTextSelection({ from: newFrom, to: newTo });
+
     const contentHTML = editor.getHTML();
     instance.publishState("contentHTML", contentHTML);
     instance.publishState("contentText", editor.getText());
