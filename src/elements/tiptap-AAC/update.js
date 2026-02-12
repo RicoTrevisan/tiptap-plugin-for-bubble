@@ -27,20 +27,20 @@ if (!instance.data.isEditorSetup) {
 
     // pull the libraries that were loaded on Header
 
-    const Heading = window.tiptapHeading;
-    const Bold = window.tiptapBold;
-    const Code = window.tiptapCode;
-    const Italic = window.tiptapItalic;
-    const Strike = window.tiptapStrike;
-    const Dropcursor = window.tiptapDropcursor;
-    const Gapcursor = window.tiptapGapcursor;
-    const History = window.tiptapHistory;
-    const Blockquote = window.tiptapBlockquote;
-    const BulletList = window.tiptapBulletList;
-    const CodeBlock = window.tiptapCodeBlock;
-    const HorizontalRule = window.tiptapHorizontalRule;
-    const ListItem = window.tiptapListItem;
-    const OrderedList = window.tiptapOrderedList;
+    const Heading = window.tiptap.Heading;
+    const Bold = window.tiptap.Bold;
+    const Code = window.tiptap.Code;
+    const Italic = window.tiptap.Italic;
+    const Strike = window.tiptap.Strike;
+    const Dropcursor = window.tiptap.Dropcursor;
+    const Gapcursor = window.tiptap.Gapcursor;
+    const History = window.tiptap.UndoRedo;
+    const Blockquote = window.tiptap.Blockquote;
+    const BulletList = window.tiptap.BulletList;
+    const CodeBlock = window.tiptap.CodeBlock;
+    const HorizontalRule = window.tiptap.HorizontalRule;
+    const ListItem = window.tiptap.ListItem;
+    const OrderedList = window.tiptap.OrderedList;
 
     const {
         Editor,
@@ -62,23 +62,23 @@ if (!instance.data.isEditorSetup) {
         Resizable,
     } = window.tiptap;
 
-    const TaskList = window.tiptapTaskList;
-    const TaskItem = window.tiptapTaskItem;
-    const Placeholder = window.tiptapPlaceholder;
-    const CharacterCount = window.tiptapCharacterCount;
-    const BubbleMenu = window.tiptapBubbleMenu;
-    const FloatingMenu = window.tiptapFloatingMenu;
-    const Link = window.tiptapLink;
-    const TextAlign = window.tiptapTextAlign;
-    const Highlight = window.tiptapHighlight;
-    const Table = window.tiptapTable;
-    const TableCell = window.tiptapTableCell;
-    const TableHeader = window.tiptapTableHeader;
-    const TableRow = window.tiptapTableRow;
-    const Underline = window.tiptapUnderline;
-    const Youtube = window.tiptapYoutube;
+    const TaskList = window.tiptap.TaskList;
+    const TaskItem = window.tiptap.TaskItem;
+    const Placeholder = window.tiptap.Placeholder;
+    const CharacterCount = window.tiptap.CharacterCount;
+    const BubbleMenu = window.tiptap.BubbleMenu;
+    const FloatingMenu = window.tiptap.FloatingMenu;
+    const Link = window.tiptap.Link;
+    const TextAlign = window.tiptap.TextAlign;
+    const Highlight = window.tiptap.Highlight;
+    const Table = window.tiptap.Table;
+    const TableCell = window.tiptap.TableCell;
+    const TableHeader = window.tiptap.TableHeader;
+    const TableRow = window.tiptap.TableRow;
+    const Underline = window.tiptap.Underline;
+    const Youtube = window.tiptap.Youtube;
 
-    const Mention = window.tiptapMention;
+    const Mention = window.tiptap.Mention;
 
     instance.data.headings = [];
     properties.headings.split(",").map((item) => {
