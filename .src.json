@@ -786,13 +786,13 @@
           "editor": "Color",
           "in_style": true,
           "name": "table_header_font_color",
-          "rank": 103
+          "rank": 99
         },
         "h2_info": {
           "caption": "     ----- H2 styling -----",
           "editor": "Label",
           "name": "stylesheet_info",
-          "rank": 35
+          "rank": 33
         },
         "AEj": {
           "caption": "CSS for base div // override",
@@ -809,7 +809,7 @@
           "caption": "----- Ordered List -----",
           "editor": "Label",
           "name": "ext_orderedlist_label",
-          "rank": 75
+          "rank": 72
         },
         "AGH": {
           "caption": "Element types",
@@ -818,14 +818,8 @@
           "editor": "DynamicValue",
           "name": "extension_uniqueid_types",
           "optional": true,
-          "rank": 140,
+          "rank": 133,
           "value": "text"
-        },
-        "ext_color_label": {
-          "caption": "----- Color -----",
-          "editor": "Label",
-          "name": "ext_color_label",
-          "rank": 24
         },
         "AEX": {
           "caption": "Placeholder color",
@@ -835,14 +829,15 @@
           "in_style": true,
           "name": "placeholder_color",
           "optional": true,
-          "rank": 117
+          "rank": 113
         },
         "ext_codeblock": {
           "caption": "Code Block",
           "default_val": true,
+          "doc": "Enables fenced code blocks (multi-line code). Users can create them via toolbar or by typing ``` at the start of a line.",
           "editor": "DynamicValue",
           "name": "ext_codeblock",
-          "rank": 71,
+          "rank": 68,
           "value": "boolean"
         },
         "AFy": {
@@ -860,7 +855,7 @@
           "editor": "Color",
           "in_style": true,
           "name": "h2_color",
-          "rank": 37
+          "rank": 35
         },
         "AFK": {
           "caption": "Highlight CSS",
@@ -869,7 +864,7 @@
           "long_text": true,
           "name": "mark_adv",
           "optional": true,
-          "rank": 21,
+          "rank": 23,
           "value": "text"
         },
         "ADy": {
@@ -879,28 +874,31 @@
           "long_text": true,
           "name": "h5_adv",
           "optional": true,
-          "rank": 58,
+          "rank": 56,
           "value": "text"
         },
         "ext_bubblemenu": {
           "caption": "Bubble Menu",
           "default_val": true,
+          "doc": "Enables the bubble menu — a floating toolbar that appears when the user selects text. Provide the Bubble element ID below.",
           "editor": "DynamicValue",
           "name": "ext_bubblemenu",
-          "rank": 107,
+          "rank": 103,
           "value": "boolean"
         },
         "ext_heading": {
           "caption": "Heading",
           "default_val": true,
+          "doc": "Enables heading levels (H1–H6). Configure which levels are available with the 'headings' field below. Users can set headings via toolbar or markdown shortcuts (# , ## , etc.).",
           "editor": "DynamicValue",
           "name": "ext_heading",
-          "rank": 27,
+          "rank": 25,
           "value": "boolean"
         },
         "ext_bold": {
           "caption": "Bold",
           "default_val": true,
+          "doc": "Enables bold text formatting. Users can apply bold with Ctrl/⌘+B or by using the toolbar.",
           "editor": "DynamicValue",
           "name": "ext_bold",
           "rank": 14,
@@ -913,13 +911,13 @@
           "editor": "Color",
           "in_style": true,
           "name": "table_zebra_background",
-          "rank": 105
+          "rank": 101
         },
         "ext_preserve_label": {
           "caption": "----- Preserve Attributes -----",
           "editor": "Label",
           "name": "ext_preserve_label",
-          "rank": 142
+          "rank": 135
         },
         "AFO": {
           "caption": "link_unvisited_adv",
@@ -928,14 +926,14 @@
           "long_text": false,
           "name": "link_unvisited_adv",
           "optional": true,
-          "rank": 94,
+          "rank": 90,
           "value": "text"
         },
         "ext_bulletlist_label": {
           "caption": "----- Bullet List -----",
           "editor": "Label",
           "name": "ext_bulletlist_label",
-          "rank": 72
+          "rank": 69
         },
         "AGI": {
           "caption": "Attribute name",
@@ -944,7 +942,7 @@
           "editor": "DynamicValue",
           "name": "extension_uniqueid_attrName",
           "optional": true,
-          "rank": 141,
+          "rank": 134,
           "value": "text"
         },
         "h4_color": {
@@ -953,7 +951,7 @@
           "editor": "Color",
           "in_style": true,
           "name": "h4_color",
-          "rank": 49
+          "rank": 47
         },
         "AGB": {
           "caption": "Keep marks after <br>",
@@ -961,14 +959,14 @@
           "doc": "Decides if to keep a mark after a hardbreak. When checked, and you're typing in bold, when you hit Shift+Enter, the next line will continue with bold. If unchecked, it will revert to normal text.",
           "editor": "Checkbox",
           "name": "hardBreakKeepMarks",
-          "rank": 128,
+          "rank": 121,
           "value": "boolean"
         },
         "ext_youtube_label": {
           "caption": "----- YouTube -----",
           "editor": "Label",
           "name": "ext_youtube_label",
-          "rank": 84
+          "rank": 80
         },
         "AED": {
           "caption": "user_name",
@@ -977,25 +975,25 @@
           "editor": "DynamicValue",
           "name": "collab_user_name",
           "optional": true,
-          "rank": 155,
+          "rank": 148,
           "value": "text"
         },
         "ext_history": {
           "caption": "History (Undo/Redo)",
           "default_val": true,
-          "doc": "Enables undo/redo. Automatically disabled when collaboration is active.",
+          "doc": "Enables undo/redo (Ctrl/⌘+Z / Ctrl/⌘+Shift+Z). Automatically disabled when collaboration is active (collab has its own history).",
           "editor": "DynamicValue",
           "name": "ext_history",
-          "rank": 125,
+          "rank": 118,
           "value": "boolean"
         },
         "ext_fontfamily": {
           "caption": "Font Family",
           "default_val": false,
-          "doc": "Allows setting font family on text selections. Off by default.",
+          "doc": "Allows setting the font family on text selections. Use the 'Set font family' action to apply a font. Off by default.",
           "editor": "DynamicValue",
           "name": "ext_fontfamily",
-          "rank": 23,
+          "rank": 19,
           "value": "boolean"
         },
         "AFq": {
@@ -1004,14 +1002,15 @@
           "doc": "Allow images to be parsed as base64 strings. When off Base64 images will remain in the code, but it won't be displayed.",
           "editor": "Checkbox",
           "name": "allowBase64",
-          "rank": 83
+          "rank": 79
         },
         "ext_placeholder": {
           "caption": "Placeholder",
           "default_val": true,
+          "doc": "Enables placeholder text shown when the editor is empty. Configure the text and color below.",
           "editor": "DynamicValue",
           "name": "ext_placeholder",
-          "rank": 115,
+          "rank": 111,
           "value": "boolean"
         },
         "ADu": {
@@ -1021,7 +1020,7 @@
           "long_text": true,
           "name": "h1_adv",
           "optional": true,
-          "rank": 34,
+          "rank": 32,
           "value": "text"
         },
         "AEC": {
@@ -1029,19 +1028,13 @@
           "default_val": false,
           "editor": "Checkbox",
           "name": "collab_active",
-          "rank": 148
-        },
-        "ext_history_label": {
-          "caption": "----- History (Undo/Redo) -----",
-          "editor": "Label",
-          "name": "ext_history_label",
-          "rank": 124
+          "rank": 141
         },
         "ext_heading_label": {
           "caption": "----- Heading -----",
           "editor": "Label",
           "name": "ext_heading_label",
-          "rank": 26
+          "rank": 24
         },
         "h5_font_weight": {
           "caption": "H5 font-weight",
@@ -1051,7 +1044,7 @@
           "in_style": true,
           "name": "h5_font_weight",
           "options": "900,800,700,600,500,400",
-          "rank": 56
+          "rank": 54
         },
         "AAK": {
           "caption": "Initial content",
@@ -1067,13 +1060,7 @@
           "caption": "----- Link -----",
           "editor": "Label",
           "name": "ext_link_label",
-          "rank": 87
-        },
-        "ext_tasklist_label": {
-          "caption": "----- Task List -----",
-          "editor": "Label",
-          "name": "ext_tasklist_label",
-          "rank": 78
+          "rank": 83
         },
         "h6_color": {
           "caption": "H6 Color",
@@ -1081,36 +1068,36 @@
           "editor": "Color",
           "in_style": true,
           "name": "h6_color",
-          "rank": 61
+          "rank": 59
         },
         "AGM": {
           "caption": "preserve_attributes",
           "default_val": true,
           "editor": "DynamicValue",
           "name": "preserve_attributes",
-          "rank": 143,
+          "rank": 136,
           "value": "boolean"
         },
         "AEB": {
           "caption": "𝗖𝗢𝗟𝗟𝗔𝗕𝗢𝗥𝗔𝗧𝗜𝗢𝗡",
           "editor": "Label",
           "name": "collab_info",
-          "rank": 146
+          "rank": 139
         },
         "ext_dropcursor": {
           "caption": "Dropcursor",
           "default_val": true,
-          "doc": "Shows a cursor when dragging content over the editor.",
+          "doc": "Shows a cursor indicator when dragging content over the editor, helping users see where the drop will land.",
           "editor": "DynamicValue",
           "name": "ext_dropcursor",
-          "rank": 121,
+          "rank": 116,
           "value": "boolean"
         },
         "ext_bubblemenu_label": {
           "caption": "----- Bubble Menu -----",
           "editor": "Label",
           "name": "ext_bubblemenu_label",
-          "rank": 106
+          "rank": 102
         },
         "ADg": {
           "caption": "Link color",
@@ -1118,14 +1105,15 @@
           "editor": "Color",
           "in_style": true,
           "name": "link_color",
-          "rank": 89
+          "rank": 85
         },
         "ext_horizontalrule": {
           "caption": "Horizontal Rule",
           "default_val": true,
+          "doc": "Enables horizontal rule (divider line). Users can insert one via toolbar or by typing --- on an empty line.",
           "editor": "DynamicValue",
           "name": "ext_horizontalrule",
-          "rank": 69,
+          "rank": 67,
           "value": "boolean"
         },
         "ADc": {
@@ -1134,7 +1122,7 @@
           "editor": "Color",
           "in_style": true,
           "name": "table_th_background",
-          "rank": 104
+          "rank": 100
         },
         "h6_margin": {
           "caption": "H6 margin",
@@ -1143,7 +1131,7 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h6_margin",
-          "rank": 63
+          "rank": 61
         },
         "ADT": {
           "caption": "H1 margin",
@@ -1152,7 +1140,7 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h1_margin",
-          "rank": 33
+          "rank": 31
         },
         "h5_size": {
           "caption": "H5 Size",
@@ -1160,14 +1148,15 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h5_size",
-          "rank": 54
+          "rank": 52
         },
         "ext_image": {
           "caption": "Image",
           "default_val": true,
+          "doc": "Enables image support. Images can be inserted via the 'Insert image' action, drag-and-drop, or paste.",
           "editor": "DynamicValue",
           "name": "ext_image",
-          "rank": 81,
+          "rank": 77,
           "value": "boolean"
         },
         "ADq": {
@@ -1178,7 +1167,7 @@
           "in_style": true,
           "long_text": true,
           "name": "iframe",
-          "rank": 86,
+          "rank": 82,
           "value": "text"
         },
         "h4_font_weight": {
@@ -1189,15 +1178,15 @@
           "in_style": true,
           "name": "h4_font_weight",
           "options": "900,800,700,600,500,400",
-          "rank": 50
+          "rank": 48
         },
         "ext_hardbreak": {
           "caption": "Hard Break",
           "default_val": false,
-          "doc": "Enables Shift+Enter line breaks. Off by default.",
+          "doc": "Enables Shift+Enter line breaks (hard breaks) within a paragraph. Off by default — when off, Shift+Enter does nothing.",
           "editor": "DynamicValue",
           "name": "ext_hardbreak",
-          "rank": 127,
+          "rank": 120,
           "value": "boolean"
         },
         "ADa": {
@@ -1206,7 +1195,7 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "table_th_td_border_bottom",
-          "rank": 100
+          "rank": 96
         },
         "ADR": {
           "caption": "H1 Size",
@@ -1214,7 +1203,7 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h1_size",
-          "rank": 30
+          "rank": 28
         },
         "AEW": {
           "caption": "Max number of characters",
@@ -1231,7 +1220,7 @@
           "long_text": false,
           "name": "link_adv",
           "optional": true,
-          "rank": 93,
+          "rank": 89,
           "value": "text"
         },
         "ADl": {
@@ -1240,13 +1229,7 @@
           "editor": "Color",
           "in_style": true,
           "name": "link_color_visited",
-          "rank": 92
-        },
-        "ext_codeblock_label": {
-          "caption": "----- Code Block -----",
-          "editor": "Label",
-          "name": "ext_codeblock_label",
-          "rank": 70
+          "rank": 88
         },
         "AEx": {
           "caption": "Type of content",
@@ -1255,7 +1238,7 @@
           "is_list": true,
           "name": "mention_list_type",
           "optional": "false",
-          "rank": 131,
+          "rank": 124,
           "value": "_any_thing_bindable"
         },
         "h2_font_weight": {
@@ -1266,14 +1249,15 @@
           "in_style": true,
           "name": "h2_font_weight",
           "options": "900,800,700,600,500,400",
-          "rank": 39
+          "rank": 37
         },
         "ext_highlight": {
           "caption": "Highlight",
           "default_val": true,
+          "doc": "Enables text highlighting (background color on text). Users can mark text with a highlight color via the toolbar.",
           "editor": "DynamicValue",
           "name": "ext_highlight",
-          "rank": 20,
+          "rank": 22,
           "value": "boolean"
         },
         "ACS": {
@@ -1282,7 +1266,7 @@
           "editor": "DynamicValue",
           "name": "floatingMenu",
           "optional": true,
-          "rank": 112,
+          "rank": 108,
           "value": "text"
         },
         "ADV": {
@@ -1294,10 +1278,10 @@
         "ext_color": {
           "caption": "Text Color",
           "default_val": false,
-          "doc": "Allows setting text color on selections. Off by default.",
+          "doc": "Allows setting the text color on selections. Use the 'Set color' action to apply a color. Off by default.",
           "editor": "DynamicValue",
           "name": "ext_color",
-          "rank": 25,
+          "rank": 20,
           "value": "boolean"
         },
         "h4_margin": {
@@ -1307,11 +1291,12 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h4_margin",
-          "rank": 51
+          "rank": 49
         },
         "ext_italic": {
           "caption": "Italic",
           "default_val": true,
+          "doc": "Enables italic text formatting. Users can apply italic with Ctrl/⌘+I or by using the toolbar.",
           "editor": "DynamicValue",
           "name": "ext_italic",
           "rank": 15,
@@ -1325,13 +1310,13 @@
           "in_style": true,
           "name": "h1_font_weight",
           "options": "900,800,700,600,500,400",
-          "rank": 32
+          "rank": 30
         },
         "h1_info1": {
           "caption": "     ----- H1 styling -----",
           "editor": "Label",
           "name": "stylesheet_info",
-          "rank": 29
+          "rank": 27
         },
         "h6_size": {
           "caption": "H6 Size",
@@ -1339,7 +1324,7 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h6_size",
-          "rank": 60
+          "rank": 58
         },
         "ADk": {
           "caption": "Link color hover",
@@ -1347,7 +1332,7 @@
           "editor": "Color",
           "in_style": true,
           "name": "link_color_hover",
-          "rank": 90
+          "rank": 86
         },
         "ADv": {
           "caption": "h2_adv",
@@ -1356,14 +1341,14 @@
           "long_text": true,
           "name": "h2_adv",
           "optional": true,
-          "rank": 40,
+          "rank": 38,
           "value": "text"
         },
         "ext_placeholder_label": {
           "caption": "----- Placeholder -----",
           "editor": "Label",
           "name": "ext_placeholder_label",
-          "rank": 114
+          "rank": 110
         },
         "ADw": {
           "caption": "h3_adv",
@@ -1372,15 +1357,16 @@
           "long_text": true,
           "name": "h3_adv",
           "optional": true,
-          "rank": 46,
+          "rank": 44,
           "value": "text"
         },
         "ext_orderedlist": {
           "caption": "Ordered List",
           "default_val": true,
+          "doc": "Enables ordered (numbered) lists. Users can create them via toolbar or by typing 1. at the start of a line.",
           "editor": "DynamicValue",
           "name": "ext_orderedlist",
-          "rank": 76,
+          "rank": 73,
           "value": "boolean"
         },
         "AFG": {
@@ -1396,7 +1382,7 @@
           "caption": "----- Mention -----",
           "editor": "Label",
           "name": "ext_mention_label",
-          "rank": 129
+          "rank": 122
         },
         "collab_url": {
           "caption": "Custom - URL",
@@ -1404,7 +1390,7 @@
           "doc": "Paste the collab URL here to enable collaborative editing. Leave empty to disable.",
           "editor": "StaticText",
           "name": "collab_url",
-          "rank": 151
+          "rank": 144
         },
         "AFP": {
           "caption": "link_visited_adv",
@@ -1413,7 +1399,7 @@
           "long_text": false,
           "name": "link_visited_adv",
           "optional": true,
-          "rank": 95,
+          "rank": 91,
           "value": "text"
         },
         "AFB": {
@@ -1422,15 +1408,22 @@
           "doc": "Color of the border around the mention on the text",
           "editor": "Color",
           "name": "mention_border_color",
-          "rank": 136
+          "rank": 129
         },
         "ext_underline": {
           "caption": "Underline",
           "default_val": true,
+          "doc": "Enables underline text formatting. Users can apply it with Ctrl/⌘+U or by using the toolbar.",
           "editor": "DynamicValue",
           "name": "ext_underline",
           "rank": 17,
           "value": "boolean"
+        },
+        "ext_structure_label": {
+          "caption": "----- Structure -----",
+          "editor": "Label",
+          "name": "ext_structure_label",
+          "rank": 66
         },
         "ADm": {
           "caption": "Link hover adv",
@@ -1440,7 +1433,7 @@
           "in_style": true,
           "long_text": true,
           "name": "link_hover_adv",
-          "rank": 91
+          "rank": 87
         },
         "AGP": {
           "caption": "Debug mode",
@@ -1448,20 +1441,15 @@
           "doc": "When enabled, logs detailed information to the browser console. Useful for troubleshooting. Look for messages prefixed with [Tiptap].",
           "editor": "Checkbox",
           "name": "debug_mode",
-          "rank": 157
-        },
-        "ext_horizontalrule_label": {
-          "caption": "----- Horizontal Rule -----",
-          "editor": "Label",
-          "name": "ext_horizontalrule_label",
-          "rank": 68
+          "rank": 150
         },
         "ext_bulletlist": {
           "caption": "Bullet List",
           "default_val": true,
+          "doc": "Enables unordered (bullet) lists. Users can create them via toolbar or by typing - or * at the start of a line.",
           "editor": "DynamicValue",
           "name": "ext_bulletlist",
-          "rank": 73,
+          "rank": 70,
           "value": "boolean"
         },
         "AEE": {
@@ -1471,7 +1459,7 @@
           "editor": "Color",
           "name": "collab_cursor_color",
           "optional": true,
-          "rank": 156,
+          "rank": 149,
           "value": "text"
         },
         "AEV": {
@@ -1482,7 +1470,7 @@
           "long_text": true,
           "name": "blockquote_adv",
           "optional": true,
-          "rank": 67,
+          "rank": 65,
           "value": "text"
         },
         "ADd": {
@@ -1491,17 +1479,12 @@
           "editor": "Color",
           "in_style": true,
           "name": "table_row_border_color",
-          "rank": 101
-        },
-        "ext_textalign_label": {
-          "caption": "----- Text Align -----",
-          "editor": "Label",
-          "name": "ext_textalign_label",
-          "rank": 118
+          "rank": 97
         },
         "ext_strike": {
           "caption": "Strikethrough",
           "default_val": true,
+          "doc": "Enables strikethrough text formatting. Users can apply it with Ctrl/⌘+Shift+S or by using the toolbar.",
           "editor": "DynamicValue",
           "name": "ext_strike",
           "rank": 16,
@@ -1513,20 +1496,20 @@
           "editor": "DynamicValue",
           "name": "bubbleMenu",
           "optional": true,
-          "rank": 108,
+          "rank": 104,
           "value": "text"
         },
         "ext_image_label": {
           "caption": "----- Image -----",
           "editor": "Label",
           "name": "ext_image_label",
-          "rank": 80
+          "rank": 76
         },
         "ext_table_label": {
           "caption": "----- Table -----",
           "editor": "Label",
           "name": "ext_table_label",
-          "rank": 97
+          "rank": 93
         },
         "h3_margin": {
           "caption": "H3 margin",
@@ -1535,7 +1518,7 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h3_margin",
-          "rank": 45
+          "rank": 43
         },
         "h2_margin": {
           "caption": "H2 margin",
@@ -1544,7 +1527,7 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h2_margin",
-          "rank": 38
+          "rank": 36
         },
         "h5_color": {
           "caption": "H5 Color",
@@ -1552,7 +1535,7 @@
           "editor": "Color",
           "in_style": true,
           "name": "h5_color",
-          "rank": 55
+          "rank": 53
         },
         "AEy": {
           "caption": "Label",
@@ -1560,7 +1543,7 @@
           "field_type_restriction": "text_image_file",
           "name": "mention_field_label",
           "optional": true,
-          "rank": 134
+          "rank": 127
         },
         "ext_formatting_label": {
           "caption": "----- Text Formatting -----",
@@ -1574,7 +1557,7 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h3_size",
-          "rank": 42
+          "rank": 40
         },
         "AEw": {
           "caption": "Data source",
@@ -1584,7 +1567,7 @@
           "is_list": true,
           "name": "mention_list",
           "optional": "true",
-          "rank": 132,
+          "rank": 125,
           "value": "_any_thing"
         },
         "h6_font_weight": {
@@ -1595,7 +1578,7 @@
           "in_style": true,
           "name": "h6_font_weight",
           "options": "900,800,700,600,500,400",
-          "rank": 62
+          "rank": 60
         },
         "ACZ": {
           "caption": "Content is JSON?",
@@ -1612,16 +1595,16 @@
           "editor": "DynamicValue",
           "name": "collab_doc_id",
           "optional": true,
-          "rank": 149,
+          "rank": 142,
           "value": "text"
         },
         "ext_mention": {
           "caption": "Mention",
           "default_val": false,
-          "doc": "Enables @mentions. Configure the data source and fields below.",
+          "doc": "Enables @mentions. When a user types @ followed by a query, a suggestion list appears. Configure the data source and fields below.",
           "editor": "DynamicValue",
           "name": "ext_mention",
-          "rank": 130,
+          "rank": 123,
           "value": "boolean"
         },
         "AEH": {
@@ -1631,19 +1614,13 @@
           "editor": "StaticText",
           "name": "collab_app_id",
           "optional": true,
-          "rank": 152
+          "rank": 145
         },
         "ext_floatingmenu_label": {
           "caption": "----- Floating Menu -----",
           "editor": "Label",
           "name": "ext_floatingmenu_label",
-          "rank": 110
-        },
-        "ext_dropcursor_label": {
-          "caption": "----- Dropcursor -----",
-          "editor": "Label",
-          "name": "ext_dropcursor_label",
-          "rank": 120
+          "rank": 106
         },
         "h3_color": {
           "caption": "H3 Color",
@@ -1651,7 +1628,7 @@
           "editor": "Color",
           "in_style": true,
           "name": "h3_color",
-          "rank": 43
+          "rank": 41
         },
         "AFQ": {
           "caption": "link_focus_adv",
@@ -1660,7 +1637,7 @@
           "long_text": false,
           "name": "link_focus_adv",
           "optional": true,
-          "rank": 96,
+          "rank": 92,
           "value": "text"
         },
         "AEz": {
@@ -1669,20 +1646,21 @@
           "field_type_restriction": "text_image_file",
           "name": "mention_field_id",
           "optional": true,
-          "rank": 135
+          "rank": 128
         },
         "AEG": {
           "caption": "to use the collaboration function you first need an account with one of the providers: 𝗿𝗶𝗰𝗼.𝘄𝘁𝗳 (has free tier), 𝗰𝗼𝗹𝗹𝗮𝗯.𝘁𝗶𝗽𝘁𝗮𝗽.𝗱𝗲𝘃, or 𝗹𝗶𝘃𝗲𝗯𝗹𝗼𝗰𝗸𝘀.𝗶𝗼",
           "editor": "Label",
           "name": "collab_info_sub",
-          "rank": 147
+          "rank": 140
         },
         "ext_table": {
           "caption": "Table",
           "default_val": true,
+          "doc": "Enables table support with resizable columns. Use table actions to insert, add/remove rows and columns, merge cells, etc.",
           "editor": "DynamicValue",
           "name": "ext_table",
-          "rank": 98,
+          "rank": 94,
           "value": "boolean"
         },
         "ABs": {
@@ -1700,7 +1678,7 @@
           "default_val": "class,style,id,data-*",
           "editor": "DynamicValue",
           "name": "preserved_attributes",
-          "rank": 144,
+          "rank": 137,
           "value": "text"
         },
         "ADt": {
@@ -1719,7 +1697,7 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "table_th_td_padding",
-          "rank": 99
+          "rank": 95
         },
         "ADx": {
           "caption": "h4_adv",
@@ -1728,22 +1706,23 @@
           "long_text": true,
           "name": "h4_adv",
           "optional": true,
-          "rank": 52,
+          "rank": 50,
           "value": "text"
         },
         "ext_floatingmenu": {
           "caption": "Floating Menu",
           "default_val": true,
+          "doc": "Enables the floating menu — a toolbar that appears on empty lines. Provide the Bubble element ID below.",
           "editor": "DynamicValue",
           "name": "ext_floatingmenu",
-          "rank": 111,
+          "rank": 107,
           "value": "boolean"
         },
         "h4_info": {
           "caption": "     ----- H4 styling -----",
           "editor": "Label",
           "name": "h4_info",
-          "rank": 47
+          "rank": 45
         },
         "ADQ": {
           "caption": "Floating Menu Theme",
@@ -1753,7 +1732,7 @@
           "in_style": true,
           "name": "floatingMenuTheme",
           "options": "translucent,light,light-border,material",
-          "rank": 113
+          "rank": 109
         },
         "ADp": {
           "caption": "headings",
@@ -1763,7 +1742,7 @@
           "in_style": true,
           "long_text": false,
           "name": "headings",
-          "rank": 28
+          "rank": 26
         },
         "h2_size": {
           "caption": "H2 Size",
@@ -1771,31 +1750,33 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h2_size",
-          "rank": 36
+          "rank": 34
         },
         "ext_textalign": {
           "caption": "Text Align",
           "default_val": true,
+          "doc": "Enables text alignment (left, center, right, justify). Use the 'Align text' action to change alignment.",
           "editor": "DynamicValue",
           "name": "ext_textalign",
-          "rank": 119,
+          "rank": 115,
           "value": "boolean"
         },
         "ext_link": {
           "caption": "Link",
           "default_val": true,
+          "doc": "Enables hyperlinks. Users can add links via the 'Set link' action. Configure link colors and styles below.",
           "editor": "DynamicValue",
           "name": "ext_link",
-          "rank": 88,
+          "rank": 84,
           "value": "boolean"
         },
         "ext_uniqueid": {
           "caption": "Unique ID",
           "default_val": false,
-          "doc": "Adds unique IDs to specified node types. Useful for targeting specific parts of the document.",
+          "doc": "Adds unique IDs to specified node types (e.g. paragraphs, headings). Useful for deep-linking to specific parts of the document.",
           "editor": "DynamicValue",
           "name": "ext_uniqueid",
-          "rank": 139,
+          "rank": 132,
           "value": "boolean"
         },
         "AFC": {
@@ -1804,13 +1785,13 @@
           "doc": "Color of the background of the mention.",
           "editor": "Color",
           "name": "mention_background_color",
-          "rank": 137
+          "rank": 130
         },
         "h5_info": {
           "caption": "----- H5 styling -----",
           "editor": "Label",
           "name": "h5_info",
-          "rank": 53
+          "rank": 51
         },
         "ADz": {
           "caption": "h6_adv",
@@ -1819,7 +1800,7 @@
           "long_text": true,
           "name": "h6_adv",
           "optional": true,
-          "rank": 64,
+          "rank": 62,
           "value": "text"
         },
         "AEm": {
@@ -1828,19 +1809,13 @@
           "editor": "StaticText",
           "name": "liveblocksPublicApiKey",
           "optional": true,
-          "rank": 154
+          "rank": 147
         },
         "ext_section_label": {
           "caption": "𝗘𝗫𝗧𝗘𝗡𝗦𝗜𝗢𝗡𝗦",
           "editor": "Label",
           "name": "ext_section_label",
           "rank": 12
-        },
-        "ext_fontfamily_label": {
-          "caption": "----- Font Family -----",
-          "editor": "Label",
-          "name": "ext_fontfamily_label",
-          "rank": 22
         },
         "AEi": {
           "caption": "Number list CSS",
@@ -1850,14 +1825,14 @@
           "long_text": true,
           "name": "ol_adv",
           "optional": true,
-          "rank": 77,
+          "rank": 74,
           "value": "text"
         },
         "h6_info": {
           "caption": "     ----- H6 styling -----",
           "editor": "Label",
           "name": "h6_info",
-          "rank": 59
+          "rank": 57
         },
         "ADb": {
           "caption": "Header font weight",
@@ -1867,11 +1842,12 @@
           "in_style": true,
           "name": "table_th_font_weight",
           "options": "900,800,700,600,500,400",
-          "rank": 102
+          "rank": 98
         },
         "ext_code": {
           "caption": "Code (inline)",
           "default_val": true,
+          "doc": "Enables inline code formatting — wraps selected text in a <code> tag. Users can apply it with Ctrl/⌘+E.",
           "editor": "DynamicValue",
           "name": "ext_code",
           "rank": 18,
@@ -1885,14 +1861,14 @@
           "long_text": true,
           "name": "ul_adv",
           "optional": true,
-          "rank": 74,
+          "rank": 71,
           "value": "text"
         },
         "ext_highlight_label": {
           "caption": "----- Highlight -----",
           "editor": "Label",
           "name": "ext_highlight_label",
-          "rank": 19
+          "rank": 21
         },
         "h3_font_weight": {
           "caption": "H3 font-weight",
@@ -1902,14 +1878,15 @@
           "in_style": true,
           "name": "h3_font_weight",
           "options": "900,800,700,600,500,400",
-          "rank": 44
+          "rank": 42
         },
         "ext_youtube": {
           "caption": "YouTube",
           "default_val": true,
+          "doc": "Enables YouTube video embeds. Use the 'Add YouTube' action to insert a video by URL.",
           "editor": "DynamicValue",
           "name": "ext_youtube",
-          "rank": 85,
+          "rank": 81,
           "value": "boolean"
         },
         "AEN": {
@@ -1918,14 +1895,14 @@
           "editor": "DynamicValue",
           "name": "collab_jwt",
           "optional": true,
-          "rank": 153,
+          "rank": 146,
           "value": "text"
         },
         "ext_uniqueid_label": {
           "caption": "----- Unique ID -----",
           "editor": "Label",
           "name": "ext_uniqueid_label",
-          "rank": 138
+          "rank": 131
         },
         "ACA": {
           "caption": "Placeholder",
@@ -1935,7 +1912,7 @@
           "long_text": false,
           "name": "placeholder",
           "optional": true,
-          "rank": 116,
+          "rank": 112,
           "value": "text"
         },
         "AGO": {
@@ -1943,16 +1920,23 @@
           "default_val": true,
           "editor": "DynamicValue",
           "name": "preserve_unknown_tags",
-          "rank": 145,
+          "rank": 138,
           "value": "boolean"
         },
         "ext_blockquote": {
           "caption": "Blockquote",
           "default_val": true,
+          "doc": "Enables blockquote blocks. Users can create blockquotes via toolbar or by typing > at the start of a line.",
           "editor": "DynamicValue",
           "name": "ext_blockquote",
-          "rank": 66,
+          "rank": 64,
           "value": "boolean"
+        },
+        "ext_behavior_label": {
+          "caption": "----- Editor Behavior -----",
+          "editor": "Label",
+          "name": "ext_behavior_label",
+          "rank": 114
         },
         "AEv": {
           "caption": "Base URL",
@@ -1960,14 +1944,14 @@
           "editor": "DynamicValue",
           "name": "mention_base_url",
           "optional": true,
-          "rank": 133,
+          "rank": 126,
           "value": "text"
         },
         "h3_info": {
           "caption": "     ----- H3 styling -----",
           "editor": "Label",
           "name": "stylesheet_info",
-          "rank": 41
+          "rank": 39
         },
         "AEk": {
           "caption": "Provider",
@@ -1977,7 +1961,7 @@
           "name": "collabProvider",
           "optional": true,
           "options": "tiptap,liveblocks,custom",
-          "rank": 150
+          "rank": 143
         },
         "h4_size": {
           "caption": "H4 Size",
@@ -1985,7 +1969,7 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h4_size",
-          "rank": 48
+          "rank": 46
         },
         "ADP": {
           "caption": "Bubble menu theme",
@@ -1995,22 +1979,22 @@
           "in_style": true,
           "name": "bubbleMenuTheme",
           "options": "translucent,light,light-border,material",
-          "rank": 109
+          "rank": 105
         },
         "ext_gapcursor": {
           "caption": "Gapcursor",
           "default_val": true,
-          "doc": "Allows placing the cursor in gaps between nodes (e.g. before/after tables).",
+          "doc": "Allows placing the cursor in gaps that would normally be inaccessible — for example, before or after a table or image.",
           "editor": "DynamicValue",
           "name": "ext_gapcursor",
-          "rank": 123,
+          "rank": 117,
           "value": "boolean"
         },
         "ext_blockquote_label": {
           "caption": "----- Blockquote -----",
           "editor": "Label",
           "name": "ext_blockquote_label",
-          "rank": 65
+          "rank": 63
         },
         "ADS": {
           "caption": "H1 Color",
@@ -2018,13 +2002,7 @@
           "editor": "Color",
           "in_style": true,
           "name": "h1_color",
-          "rank": 31
-        },
-        "ext_gapcursor_label": {
-          "caption": "----- Gapcursor -----",
-          "editor": "Label",
-          "name": "ext_gapcursor_label",
-          "rank": 122
+          "rank": 29
         },
         "h5_margin": {
           "caption": "H5 margin",
@@ -2033,14 +2011,15 @@
           "editor": "StaticText",
           "in_style": true,
           "name": "h5_margin",
-          "rank": 57
+          "rank": 55
         },
         "ext_tasklist": {
           "caption": "Task List",
           "default_val": true,
+          "doc": "Enables task lists (checkboxes). Users can create them via toolbar or by typing [ ] or [x] at the start of a line.",
           "editor": "DynamicValue",
           "name": "ext_tasklist",
-          "rank": 79,
+          "rank": 75,
           "value": "boolean"
         },
         "AFF": {
@@ -2061,7 +2040,7 @@
           "long_text": true,
           "name": "image_css",
           "optional": true,
-          "rank": 82
+          "rank": 78
         },
         "ADW": {
           "caption": "paragraph",
@@ -2073,7 +2052,7 @@
           "caption": "----- Hard Break -----",
           "editor": "Label",
           "name": "ext_hardbreak_label",
-          "rank": 126
+          "rank": 119
         }
       },
       "has_reset_fn": false,
