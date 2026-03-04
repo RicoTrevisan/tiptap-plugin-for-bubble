@@ -66,11 +66,11 @@
   },
   "shared_keys": {
     "AEF": {
-      "caption": "Tiptap Cloud JWT secret",
+      "caption": "Tiptap Cloud document server secret",
       "type": "secure"
     },
     "custom_collab_jwt_secret": {
-      "caption": "Custom collab JWT secret",
+      "caption": "Custom collab document server secret",
       "type": "secure"
     }
   }

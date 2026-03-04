@@ -12,7 +12,7 @@
     "package_status": "up_to_date",
     "package_used": true
   },
-  "display": "generate JWT key",
+  "display": "generate auth token",
   "fields": {
     "AEL": {
       "caption": "Document names (comma-separated)",
@@ -24,9 +24,9 @@
       "value": "text"
     },
     "jwt_secret": {
-      "caption": "Which JWT secret to use",
+      "caption": "Which document server secret to use",
       "default_val": "Tiptap Cloud",
-      "doc": "Key to use to sign the JWT key",
+      "doc": "Selects which document server secret to use to sign the auth token. The secret itself is configured in the plugin's settings page (Plugins tab → Rich Text Editor (Tiptap.dev) → settings). Tiptap Cloud uses the 'Tiptap Cloud document server secret' field, and Custom uses the 'Custom collab document server secret' field.",
       "editor": "Dropdown",
       "name": "jwt_secret",
       "optional": true,
@@ -35,7 +35,7 @@
     },
     "optional_info": {
       "caption": "𝗢𝗽𝘁𝗶𝗼𝗻𝗮𝗹 — 𝘀𝗲𝗰𝘂𝗿𝗶𝘁𝘆 & 𝘁𝗿𝗮𝗰𝗲𝗮𝗯𝗶𝗹𝗶𝘁𝘆",
-      "doc": "These fields harden the JWT token and improve traceability. 𝗔𝗽𝗽 𝗜𝗗 ties the token to a specific app, preventing it from being reused on other apps. 𝗨𝘀𝗲𝗿 𝗜𝗗 identifies which user the token belongs to, useful for auditing and revoking access. 𝗘𝘅𝗽𝗶𝗿𝗮𝘁𝗶𝗼𝗻 limits the token's lifetime so that leaked tokens stop working after a set time.",
+      "doc": "These fields harden the auth token and improve traceability. 𝗔𝗽𝗽 𝗜𝗗 ties the token to a specific app, preventing it from being reused on other apps. 𝗨𝘀𝗲𝗿 𝗜𝗗 identifies which user the token belongs to, useful for auditing and revoking access. 𝗘𝘅𝗽𝗶𝗿𝗮𝘁𝗶𝗼𝗻 limits the token's lifetime so that leaked tokens stop working after a set time.",
       "editor": "Label",
       "name": "optional_info",
       "optional": true,
@@ -43,7 +43,7 @@
     },
     "AEY": {
       "caption": "App ID",
-      "doc": "Your Tiptap Cloud or custom collab app ID. For Tiptap Cloud, this is included as the 'aud' (audience) claim in the JWT.",
+      "doc": "Your Tiptap Cloud or custom collab app ID. For Tiptap Cloud, this is included as the 'aud' (audience) claim in the token.",
       "editor": "DynamicValue",
       "name": "appId",
       "optional": true,
@@ -52,7 +52,7 @@
     },
     "sub": {
       "caption": "User ID (sub)",
-      "doc": "A unique identifier for the user (e.g. Current User's unique id). Included as the 'sub' (subject) claim in the JWT.",
+      "doc": "A unique identifier for the user (e.g. Current User's unique id). Included as the 'sub' (subject) claim in the token.",
       "editor": "DynamicValue",
       "name": "sub",
       "optional": true,
@@ -62,7 +62,7 @@
     "expiration": {
       "caption": "Expiration (seconds)",
       "default_val": "86400",
-      "doc": "How long the JWT token is valid, in seconds. Default is 86400 (1 day).",
+      "doc": "How long the auth token is valid, in seconds. Default is 86400 (1 day).",
       "editor": "DynamicValue",
       "name": "expiration",
       "optional": true,
@@ -72,7 +72,7 @@
   },
   "return_value": {
     "AEM": {
-      "caption": "jwt key",
+      "caption": "auth token",
       "name": "jwt_key",
       "rank": 0,
       "value": "text"

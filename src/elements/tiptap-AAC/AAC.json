@@ -1274,8 +1274,8 @@
       "rank": 28
     },
     "AEN": {
-      "caption": "JWT key",
-      "doc": "For both Tiptap Cloud or Custom collab, you need to provide a JWT key. Best idea is to create a workflow when the page loads, run 𝗴𝗲𝗻𝗲𝗿𝗮𝘁𝗲 𝗝𝗪𝗧 𝗸𝗲𝘆 action, and store the token in a state on the page.",
+      "caption": "Auth token",
+      "doc": "For both Tiptap Cloud or Custom collab, you need to provide an auth token. Best idea is to create a workflow when the page loads, run 𝗴𝗲𝗻𝗲𝗿𝗮𝘁𝗲 𝗮𝘂𝘁𝗵 𝘁𝗼𝗸𝗲𝗻 action, and store the token in a state on the page.",
       "editor": "DynamicValue",
       "name": "collab_jwt",
       "optional": true,
@@ -1339,7 +1339,7 @@
     "AEk": {
       "caption": "Provider",
       "default_val": "tiptap",
-      "doc": "Which collab provider you would like to use. Tiptap requires a subscription with cloud.tiptap.com and a JWT key. Liveblocks requires the plublic key. For custom requires the url of the server and a JWT.",
+      "doc": "Which collab provider you would like to use. Tiptap requires a subscription with cloud.tiptap.com and an auth token. Liveblocks requires the public key. For custom requires the url of the server and an auth token.",
       "editor": "Dropdown",
       "name": "collabProvider",
       "optional": true,

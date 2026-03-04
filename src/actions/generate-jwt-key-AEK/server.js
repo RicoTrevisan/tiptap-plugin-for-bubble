@@ -18,8 +18,8 @@ if (allowedDocumentNames.length > 0) {
 }
 
 let key;
-if (properties.jwt_secret === "Tiptap Cloud") key = context.keys["Tiptap Cloud JWT secret"];
-if (properties.jwt_secret === "Custom") key = context.keys["Custom collab JWT secret"];
+if (properties.jwt_secret === "Tiptap Cloud") key = context.keys["Tiptap Cloud document server secret"];
+if (properties.jwt_secret === "Custom") key = context.keys["Custom collab document server secret"];
 if (key) key = key.trim();
 
 const expiration = properties.expiration || 86400;
@@ -38,10 +38,10 @@ try {
         returned_an_error: false,
     };
 } catch (error) {
-    console.log("error when creating JWT token", inspect(error));
+    console.log("error when creating auth token", inspect(error));
     return {
         jwt_key: "",
-        error: "there was an error retrieving the jwt keys.\n" + inspect(error),
+        error: "there was an error retrieving the document server secret.\n" + inspect(error),
         returned_an_error: true,
     };
 }

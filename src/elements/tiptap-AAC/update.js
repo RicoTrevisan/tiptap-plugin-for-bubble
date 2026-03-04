@@ -2,7 +2,7 @@
 instance.data._debug_mode = properties.debug_mode;
 
 if (properties.collab_active === true && !properties.collab_jwt) {
-    instance.data.debug("collab is active but JWT token is not yet loaded. Returning...");
+    instance.data.debug("collab is active but auth token is not yet loaded. Returning...");
     return;
 }
 
