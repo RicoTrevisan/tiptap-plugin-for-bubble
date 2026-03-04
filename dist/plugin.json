@@ -89,7 +89,7 @@
       "fields": {
         "AEL": {
           "caption": "Document names (comma-separated)",
-          "doc": "Comma-separated list of allowed document names. Each name will be trimmed. Example: \"my-doc, another-doc\"",
+          "doc": "Comma-separated list of allowed document names. Each name will be trimmed. Example: \"my-doc, another-doc\". Omit to grant access to all documents.",
           "editor": "DynamicValue",
           "name": "docNames",
           "optional": true,
@@ -98,11 +98,11 @@
         },
         "AEY": {
           "caption": "App ID",
-          "doc": "Your Tiptap Cloud or custom collab app ID. For Tiptap Cloud, this is included as the 'aud' (audience) claim in the JWT — required for authentication.",
+          "doc": "Your Tiptap Cloud or custom collab app ID. For Tiptap Cloud, this is included as the 'aud' (audience) claim in the JWT.",
           "editor": "DynamicValue",
           "name": "appId",
           "optional": true,
-          "rank": 1,
+          "rank": 3,
           "value": "text"
         },
         "expiration": {
@@ -112,7 +112,7 @@
           "editor": "DynamicValue",
           "name": "expiration",
           "optional": true,
-          "rank": 4,
+          "rank": 5,
           "value": "number"
         },
         "jwt_secret": {
@@ -123,15 +123,23 @@
           "name": "jwt_secret",
           "optional": true,
           "options": "Tiptap Cloud,Custom",
+          "rank": 1
+        },
+        "optional_info": {
+          "caption": "𝗢𝗽𝘁𝗶𝗼𝗻𝗮𝗹 — 𝘀𝗲𝗰𝘂𝗿𝗶𝘁𝘆 & 𝘁𝗿𝗮𝗰𝗲𝗮𝗯𝗶𝗹𝗶𝘁𝘆",
+          "doc": "These fields harden the JWT token and improve traceability. 𝗔𝗽𝗽 𝗜𝗗 ties the token to a specific app, preventing it from being reused on other apps. 𝗨𝘀𝗲𝗿 𝗜𝗗 identifies which user the token belongs to, useful for auditing and revoking access. 𝗘𝘅𝗽𝗶𝗿𝗮𝘁𝗶𝗼𝗻 limits the token's lifetime so that leaked tokens stop working after a set time.",
+          "editor": "Label",
+          "name": "optional_info",
+          "optional": true,
           "rank": 2
         },
         "sub": {
           "caption": "User ID (sub)",
-          "doc": "Optional. A unique identifier for the user (e.g. Current User's unique id). This is included as the 'sub' (subject) claim in the JWT.",
+          "doc": "A unique identifier for the user (e.g. Current User's unique id). Included as the 'sub' (subject) claim in the JWT.",
           "editor": "DynamicValue",
           "name": "sub",
           "optional": true,
-          "rank": 3,
+          "rank": 4,
           "value": "text"
         }
       },
