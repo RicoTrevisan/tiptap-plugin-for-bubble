@@ -4,6 +4,18 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.1.1
+
+### 🐛 Bug Fixes
+
+- **Auto-binding ignored when collaboration is active**: Fixed a critical conflict when both collaboration and auto-binding were enabled simultaneously. The auto-binding system works by writing editor HTML to a Bubble database field and reading changes back via `setContent()`. However, collaboration uses a Y.js CRDT document as the source of truth, and `setContent()` replaces the entire document — destroying the Y.js state, losing remote edits, and causing content duplication or cursor jumps. When both were on, every user was continuously writing HTML to the same Bubble field (their own and remote changes), creating race conditions and feedback loops that corrupted the collaborative document. Now, when collaboration is active, auto-binding writes and read-backs are suppressed. The collaborative Y.js document takes priority as the single source of truth. A one-time debugger warning is shown if both are enabled. States (`contentHTML`, `contentText`, `contentJSON`) and the `contentUpdated` event continue to work normally.
+
+### 📝 Documentation
+
+- **"Enable collaboration?" field**: Added documentation explaining that auto-binding is automatically ignored while collaboration is active to prevent conflicts.
+
+---
+
 ## v4.1.0
 
 ### ✨ New Extensions

@@ -696,6 +696,7 @@
         "AEC": {
             "caption": "Enable collaboration?",
             "default_val": false,
+            "doc": "Enable real-time collaborative editing via a Y.js-based provider (Tiptap Cloud, Custom Hocuspocus, or Liveblocks). When collaboration is active, the shared Y.js document is the single source of truth. Note: auto-binding is automatically ignored while collaboration is active — the collaborative document takes priority to prevent conflicts.",
             "editor": "Checkbox",
             "name": "collab_active",
             "rank": 146

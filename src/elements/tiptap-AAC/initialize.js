@@ -1678,7 +1678,11 @@ instance.data.setupEditor = function (properties, context) {
             instance.publishState("wordCount", editor.storage.characterCount.words());
 
             if (!instance.data.isProgrammaticUpdate) {
-                instance.data.updateContent(contentHTML);
+                if (!properties.collab_active) {
+                    instance.data.updateContent(contentHTML);
+                } else {
+                    instance.triggerEvent("contentUpdated");
+                }
                 instance.data.isDebouncingDone = false;
             }
         },
@@ -1693,7 +1697,9 @@ instance.data.setupEditor = function (properties, context) {
             instance.triggerEvent("isntFocused");
             instance.publishState("isFocused", false);
             instance.data.is_focused = false;
-            instance.publishAutobinding(editor.getHTML());
+            if (!properties.collab_active) {
+                instance.publishAutobinding(editor.getHTML());
+            }
         },
         onTransaction({ editor, transaction }) {
             instance.data.getSelection(editor);

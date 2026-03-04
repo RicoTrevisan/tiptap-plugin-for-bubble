@@ -24,6 +24,14 @@ if (properties.collab_active === true && !properties.collab_doc_id) {
     return;
 }
 
+// Warn if both collaboration and auto-binding are enabled (one-time)
+if (properties.collab_active && properties.bubble.auto_binding() && !instance.data._collabAutobindingWarningShown) {
+    instance.data._collabAutobindingWarningShown = true;
+    context.reportDebugger(
+        "Collaboration and auto-binding are both enabled. Auto-binding will be ignored while collaboration is active — the collaborative document is the source of truth.",
+    );
+}
+
 // First run: set up the editor (defined in initialize.js)
 // Also re-runs after a collab auth failure retry (isEditorSetup is reset to false)
 if (!instance.data.isEditorSetup) {
@@ -84,6 +92,7 @@ if (instance.data.editor_is_ready && instance.data.delay !== properties.update_d
 if (
     instance.data.editor_is_ready &&
     properties.bubble.auto_binding() &&
+    !properties.collab_active &&
     instance.data.isDebouncingDone &&
     properties.autobinding !== instance.data.editor.getHTML()
 ) {
