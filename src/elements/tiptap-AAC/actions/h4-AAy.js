@@ -2,7 +2,7 @@ if (!instance.data.editor_is_ready)
     return instance.data.returnAndReportErrorIfEditorNotReady("H4");
 
   if (
-    instance.data.active_nodes.includes("Heading") &&
+    instance.data.ext.heading &&
     instance.data.headings.includes(4)
   ) {
     instance.data.editor.chain().focus().toggleHeading({ level: 4 }).run();

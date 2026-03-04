@@ -3,7 +3,7 @@ if (!instance.data.editor_is_ready)
       "Set font family"
     );
 
-  if (instance.data.active_nodes.includes("FontFamily")) {
+  if (instance.data.ext.fontfamily) {
     let font_family = properties.font_family;
     instance.data.editor.chain().setFontFamily(font_family).focus().run();
   }

@@ -1,7 +1,7 @@
 if (!instance.data.editor_is_ready)
     return instance.data.returnAndReportErrorIfEditorNotReady("Align Text");
 
-  if (instance.data.active_nodes.includes("TextAlign")) {
+  if (instance.data.ext.textalign) {
     let alignment = properties.alignment;
     console.log(alignment);
     if (alignment == "reset") {

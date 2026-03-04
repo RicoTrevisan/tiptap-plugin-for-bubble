@@ -1,7 +1,7 @@
 if (!instance.data.editor_is_ready)
     return instance.data.returnAndReportErrorIfEditorNotReady("Insert Image");
 
-  if (instance.data.active_nodes.includes("Image")) {
+  if (instance.data.ext.image) {
     let image = properties.insert_image;
     if (!image) return;
 

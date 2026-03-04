@@ -1178,14 +1178,46 @@ instance.data.setupEditor = function (properties, context) {
         UniqueID,
     } = window.tiptap;
 
+    // Store extension states for action files to reference
+    instance.data.ext = {
+        bold: properties.ext_bold,
+        italic: properties.ext_italic,
+        strike: properties.ext_strike,
+        underline: properties.ext_underline,
+        code: properties.ext_code,
+        highlight: properties.ext_highlight,
+        fontfamily: properties.ext_fontfamily,
+        color: properties.ext_color,
+        heading: properties.ext_heading,
+        blockquote: properties.ext_blockquote,
+        horizontalrule: properties.ext_horizontalrule,
+        codeblock: properties.ext_codeblock,
+        bulletlist: properties.ext_bulletlist,
+        orderedlist: properties.ext_orderedlist,
+        tasklist: properties.ext_tasklist,
+        image: properties.ext_image,
+        youtube: properties.ext_youtube,
+        link: properties.ext_link,
+        table: properties.ext_table,
+        bubblemenu: properties.ext_bubblemenu,
+        floatingmenu: properties.ext_floatingmenu,
+        placeholder: properties.ext_placeholder,
+        textalign: properties.ext_textalign,
+        dropcursor: properties.ext_dropcursor,
+        gapcursor: properties.ext_gapcursor,
+        history: properties.ext_history,
+        hardbreak: properties.ext_hardbreak,
+        mention: properties.ext_mention,
+        uniqueid: properties.ext_uniqueid,
+    };
+
     // parse heading levels
     instance.data.headings = [];
-    properties.headings.split(",").map((item) => {
-        instance.data.headings.push(parseInt(item));
-    });
-
-    instance.data.active_nodes = properties.nodes.split(",").map((item) => item.trim());
-    instance.data.debug("active nodes:", instance.data.active_nodes.join(", "));
+    if (properties.ext_heading) {
+        properties.headings.split(",").map((item) => {
+            instance.data.headings.push(parseInt(item));
+        });
+    }
 
     // ── Build extensions ─────────────────────────────────────
 
@@ -1200,7 +1232,7 @@ instance.data.setupEditor = function (properties, context) {
         }),
     ];
 
-    if (properties.extension_uniqueid) {
+    if (properties.ext_uniqueid) {
         if (!properties.extension_uniqueid_types) {
             context.reportDebugger("UniqueID extension is active but the types are empty. You could target `paragraph, heading`, for example.");
             return;
@@ -1227,23 +1259,25 @@ instance.data.setupEditor = function (properties, context) {
         );
     }
 
-    if (instance.data.active_nodes.includes("Dropcursor")) extensions.push(Dropcursor);
-    if (instance.data.active_nodes.includes("Gapcursor")) extensions.push(Gapcursor);
-    if (instance.data.active_nodes.includes("HardBreak")) {
+    // ── Extension toggles (each controlled by its own yes/no property) ──
+
+    if (properties.ext_dropcursor) extensions.push(Dropcursor);
+    if (properties.ext_gapcursor) extensions.push(Gapcursor);
+    if (properties.ext_hardbreak) {
         extensions.push(HardBreak.configure({ keepMarks: properties.hardBreakKeepMarks }));
     }
-    if (instance.data.active_nodes.includes("History") && !properties.collab_active) extensions.push(UndoRedo);
-    if (instance.data.active_nodes.includes("Bold")) extensions.push(Bold);
-    if (instance.data.active_nodes.includes("Italic")) extensions.push(Italic);
-    if (instance.data.active_nodes.includes("Strike")) extensions.push(Strike);
-    if (instance.data.active_nodes.includes("FontFamily")) extensions.push(FontFamily);
-    if (instance.data.active_nodes.includes("Color")) extensions.push(Color);
-    if (instance.data.active_nodes.includes("Heading")) extensions.push(Heading.configure({ levels: instance.data.headings }));
-    if (instance.data.active_nodes.includes("BulletList")) extensions.push(BulletList);
-    if (instance.data.active_nodes.includes("OrderedList")) extensions.push(OrderedList);
-    if (instance.data.active_nodes.includes("TaskList")) extensions.push(TaskList, TaskItem.configure({ nested: true }));
+    if (properties.ext_history && !properties.collab_active) extensions.push(UndoRedo);
+    if (properties.ext_bold) extensions.push(Bold);
+    if (properties.ext_italic) extensions.push(Italic);
+    if (properties.ext_strike) extensions.push(Strike);
+    if (properties.ext_fontfamily) extensions.push(FontFamily);
+    if (properties.ext_color) extensions.push(Color);
+    if (properties.ext_heading) extensions.push(Heading.configure({ levels: instance.data.headings }));
+    if (properties.ext_bulletlist) extensions.push(BulletList);
+    if (properties.ext_orderedlist) extensions.push(OrderedList);
+    if (properties.ext_tasklist) extensions.push(TaskList, TaskItem.configure({ nested: true }));
 
-    if (instance.data.active_nodes.includes("Mention")) {
+    if (properties.ext_mention) {
         if (!properties.mention_list) {
             instance.data.debug("tried to use Mention extension, but mention_list is empty. Mention extension not loaded");
         } else {
@@ -1267,20 +1301,20 @@ instance.data.setupEditor = function (properties, context) {
         }
     }
 
-    if (instance.data.active_nodes.includes("Highlight")) extensions.push(Highlight);
-    if (instance.data.active_nodes.includes("Underline")) extensions.push(Underline);
-    if (instance.data.active_nodes.includes("CodeBlock")) extensions.push(CodeBlock);
-    if (instance.data.active_nodes.includes("Code")) extensions.push(Code);
-    if (instance.data.active_nodes.includes("Blockquote")) extensions.push(Blockquote);
-    if (instance.data.active_nodes.includes("HorizontalRule")) extensions.push(HorizontalRule);
-    if (instance.data.active_nodes.includes("Youtube")) extensions.push(Youtube.configure({ nocookie: true }));
-    if (instance.data.active_nodes.includes("Table")) extensions.push(Table.configure({ resizable: true }), TableRow, TableHeader, TableCell);
-    if (instance.data.active_nodes.includes("Image")) {
+    if (properties.ext_highlight) extensions.push(Highlight);
+    if (properties.ext_underline) extensions.push(Underline);
+    if (properties.ext_codeblock) extensions.push(CodeBlock);
+    if (properties.ext_code) extensions.push(Code);
+    if (properties.ext_blockquote) extensions.push(Blockquote);
+    if (properties.ext_horizontalrule) extensions.push(HorizontalRule);
+    if (properties.ext_youtube) extensions.push(Youtube.configure({ nocookie: true }));
+    if (properties.ext_table) extensions.push(Table.configure({ resizable: true }), TableRow, TableHeader, TableCell);
+    if (properties.ext_image) {
         extensions.push(Image.configure({ inline: false, allowBase64: properties.allowBase64 }), Resizable);
     }
-    if (instance.data.active_nodes.includes("Link")) extensions.push(Link);
-    if (instance.data.active_nodes.includes("Placeholder")) extensions.push(Placeholder.configure({ placeholder: placeholder }));
-    if (instance.data.active_nodes.includes("TextAlign")) extensions.push(TextAlign.configure({ types: ["heading", "paragraph"] }));
+    if (properties.ext_link) extensions.push(Link);
+    if (properties.ext_placeholder) extensions.push(Placeholder.configure({ placeholder: placeholder }));
+    if (properties.ext_textalign) extensions.push(TextAlign.configure({ types: ["heading", "paragraph"] }));
 
     // ── PreserveAttributes extension ─────────────────────────
 
@@ -1580,10 +1614,9 @@ instance.data.setupEditor = function (properties, context) {
             instance.publishState("is_empty", editor.isEmpty);
             instance.publishState("can_undo", editor.can().undo());
             instance.publishState("can_redo", editor.can().redo());
-            if (instance.data.active_nodes.includes("CharacterCount")) {
-                instance.publishState("characterCount", editor.storage.characterCount.characters());
-                instance.publishState("wordCount", editor.storage.characterCount.words());
-            }
+            // CharacterCount is always loaded as a core extension
+            instance.publishState("characterCount", editor.storage.characterCount.characters());
+            instance.publishState("wordCount", editor.storage.characterCount.words());
 
             // If collaboration is active, try to set initial content
             if (properties.collab_active && instance.data.maybeSetCollabInitialContent) {
@@ -1677,7 +1710,7 @@ instance.data.setupEditor = function (properties, context) {
         el.style.opacity = "0";
     }
 
-    if (bubbleMenu && instance.data.active_nodes.includes("BubbleMenu")) {
+    if (bubbleMenu && properties.ext_bubblemenu) {
         // Find all elements with the id matching properties.bubbleMenu
         let bubbleMenuElements = document.querySelectorAll(`#${bubbleMenu}`);
 
@@ -1711,7 +1744,7 @@ instance.data.setupEditor = function (properties, context) {
         }
     }
 
-    if (floatingMenu && instance.data.active_nodes.includes("FloatingMenu")) {
+    if (floatingMenu && properties.ext_floatingmenu) {
         // Find all elements with the id matching properties.floatingMenu
         let floatingMenuElements = document.querySelectorAll(`#${floatingMenu}`);
 

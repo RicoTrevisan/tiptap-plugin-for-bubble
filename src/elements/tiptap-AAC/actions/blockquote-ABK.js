@@ -1,7 +1,7 @@
 if (!instance.data.editor_is_ready)
     return instance.data.returnAndReportErrorIfEditorNotReady("Blockquote");
 
-  if (instance.data.active_nodes.includes("Blockquote")) {
+  if (instance.data.ext.blockquote) {
     instance.data.editor.chain().focus().toggleBlockquote().run();
   } else {
     console.log("tried to add Blockquote, but extension is not active.");

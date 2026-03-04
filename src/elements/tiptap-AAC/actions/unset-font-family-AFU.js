@@ -3,6 +3,6 @@ if (!instance.data.editor_is_ready)
       "Unset font family"
     );
 
-  if (instance.data.active_nodes.includes("FontFamily")) {
+  if (instance.data.ext.fontfamily) {
     instance.data.editor.chain().unsetFontFamily().focus().run();
   }
