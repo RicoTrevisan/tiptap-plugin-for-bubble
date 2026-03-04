@@ -4,6 +4,16 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## Unreleased
+
+### ✨ New Extensions
+
+- **Trailing Node** (on by default) — Automatically inserts an empty paragraph at the end of the document when the last node is a block element (table, image, code block, etc.). Prevents users from getting trapped with no way to continue typing below block-level content.
+- **Focus** (off by default) — Adds a `has-focus` CSS class to the node where the cursor is currently positioned. Enables styling the active block — e.g., a subtle background or left border on the focused paragraph. Configurable mode: `deepest` (default, innermost node only), `shallowest` (outermost node only), or `all` (all ancestor nodes).
+- **Selection** (off by default) — Keeps the text selection visually highlighted when the editor loses focus. Useful when users click toolbar buttons outside the editor — the selection remains visible instead of disappearing. A default blue highlight style (`.selection { background: #accef7 }`) is provided automatically. Includes a **Selection CSS override** field to customize the highlight styling.
+
+---
+
 ## v4.0.0
 
 ### ⚡ Tiptap v3 Upgrade

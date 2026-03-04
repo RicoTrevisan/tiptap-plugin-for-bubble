@@ -220,6 +220,11 @@ try {
 
     }
 
+    .ProseMirror .selection {
+        background: #accef7;
+        ${properties.ext_selection_css || ""}
+    }
+
     .mention {
         border: 1px solid;
         border-color: ${properties.mention_border_color};
@@ -1172,6 +1177,9 @@ instance.data.setupEditor = function (properties, context) {
         Gapcursor,
         UndoRedo,
         Placeholder,
+        TrailingNode,
+        Focus,
+        Selection,
         BubbleMenu,
         FloatingMenu,
         FileHandler,
@@ -1263,6 +1271,9 @@ instance.data.setupEditor = function (properties, context) {
 
     if (properties.ext_dropcursor) extensions.push(Dropcursor);
     if (properties.ext_gapcursor) extensions.push(Gapcursor);
+    if (properties.ext_trailingnode) extensions.push(TrailingNode);
+    if (properties.ext_focus) extensions.push(Focus.configure({ className: "has-focus", mode: properties.ext_focus_mode || "deepest" }));
+    if (properties.ext_selection) extensions.push(Selection);
     if (properties.ext_hardbreak) {
         extensions.push(HardBreak.configure({ keepMarks: properties.hardBreakKeepMarks }));
     }
