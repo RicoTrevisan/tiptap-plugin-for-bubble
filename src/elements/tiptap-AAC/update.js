@@ -8,7 +8,9 @@ if (properties.collab_active === true && !properties.collab_jwt) {
 
 if (properties.collab_active === true && !properties.collab_doc_id) {
     instance.data.debug("collab is active but document name (collab_doc_id) is not yet loaded. Returning...");
-    context.reportDebugger("Collaboration is enabled but the Document name field is empty. Please provide a unique document name (e.g. a slug or unique ID) for collaboration to work.");
+    context.reportDebugger(
+        "Collaboration is enabled but the Document name field is empty. Please provide a unique document name (e.g. a slug or unique ID) for collaboration to work.",
+    );
     return;
 }
 
@@ -710,9 +712,15 @@ if (!instance.data.isEditorSetup) {
 
     const menuErrorMessage = " not found. Is the entered id correct? FYI: the Bubble element should default to visible.";
 
-    if (bubbleMenu && instance.data.active_nodes.includes("BubbleMenu")) {
-        let bubbleMenuTheme = properties.bubbleMenuTheme;
+    // Helper: Tiptap v3 uses Floating UI instead of tippy.js for BubbleMenu/FloatingMenu.
+    // v3 does NOT initially hide the element (isVisible starts false, so hide() is a no-op).
+    // We must hide menu elements ourselves before passing them to the extension.
+    function hideMenuElement(el) {
+        el.style.visibility = "hidden";
+        el.style.opacity = "0";
+    }
 
+    if (bubbleMenu && instance.data.active_nodes.includes("BubbleMenu")) {
         // Find all elements with the id matching properties.bubbleMenu
         let bubbleMenuElements = document.querySelectorAll(`#${bubbleMenu}`);
 
@@ -723,13 +731,11 @@ if (!instance.data.isEditorSetup) {
             instance.data.debug(errorMessage);
         } else if (bubbleMenuElements.length === 1) {
             // If only one element is found, make that the bubble menu.
+            hideMenuElement(bubbleMenuElements[0]);
             options.extensions.push(
                 BubbleMenu.configure({
                     element: bubbleMenuElements[0],
-                    tippyOptions: {
-                        theme: bubbleMenuTheme,
-                        appendTo: document.body,
-                    },
+                    appendTo: () => document.body,
                 }),
             );
         } else if (bubbleMenuElements.length >= 2) {
@@ -738,21 +744,17 @@ if (!instance.data.isEditorSetup) {
             context.reportDebugger(errorMessage);
             instance.data.debug(errorMessage);
             let bubbleMenuDiv = instance.data.findElement(bubbleMenu);
+            hideMenuElement(bubbleMenuDiv);
             options.extensions.push(
                 BubbleMenu.configure({
                     element: bubbleMenuDiv,
-                    tippyOptions: {
-                        theme: bubbleMenuTheme,
-                        appendTo: document.body,
-                    },
+                    appendTo: () => document.body,
                 }),
             );
         }
     }
 
     if (floatingMenu && instance.data.active_nodes.includes("FloatingMenu")) {
-        let floatingMenuTheme = properties.floatingMenuTheme;
-
         // Find all elements with the id matching properties.floatingMenu
         let floatingMenuElements = document.querySelectorAll(`#${floatingMenu}`);
 
@@ -763,13 +765,11 @@ if (!instance.data.isEditorSetup) {
             instance.data.debug(errorMessage);
         } else if (floatingMenuElements.length === 1) {
             // If only one element is found, make that the floating menu.
+            hideMenuElement(floatingMenuElements[0]);
             options.extensions.push(
                 FloatingMenu.configure({
                     element: floatingMenuElements[0],
-                    tippyOptions: {
-                        theme: floatingMenuTheme,
-                        appendTo: document.body,
-                    },
+                    appendTo: () => document.body,
                 }),
             );
         } else if (floatingMenuElements.length >= 2) {
@@ -778,13 +778,11 @@ if (!instance.data.isEditorSetup) {
             context.reportDebugger(errorMessage);
             instance.data.debug(errorMessage);
             let floatingMenuDiv = instance.data.findElement(floatingMenu);
+            hideMenuElement(floatingMenuDiv);
             options.extensions.push(
                 FloatingMenu.configure({
                     element: floatingMenuDiv,
-                    tippyOptions: {
-                        theme: floatingMenuTheme,
-                        appendTo: document.body,
-                    },
+                    appendTo: () => document.body,
                 }),
             );
         }

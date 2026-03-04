@@ -23,6 +23,25 @@
       "rank": 0,
       "value": "text"
     },
+    "AEY": {
+      "caption": "App ID",
+      "doc": "Your Tiptap Cloud or custom collab app ID. For Tiptap Cloud, this is included as the 'aud' (audience) claim in the token.",
+      "editor": "DynamicValue",
+      "name": "appId",
+      "optional": true,
+      "rank": 3,
+      "value": "text"
+    },
+    "expiration": {
+      "caption": "Expiration (seconds)",
+      "default_val": "86400",
+      "doc": "How long the auth token is valid, in seconds. Default is 86400 (1 day).",
+      "editor": "DynamicValue",
+      "name": "expiration",
+      "optional": true,
+      "rank": 5,
+      "value": "number"
+    },
     "jwt_secret": {
       "caption": "Which document server secret to use",
       "default_val": "Tiptap Cloud",
@@ -41,15 +60,6 @@
       "optional": true,
       "rank": 2
     },
-    "AEY": {
-      "caption": "App ID",
-      "doc": "Your Tiptap Cloud or custom collab app ID. For Tiptap Cloud, this is included as the 'aud' (audience) claim in the token.",
-      "editor": "DynamicValue",
-      "name": "appId",
-      "optional": true,
-      "rank": 3,
-      "value": "text"
-    },
     "sub": {
       "caption": "User ID (sub)",
       "doc": "A unique identifier for the user (e.g. Current User's unique id). Included as the 'sub' (subject) claim in the token.",
@@ -58,16 +68,6 @@
       "optional": true,
       "rank": 4,
       "value": "text"
-    },
-    "expiration": {
-      "caption": "Expiration (seconds)",
-      "default_val": "86400",
-      "doc": "How long the auth token is valid, in seconds. Default is 86400 (1 day).",
-      "editor": "DynamicValue",
-      "name": "expiration",
-      "optional": true,
-      "rank": 5,
-      "value": "number"
     }
   },
   "return_value": {

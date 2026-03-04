@@ -1274,7 +1274,7 @@
       "rank": 28
     },
     "AEN": {
-      "caption": "Auth token",
+      "caption": "JWT key",
       "doc": "For both Tiptap Cloud or Custom collab, you need to provide an auth token. Best idea is to create a workflow when the page loads, run 𝗴𝗲𝗻𝗲𝗿𝗮𝘁𝗲 𝗮𝘂𝘁𝗵 𝘁𝗼𝗸𝗲𝗻 action, and store the token in a state on the page.",
       "editor": "DynamicValue",
       "name": "collab_jwt",
