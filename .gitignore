@@ -3,3 +3,5 @@ lib/.npmrc
 lib/dist*.js
 .envrc
 erl_crash.dump
+.src.json
+dist/

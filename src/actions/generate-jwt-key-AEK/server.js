@@ -1,34 +1,47 @@
-const jsonwebtoken = require('jsonwebtoken');
-    const { inspect } = require('node:util');
+const jsonwebtoken = require("jsonwebtoken");
+const { inspect } = require("node:util");
 
-    const doc = properties.docID;
-    const docList = properties.docIDList;
+let allowedDocumentNames = [];
+if (properties.docNames) {
+    allowedDocumentNames = properties.docNames
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+}
 
-    let allowedDocumentNames = [];
-	if (!!doc) allowedDocumentNames.push(doc);
-	if (!!docList) allowedDocumentNames.push(docList);
-    const data = {
-        allowedDocumentNames: allowedDocumentNames
-    }
-    let key;
-    if (properties.jwt_secret === "Tiptap Cloud") key = context.keys["Tiptap Cloud JWT secret"]
-    if (properties.jwt_secret === "Custom") key = context.keys["Custom collab JWT secret"]
+const data = {};
+if (properties.sub) {
+    data.sub = properties.sub;
+}
+if (allowedDocumentNames.length > 0) {
+    data.allowedDocumentNames = allowedDocumentNames;
+}
 
-    try {
-        const jwt = jsonwebtoken.sign(data, key);
+let key;
+if (properties.jwt_secret === "Tiptap Cloud") key = context.keys["Tiptap Cloud JWT secret"];
+if (properties.jwt_secret === "Custom") key = context.keys["Custom collab JWT secret"];
+if (key) key = key.trim();
 
-        return {
-            jwt_key: jwt,
-            error: "",
-            returned_an_error: false
+const expiration = properties.expiration || 86400;
+const signOptions = { expiresIn: expiration };
 
-        }
-    } catch (error) {
-        console.log("error when creating JWT token", inspect(error) );
-        return {
-            jwt_key: "",
-            error: "there was an error retrieving the jwt keys.\n" + inspect(error),
-            returned_an_error: true
-        }
- 
-    }
+if (properties.appId) {
+    signOptions.audience = properties.appId;
+}
+
+try {
+    const jwt = jsonwebtoken.sign(data, key, signOptions);
+
+    return {
+        jwt_key: jwt,
+        error: "",
+        returned_an_error: false,
+    };
+} catch (error) {
+    console.log("error when creating JWT token", inspect(error));
+    return {
+        jwt_key: "",
+        error: "there was an error retrieving the jwt keys.\n" + inspect(error),
+        returned_an_error: true,
+    };
+}

@@ -35,6 +35,10 @@
     "AGT": {
       "name": "dist-v05.js",
       "url": "//meta-q.cdn.bubble.io/f1760014510929x703705299498335200/dist-v05.js"
+    },
+    "AGU": {
+      "name": "dist.js",
+      "url": "//meta-q.cdn.bubble.io/f1772551593920x983290223326721800/dist.js"
     }
   },
   "dependencies": {

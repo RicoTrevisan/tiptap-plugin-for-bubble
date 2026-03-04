@@ -4,7 +4,9 @@
     "automatically_added_packages": "{\"jsonwebtoken\":\"latest\",\"node:util\":\"latest\"}",
     "package": {
       "fn": "{\n    \"dependencies\": {\n        \"jsonwebtoken\": \"latest\"\n    }\n}",
-      "invalid_package": false
+      "invalid_package": false,
+      "package_hash": "1e76bc4a16a53766f915",
+      "package_status": "up_to_date"
     },
     "package_hash": "1e76bc4a16a53766f915",
     "package_status": "up_to_date",
@@ -13,23 +15,41 @@
   "display": "generate JWT key",
   "fields": {
     "AEL": {
-      "caption": "Doc ID",
-      "doc": "the document's unique ID. This will be the name of the document that you will see on 𝗵𝘁𝘁𝗽𝘀://𝗰𝗼𝗹𝗹𝗮𝗯.𝘁𝗶𝗽𝘁𝗮𝗽.𝗱𝗲𝘃",
+      "caption": "Document names (comma-separated)",
+      "doc": "Comma-separated list of allowed document names. Each name will be trimmed. Example: \"my-doc, another-doc\"",
       "editor": "DynamicValue",
-      "name": "docID",
+      "name": "docNames",
       "optional": true,
       "rank": 0,
       "value": "text"
     },
     "AEY": {
-      "caption": "Doc ID (list)",
-      "doc": "Doc ids list",
+      "caption": "App ID",
+      "doc": "Your Tiptap Cloud or custom collab app ID. For Tiptap Cloud, this is included as the 'aud' (audience) claim in the JWT — required for authentication.",
       "editor": "DynamicValue",
-      "is_list": true,
-      "name": "docIDList",
+      "name": "appId",
       "optional": true,
       "rank": 1,
       "value": "text"
+    },
+    "sub": {
+      "caption": "User ID (sub)",
+      "doc": "Optional. A unique identifier for the user (e.g. Current User's unique id). This is included as the 'sub' (subject) claim in the JWT.",
+      "editor": "DynamicValue",
+      "name": "sub",
+      "optional": true,
+      "rank": 3,
+      "value": "text"
+    },
+    "expiration": {
+      "caption": "Expiration (seconds)",
+      "default_val": "86400",
+      "doc": "How long the JWT token is valid, in seconds. Default is 86400 (1 day).",
+      "editor": "DynamicValue",
+      "name": "expiration",
+      "optional": true,
+      "rank": 4,
+      "value": "number"
     },
     "jwt_secret": {
       "caption": "Which JWT secret to use",

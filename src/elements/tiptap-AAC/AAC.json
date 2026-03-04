@@ -429,6 +429,14 @@
     "AFu": {
       "caption": "file is uploaded",
       "name": "fileUploaded"
+    },
+    "collab_status_changed": {
+      "caption": "Collaboration status changed",
+      "name": "collab_status_changed"
+    },
+    "collab_synced": {
+      "caption": "Collaboration synced",
+      "name": "collab_synced"
     }
   },
   "fields": {
@@ -923,6 +931,14 @@
       "name": "link_hover_adv",
       "rank": 62
     },
+    "AGP": {
+      "caption": "Debug mode",
+      "default_val": false,
+      "doc": "When enabled, logs detailed information to the browser console. Useful for troubleshooting. Look for messages prefixed with [Tiptap].",
+      "editor": "Checkbox",
+      "name": "debug_mode",
+      "rank": 111
+    },
     "AEE": {
       "caption": "cursor_color",
       "default_val": "rgba(179,208,252,1)",
@@ -1410,6 +1426,16 @@
     "resizable": true
   },
   "states": {
+    "can_undo": {
+      "caption": "Can undo?",
+      "doc": "Whether there is an action that can be undone",
+      "initialization_code": {
+        "fn": "function(properties, context) {}"
+      },
+      "is_list": false,
+      "name": "can_undo",
+      "value": "boolean"
+    },
     "AGA": {
       "caption": "File upload URLs",
       "doc": "URLs of files that have been uploaded",
@@ -1552,6 +1578,16 @@
       "name": "h1",
       "value": "boolean"
     },
+    "collab_synced": {
+      "caption": "Collaboration synced?",
+      "doc": "Whether the collaboration document has synced with the server",
+      "initialization_code": {
+        "fn": "function(properties, context) {}"
+      },
+      "is_list": false,
+      "name": "collab_synced",
+      "value": "boolean"
+    },
     "ACP": {
       "caption": "is a link",
       "initialization_code": {
@@ -1594,6 +1630,16 @@
       "name": "selectedJSON",
       "value": "text"
     },
+    "can_redo": {
+      "caption": "Can redo?",
+      "doc": "Whether there is an action that can be redone",
+      "initialization_code": {
+        "fn": "function(properties, context) {}"
+      },
+      "is_list": false,
+      "name": "can_redo",
+      "value": "boolean"
+    },
     "ABP": {
       "caption": "Content (Plain Text)",
       "doc": "Content in plain text",
@@ -1610,6 +1656,16 @@
       },
       "name": "align_justified",
       "value": "boolean"
+    },
+    "collab_connected_users": {
+      "caption": "Collaboration connected users",
+      "doc": "The number of users currently connected to this collaborative document",
+      "initialization_code": {
+        "fn": "function(properties, context) {}"
+      },
+      "is_list": false,
+      "name": "collab_connected_users",
+      "value": "number"
     },
     "ADE": {
       "caption": "Is a table",
@@ -1728,6 +1784,16 @@
       "name": "characterCount",
       "value": "number"
     },
+    "collab_status": {
+      "caption": "Collaboration status",
+      "doc": "The current collaboration connection status: disconnected, connecting, connected, or synced",
+      "initialization_code": {
+        "fn": "function(properties, context) {}"
+      },
+      "is_list": false,
+      "name": "collab_status",
+      "value": "text"
+    },
     "ABF": {
       "caption": "list item can be indented",
       "doc": "Sink or it can be indentend.",
@@ -1751,6 +1817,16 @@
         "fn": "function(properties, context) {}"
       },
       "name": "underline",
+      "value": "boolean"
+    },
+    "is_empty": {
+      "caption": "Is empty?",
+      "doc": "Whether the editor currently has no content",
+      "initialization_code": {
+        "fn": "function(properties, context) {}"
+      },
+      "is_list": false,
+      "name": "is_empty",
       "value": "boolean"
     },
     "AAk": {

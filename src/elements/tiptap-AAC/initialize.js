@@ -1,4 +1,11 @@
 try {
+    // Debug logging helper — only logs when debug_mode is enabled
+    instance.data.debug = function (...args) {
+        if (instance.data._debug_mode) {
+            console.log("[Tiptap]", ...args);
+        }
+    };
+
     // add display: flex to main element
     instance.canvas.css("display", "flex");
 
@@ -10,6 +17,12 @@ try {
     instance.data.editor_is_ready = false;
 
     instance.publishState("is_ready", false);
+    instance.publishState("is_empty", true);
+    instance.publishState("can_undo", false);
+    instance.publishState("can_redo", false);
+    instance.publishState("collab_status", "disconnected");
+    instance.publishState("collab_synced", false);
+    instance.publishState("collab_connected_users", 0);
 
     //    instance.canvas.cfss({'overflow':'scroll'});
 
@@ -48,7 +61,7 @@ try {
 
     instance.data.isDebouncingDone = true;
     instance.data.updateContent = instance.data.debounce((content) => {
-        console.log("debounce done, updating content");
+        instance.data.debug("debounce done, updating content");
         instance.publishAutobinding(content);
         instance.triggerEvent("contentUpdated");
         instance.data.isDebouncingDone = true;
@@ -86,19 +99,49 @@ try {
 
     function returnAndReportErrorIfEditorNotReady(errorFragment = "error") {
         const message = "Tried to run " + errorFragment + " before editor was ready. Crash prevented. Returning";
-        console.log(message);
+        instance.data.debug(message);
         context.reportDebugger(message);
         return;
     }
     instance.data.returnAndReportErrorIfEditorNotReady = returnAndReportErrorIfEditorNotReady;
 
+    // Helper to set initial content on a new (empty) collab document.
+    // Called from both the provider's onSynced and the editor's onCreate,
+    // because either can fire first depending on network timing.
+    instance.data.maybeSetCollabInitialContent = function () {
+        if (!instance.data.collabHasSynced) return;
+        if (!instance.data.editor_is_ready) return;
+        if (!instance.data.collabInitialContent) return;
+        if (instance.data.collabInitialContentSet) return;
+
+        if (instance.data.editor.isEmpty) {
+            instance.data.debug("collab document is empty after sync — setting initial content");
+            instance.data.collabInitialContentSet = true;
+            instance.data.editor.commands.setContent(instance.data.collabInitialContent);
+        } else {
+            instance.data.collabInitialContentSet = true; // prevent further checks
+        }
+    };
+
+    // Helper to publish collab status as a state and fire the status changed event
+    instance.data.publishCollabStatus = function (status) {
+        instance.data.debug("collab status:", status);
+        instance.publishState("collab_status", status);
+        instance.triggerEvent("collab_status_changed");
+    };
+
     function maybeSetupCollaboration(instance, properties, options, extensions) {
         if (properties.collab_active === false) return;
+        instance.data.debug("collaboration is active, provider:", properties.collabProvider);
+        // Store initial content before removing — used to populate new (empty) collab documents
+        instance.data.collabInitialContent = options.content;
+        instance.data.collabHasSynced = false;
+        instance.data.collabInitialContentSet = false;
         // removes initialContent -- normally a collab document will have some document in the cloud.
         delete options.content;
 
         if (!properties.collab_active) {
-            console.log("collab is not active");
+            instance.data.debug("collab is not active");
             return;
         }
         if (properties.collabProvider === "liveblocks") {
@@ -119,54 +162,60 @@ try {
     instance.data.maybeSetupCollaboration = maybeSetupCollaboration;
 
     function setupCustomHocuspocus(extensions, properties) {
-        console.log("setting up custom collab");
+        instance.data.debug("setting up custom Hocuspocus collab");
         const { HocuspocusProvider, Collaboration, CollaborationCaret, Y } = window.tiptap;
         if (!properties.collab_url.endsWith("/")) {
             properties.collab_url += "/";
         }
 
         const custom_url = properties.collab_url + properties.collab_app_id;
+        instance.data.debug("custom collab URL:", custom_url, "doc:", properties.collab_doc_id);
         try {
             instance.data.provider = new HocuspocusProvider({
                 url: custom_url,
                 name: properties.collab_doc_id,
                 token: properties.collab_jwt,
-                onStatus: (event) => {
-                    console.log("onStatus event: " + JSON.stringify(event));
-                },
-                onOpen: () => {
-                    console.log("onOpen");
+                onStatus: ({ status }) => {
+                    instance.data.publishCollabStatus(status);
                 },
                 onConnect() {
-                    console.log("onConnect");
+                    instance.data.publishCollabStatus("connected");
                 },
                 onAuthenticated() {
-                    console.log("onAuthenticated");
+                    instance.data.debug("custom collab authenticated");
                 },
                 onAuthenticationFailed: ({ reason }) => {
-                    console.log("onAuthenticationFailed", reason);
+                    instance.data.debug("custom collab authentication failed:", reason);
+                    context.reportDebugger("Custom collab authentication failed: " + reason);
                 },
-                onSynced: ({ state }) => {
-                    console.log("onSynced, state", JSON.stringify(state));
+                onSynced: () => {
+                    instance.data.debug("custom collab synced");
+                    instance.data.collabHasSynced = true;
+                    instance.publishState("collab_synced", true);
+                    instance.triggerEvent("collab_synced");
+                    instance.data.maybeSetCollabInitialContent();
                 },
-                onClose: ({ event }) => {
-                    console.log("onClose, event", JSON.stringify(event));
-                },
-                onDisconnect: ({ event }) => {
-                    console.log("onDisconnect, event", JSON.stringify(event));
+                onDisconnect: () => {
+                    instance.data.publishCollabStatus("disconnected");
+                    instance.publishState("collab_synced", false);
+                    instance.data.collabHasSynced = false;
                 },
                 onDestroy() {
-                    console.log("onDestroy");
-                },
-                onAwarenessUpdate: ({ added, updated, removed }) => {
-                    // …
+                    instance.data.debug("custom collab destroyed");
                 },
                 onAwarenessChange: ({ states }) => {
-                    // …
+                    instance.publishState("collab_connected_users", states.length);
                 },
                 onStateless: ({ payload }) => {
-                    console.log("onStateless, payload", payload);
+                    instance.data.debug("custom collab stateless message:", payload);
                 },
+            });
+
+            // Also register synced handler via .on() as backup
+            instance.data.provider.on("synced", () => {
+                instance.data.collabHasSynced = true;
+                instance.publishState("collab_synced", true);
+                instance.data.maybeSetCollabInitialContent();
             });
 
             extensions.push(
@@ -177,28 +226,68 @@ try {
                     provider: instance.data.provider,
                 }),
             );
+            instance.data.debug("custom Hocuspocus provider created successfully");
         } catch (error) {
-            const message = "Error setting up custom collab";
+            const message = "Error setting up custom collab: ";
             context.reportDebugger(message + error);
-            console.log(message + error);
+            console.error("[Tiptap]", message, error);
         }
         return;
     }
 
     function setupTiptapCloud(extensions, properties) {
-        console.log("setting up TiptapCloud");
+        instance.data.debug("setting up Tiptap Cloud collab");
 
-        const { TiptapCollabProvider, Collaboration, CollaborationCaret } = window.tiptap;
+        const { HocuspocusProvider, Collaboration, CollaborationCaret } = window.tiptap;
+        const url = `wss://${properties.collab_app_id}.collab.tiptap.cloud`;
+        instance.data.debug("Tiptap Cloud URL:", url, "doc:", properties.collab_doc_id);
         try {
-            instance.data.provider = new TiptapCollabProvider({
-                appId: properties.collab_app_id,
+            instance.data.provider = new HocuspocusProvider({
+                url: url,
                 name: properties.collab_doc_id,
                 token: properties.collab_jwt,
+                onConnect: () => {
+                    instance.data.publishCollabStatus("connected");
+                },
+                onAuthenticated: () => {
+                    instance.data.debug("Tiptap Cloud authenticated");
+                },
+                onAuthenticationFailed: ({ reason }) => {
+                    instance.data.debug("Tiptap Cloud authentication failed:", reason);
+                    context.reportDebugger("Tiptap Cloud authentication failed: " + reason);
+                },
+                onStatus: ({ status }) => {
+                    instance.data.publishCollabStatus(status);
+                },
+                onSynced: () => {
+                    instance.data.debug("Tiptap Cloud synced");
+                    instance.data.collabHasSynced = true;
+                    instance.publishState("collab_synced", true);
+                    instance.triggerEvent("collab_synced");
+                    instance.data.maybeSetCollabInitialContent();
+                },
+                onDisconnect: () => {
+                    instance.data.publishCollabStatus("disconnected");
+                    instance.publishState("collab_synced", false);
+                    instance.data.collabHasSynced = false;
+                },
+                onAwarenessChange: ({ states }) => {
+                    instance.publishState("collab_connected_users", states.length);
+                },
             });
+
+            // Also register synced handler via .on() as backup
+            instance.data.provider.on("synced", () => {
+                instance.data.collabHasSynced = true;
+                instance.publishState("collab_synced", true);
+                instance.data.maybeSetCollabInitialContent();
+            });
+
+            instance.data.debug("Tiptap Cloud provider created successfully");
         } catch (error) {
-            const message = "Error setting up custom collab";
+            const message = "Error setting up Tiptap Cloud collab: ";
             context.reportDebugger(message + error);
-            console.log(message + error);
+            console.error("[Tiptap]", message, error);
         }
 
         extensions.push(
@@ -214,7 +303,7 @@ try {
     }
 
     function setupLiveblocks(extensions, properties) {
-        console.log("setting up collab with Liveblocks");
+        instance.data.debug("setting up collab with Liveblocks");
         if (!properties.liveblocksPublicApiKey) {
             context.reportDebugger("Liveblocks is selected but there's no plublic API key");
             return;
@@ -251,7 +340,7 @@ try {
     }
     instance.data.setupLiveblocks = setupLiveblocks;
 } catch (error) {
-    console.log("error in initialize", error);
+    console.error("[Tiptap] error in initialize:", error);
 }
 
 // MentionList
@@ -446,7 +535,7 @@ function configureSuggestion(instance, properties) {
 instance.data.configureSuggestion = configureSuggestion;
 
 instance.data.rgbToHex = function (colorString) {
-    console.log("rgbToHex", colorString);
+    instance.data.debug("rgbToHex", colorString);
 
     // Regular expressions for RGB and RGBA
     const rgbRegex = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/;

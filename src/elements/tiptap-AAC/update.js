@@ -1,10 +1,20 @@
+// Update debug mode flag so the debug helper picks it up
+instance.data._debug_mode = properties.debug_mode;
+
 if (properties.collab_active === true && !properties.collab_jwt) {
-    console.log("collab is active but jwt token is not yet loaded. Returning...");
+    instance.data.debug("collab is active but JWT token is not yet loaded. Returning...");
+    return;
+}
+
+if (properties.collab_active === true && !properties.collab_doc_id) {
+    instance.data.debug("collab is active but document name (collab_doc_id) is not yet loaded. Returning...");
+    context.reportDebugger("Collaboration is enabled but the Document name field is empty. Please provide a unique document name (e.g. a slug or unique ID) for collaboration to work.");
     return;
 }
 
 // load once
 if (!instance.data.isEditorSetup) {
+    instance.data.debug("starting editor setup");
     let initialContent = properties.bubble.auto_binding() ? properties.autobinding : properties.initialContent;
     instance.data.initialContent = initialContent; // a string to keep track of what's currently in the initialContent so that the editor can change when the initialContent changes
     let content = properties.content_is_json ? JSON.parse(initialContent) : initialContent;
@@ -86,6 +96,7 @@ if (!instance.data.isEditorSetup) {
     });
 
     instance.data.active_nodes = properties.nodes.split(",").map((item) => item.trim());
+    instance.data.debug("active nodes:", instance.data.active_nodes.join(", "));
 
     const extensions = [
         Document,
@@ -113,7 +124,7 @@ if (!instance.data.isEditorSetup) {
         }
 
         let attributeName = properties.extension_uniqueid_attrName || "id";
-        console.log("attributeName", attributeName);
+        instance.data.debug("UniqueID attributeName:", attributeName);
 
         extensions.push(
             UniqueID.configure({
@@ -136,7 +147,7 @@ if (!instance.data.isEditorSetup) {
             }),
         );
     }
-    if (instance.data.active_nodes.includes("History")) {
+    if (instance.data.active_nodes.includes("History") && !properties.collab_active) {
         extensions.push(History);
     }
 
@@ -174,7 +185,7 @@ if (!instance.data.isEditorSetup) {
 
     if (instance.data.active_nodes.includes("Mention")) {
         if (!properties.mention_list) {
-            console.log("tried to use Mention extension, but mention_list is empty. Mention extension not loaded");
+            instance.data.debug("tried to use Mention extension, but mention_list is empty. Mention extension not loaded");
         } else {
             const suggestion_config = instance.data.configureSuggestion(instance, properties);
             // console.log("Mention loaded properly", Mention, typeof Mention);
@@ -447,7 +458,7 @@ if (!instance.data.isEditorSetup) {
 
                     // Wait for all uploads to complete
                     const urls = await Promise.all(uploadPromises);
-                    console.log("urls", urls);
+                    instance.data.debug("file upload URLs:", urls);
                     instance.publishState("fileUploadUrls", urls);
                 } catch (error) {
                     instance.triggerEvent("fileUploadError");
@@ -510,6 +521,7 @@ if (!instance.data.isEditorSetup) {
         parseOptions: parseOptions,
         injectCSS: true,
         onCreate({ editor }) {
+            instance.data.debug("editor created and ready");
             instance.data.editor_is_ready = true;
             instance.triggerEvent("is_ready");
             instance.publishState("is_ready", true);
@@ -518,12 +530,41 @@ if (!instance.data.isEditorSetup) {
             instance.publishState("contentText", editor.getText());
             instance.publishState("contentJSON", JSON.stringify(instance.data.editor.getJSON()));
             instance.publishState("isEditable", editor.isEditable);
+            instance.publishState("is_empty", editor.isEmpty);
+            instance.publishState("can_undo", editor.can().undo());
+            instance.publishState("can_redo", editor.can().redo());
             if (instance.data.active_nodes.includes("CharacterCount")) {
                 instance.publishState("characterCount", editor.storage.characterCount.characters());
                 instance.publishState("wordCount", editor.storage.characterCount.words());
             }
-            // window.editor = editor;
-            // console.log("onCreate editor", editor);
+
+            // If collaboration is active, try to set initial content
+            if (properties.collab_active && instance.data.maybeSetCollabInitialContent) {
+                // Try immediately (in case provider already synced)
+                instance.data.maybeSetCollabInitialContent();
+
+                // Poll as a fallback — onSynced may not fire reliably in all providers
+                if (instance.data.provider && !instance.data.collabInitialContentSet) {
+                    let pollAttempts = 0;
+                    const maxAttempts = 50; // 50 * 200ms = 10 seconds
+                    const pollInterval = setInterval(() => {
+                        pollAttempts++;
+                        const providerSynced = instance.data.provider.synced || instance.data.provider.isSynced;
+                        if (providerSynced && !instance.data.collabHasSynced) {
+                            instance.data.debug("collab sync detected via polling");
+                            instance.data.collabHasSynced = true;
+                            instance.publishState("collab_synced", true);
+                            instance.triggerEvent("collab_synced");
+                        }
+                        if (instance.data.collabHasSynced) {
+                            instance.data.maybeSetCollabInitialContent();
+                        }
+                        if (instance.data.collabInitialContentSet || pollAttempts >= maxAttempts) {
+                            clearInterval(pollInterval);
+                        }
+                    }, 200);
+                }
+            }
         },
         onUpdate({ editor }) {
             const contentHTML = editor.getHTML();
@@ -531,6 +572,9 @@ if (!instance.data.isEditorSetup) {
             instance.publishState("contentText", editor.getText());
             instance.publishState("contentJSON", JSON.stringify(editor.getJSON()));
             instance.publishState("isEditable", editor.isEditable);
+            instance.publishState("is_empty", editor.isEmpty);
+            instance.publishState("can_undo", editor.can().undo());
+            instance.publishState("can_redo", editor.can().redo());
             instance.publishState("characterCount", editor.storage.characterCount.characters());
             instance.publishState("wordCount", editor.storage.characterCount.words());
 
@@ -540,11 +584,13 @@ if (!instance.data.isEditorSetup) {
             }
         },
         onFocus({ editor, event }) {
+            instance.data.debug("editor focused");
             instance.triggerEvent("isFocused");
             instance.publishState("isFocused", true);
             instance.data.is_focused = true;
         },
         onBlur({ editor, event }) {
+            instance.data.debug("editor blurred");
             instance.triggerEvent("isntFocused");
             instance.publishState("isFocused", false);
             instance.data.is_focused = false;
@@ -580,6 +626,9 @@ if (!instance.data.isEditorSetup) {
             instance.publishState("highlight", editor.isActive("highlight"));
             instance.publishState("underline", editor.isActive("underline"));
             instance.publishState("table", editor.isActive("table"));
+            instance.publishState("is_empty", editor.isEmpty);
+            instance.publishState("can_undo", editor.can().undo());
+            instance.publishState("can_redo", editor.can().redo());
 
             const textStyle = editor.getAttributes("textStyle");
             if (textStyle && textStyle.color) {
@@ -671,7 +720,7 @@ if (!instance.data.isEditorSetup) {
         if (bubbleMenuElements.length === 0) {
             const errorMessage = "BubbleMenu" + menuErrorMessage;
             context.reportDebugger(errorMessage);
-            console.log(errorMessage);
+            instance.data.debug(errorMessage);
         } else if (bubbleMenuElements.length === 1) {
             // If only one element is found, make that the bubble menu.
             options.extensions.push(
@@ -687,7 +736,7 @@ if (!instance.data.isEditorSetup) {
             // If multiple elements found, try to find the closest and warn the developer
             const errorMessage = `Bubble Menu: found multiple elements with the same ID ${bubbleMenu}. Assuming that the closest one is the correct one. However, the developer should update the code to ensure that the IDs are unique. Tiptap ID: ${instance.data.randomId}.`;
             context.reportDebugger(errorMessage);
-            console.log(errorMessage, `Tiptap ID: ${instance.data.randomId}`);
+            instance.data.debug(errorMessage);
             let bubbleMenuDiv = instance.data.findElement(bubbleMenu);
             options.extensions.push(
                 BubbleMenu.configure({
@@ -711,7 +760,7 @@ if (!instance.data.isEditorSetup) {
         if (floatingMenuElements.length === 0) {
             const errorMessage = "FloatingMenu" + menuErrorMessage;
             context.reportDebugger(errorMessage);
-            console.log(errorMessage);
+            instance.data.debug(errorMessage);
         } else if (floatingMenuElements.length === 1) {
             // If only one element is found, make that the floating menu.
             options.extensions.push(
@@ -727,7 +776,7 @@ if (!instance.data.isEditorSetup) {
             // If multiple elements found, try to find the closest and warn the developer
             const errorMessage = `Floating Menu: found multiple elements with the same ID ${floatingMenu}. Assuming that the closest one is the correct one. However, the developer should update the code to ensure that the IDs are unique. Tiptap ID: ${instance.data.randomId}.`;
             context.reportDebugger(errorMessage);
-            console.log(errorMessage, `Tiptap ID: ${instance.data.randomId}`);
+            instance.data.debug(errorMessage);
             let floatingMenuDiv = instance.data.findElement(floatingMenu);
             options.extensions.push(
                 FloatingMenu.configure({
@@ -746,8 +795,9 @@ if (!instance.data.isEditorSetup) {
     try {
         instance.data.editor = new Editor(options);
         instance.data.isEditorSetup = true;
+        instance.data.debug("editor instance created, waiting for onCreate");
     } catch (error) {
-        console.log("failed trying to create the Editor", error);
+        console.error("[Tiptap] failed trying to create the Editor:", error);
     }
 }
 /*
@@ -757,6 +807,7 @@ if (!instance.data.isEditorSetup) {
     */
 
 if (!!instance.data.editor_is_ready && properties.isEditable != instance.data.editor.isEditable) {
+    instance.data.debug("editable state changing to:", properties.isEditable);
     let isEditable = properties.isEditable;
     instance.data.editor.setEditable(isEditable);
 }
@@ -767,7 +818,7 @@ if (
     instance.data.initialContent !== properties.initialContent &&
     !properties.bubble.auto_binding()
 ) {
-    console.log("content has changed");
+    instance.data.debug("initialContent has changed");
 
     if (!properties.collab_active) {
         instance.data.initialContent = properties.initialContent;
@@ -787,12 +838,12 @@ if (
         const newTo = Math.min(to, Math.max(1, docSize - 1));
         instance.data.editor.commands.setTextSelection({ from: newFrom, to: newTo });
     } else {
-        console.log("initialContent has changed but collaboration is active -- not updating content");
+        instance.data.debug("initialContent has changed but collaboration is active -- not updating content");
     }
 }
 
 if (instance.data.editor_is_ready && instance.data.delay !== properties.update_delay) {
-    console.log("Updating debounce delay from the standard " + instance.data.delay + "ms to " + properties.update_delay + "ms");
+    instance.data.debug("updating debounce delay from", instance.data.delay + "ms to", properties.update_delay + "ms");
     instance.data.delay = properties.update_delay;
 }
 
@@ -835,6 +886,7 @@ if (!!instance.data.editor_is_ready) {
 }
 
 if (!!instance.data.editor_is_ready && !!properties.collab_active) {
+    instance.data.debug("updating collab user:", properties.collab_user_name, "color:", properties.collab_cursor_color);
     instance.data.editor.commands.updateUser({
         name: properties.collab_user_name,
         color: properties.collab_cursor_color,

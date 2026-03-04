@@ -10,7 +10,7 @@
     "license": "ISC",
     "description": "Libraries for Bubble.io plugin for Tiptap",
     "dependencies": {
-        "@hocuspocus/provider": "^3.2.2",
+        "@hocuspocus/provider": "^3.4.4",
         "@liveblocks/client": "^3.2.1",
         "@liveblocks/yjs": "^3.2.1",
         "@tiptap/core": "^3.0.9",
