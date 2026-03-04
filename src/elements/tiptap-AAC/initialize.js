@@ -292,7 +292,7 @@ try {
     cursor: col-resize;
 }
 
-.collaboration-cursor__caret {
+.collaboration-carets__caret {
     position: relative;
     margin-left: -1px;
     margin-right: -1px;
@@ -302,7 +302,7 @@ try {
     pointer-events: none;
 }
 
-.collaboration-cursor__label {
+.collaboration-carets__label {
     position: absolute;
     top: -1.4em;
     left: -1px;
@@ -315,6 +315,7 @@ try {
     padding: 0.1rem 0.3rem;
     border-radius: 3px 3px 3px 0;
     white-space: nowrap;
+    ${properties.collab_cursor_css || ""}
 }
 
 .items_${instance.data.randomId} {

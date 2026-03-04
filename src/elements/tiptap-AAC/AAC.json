@@ -1112,7 +1112,7 @@
             "doc": "When enabled, logs detailed information to the browser console. Useful for troubleshooting. Look for messages prefixed with [Tiptap].",
             "editor": "Checkbox",
             "name": "debug_mode",
-            "rank": 155
+            "rank": 156
         },
         "ext_bulletlist": {
             "caption": "Bullet List",
@@ -1772,6 +1772,16 @@
             "name": "ext_selection_css",
             "optional": true,
             "rank": 122,
+            "value": "text"
+        },
+        "collab_cursor_css": {
+            "caption": "Cursor label CSS override",
+            "doc": "Inject custom CSS for the collaboration cursor label (the floating name tag above each user's cursor). The label already receives a background-color from the user's cursor_color. Example: font-size: 14px; padding: 0.2rem 0.5rem; opacity: 0.8; — Tip: use an 'arbitrary text' value for more room to write CSS.",
+            "editor": "DynamicValue",
+            "long_text": false,
+            "name": "collab_cursor_css",
+            "optional": true,
+            "rank": 155,
             "value": "text"
         }
     },

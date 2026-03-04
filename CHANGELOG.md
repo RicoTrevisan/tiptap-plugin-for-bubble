@@ -12,6 +12,48 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 - **Focus** (off by default) — Adds a `has-focus` CSS class to the node where the cursor is currently positioned. Enables styling the active block — e.g., a subtle background or left border on the focused paragraph. Configurable mode: `deepest` (default, innermost node only), `shallowest` (outermost node only), or `all` (all ancestor nodes).
 - **Selection** (off by default) — Keeps the text selection visually highlighted when the editor loses focus. Useful when users click toolbar buttons outside the editor — the selection remains visible instead of disappearing. A default blue highlight style (`.selection { background: #accef7 }`) is provided automatically. Includes a **Selection CSS override** field to customize the highlight styling.
 
+### 🤝 Collaboration
+
+- **New field: Cursor label CSS override** — Inject custom CSS for the collaboration cursor label (the floating name tag above each user's cursor). Customize font-size, padding, opacity, etc.
+
+#### How the collaboration cursor works
+
+Each collaborator's cursor renders two elements:
+
+1. **The caret** (`.collaboration-carets__caret`) — a thin vertical line at the cursor position, colored with `border-color` from the user's `cursor_color`.
+2. **The name label** (`.collaboration-carets__label`) — a floating tag above the caret showing the user's name, with `background-color` set to the user's `cursor_color`.
+
+The plugin provides sensible defaults (12px font, 600 weight, rounded corners, positioned above the caret). To customize, use the **Cursor label CSS override** field. Any CSS you add is injected into the `.collaboration-carets__label` rule and overrides the defaults.
+
+**Default label styles:**
+```css
+.collaboration-carets__label {
+    position: absolute;
+    top: -1.4em;
+    left: -1px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    user-select: none;
+    color: #0D0D0D;
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px 3px 3px 0;
+    white-space: nowrap;
+    /* background-color is set inline from cursor_color */
+}
+```
+
+**Example overrides:**
+- Larger label: `font-size: 14px; padding: 0.2rem 0.5rem;`
+- Semi-transparent: `opacity: 0.7;`
+- White text on colored background: `color: #fff;`
+- Different shape: `border-radius: 8px;`
+
+### 🐛 Bug Fixes
+
+- **Collaboration cursor styles not applied**: Fixed CSS class name mismatch from the v3 upgrade — the stylesheet targeted `.collaboration-cursor__caret` / `.collaboration-cursor__label` but Tiptap v3's `CollaborationCaret` extension renders with `.collaboration-carets__caret` / `.collaboration-carets__label`. The floating name label now displays correctly with proper positioning, styling, and background color.
+
 ---
 
 ## v4.0.0
