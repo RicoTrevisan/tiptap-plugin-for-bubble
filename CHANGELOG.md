@@ -4,70 +4,6 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
-## v4.1.0
-
-### 🔧 Extensions Refactor
-
-The single comma-separated "Extensions" string field has been replaced with individual yes/no toggles for each extension, organized into labeled sections. This makes extensions discoverable, less error-prone, and dynamically controllable via Bubble expressions.
-
-#### New extension toggle system
-- **29 individual extension toggles** — each extension now has its own DynamicValue yes/no field (`ext_bold`, `ext_italic`, `ext_heading`, etc.) instead of typing exact names into a single string
-- **Organized into labeled sections**: Text Formatting, Highlight, Heading (with H1–H6 styling), Blockquote, Structure, Lists, Image, YouTube, Link, Table, Menus, Editor Behavior, Hard Break, Mention, Unique ID, Preserve Attributes
-- **Toggle-only extensions grouped compactly** — simple extensions (Bold, Italic, Strike, Underline, Code, Font Family, Color) share the "Text Formatting" header; Horizontal Rule and Code Block share "Structure"; Text Align, Dropcursor, Gapcursor, and History share "Editor Behavior"
-- **Extensions with config fields** get their own container with related settings nested below the toggle (e.g., Table toggle + cell padding, border, colors; Link toggle + link colors/CSS; Heading toggle + heading levels + H1–H6 styling)
-
-#### Documentation added to all extension toggles
-Every extension toggle now has documentation explaining what the extension does, how users interact with it (keyboard shortcuts, markdown shortcuts), and relevant notes (e.g., History auto-disables during collaboration).
-
-#### Code cleanup
-- Removed legacy `properties.nodes` string parsing and `instance.data.active_nodes` array
-- Extension checks in `initialize.js` now use direct property access (`properties.ext_bold`) instead of `active_nodes.includes("Bold")`
-- All 28 action files updated from `instance.data.active_nodes.includes("X")` to `instance.data.ext.x`
-- Extension states stored in `instance.data.ext` object for clean action file access
-
-### 🎨 CSS Override Fields Cleanup
-
-All advanced CSS override fields have been renamed, documented, and converted from large textareas to compact single-line inputs.
-
-#### Renamed fields (19 total)
-| Before | After |
-|--------|-------|
-| `h1_adv` – `h6_adv` | **H1 CSS override** – **H6 CSS override** |
-| `p_adv` | **Paragraph CSS override** |
-| `Image properties` | **Image CSS override** |
-| `YouTube` (duplicate name) | **YouTube CSS override** |
-| `Blockquote styling` | **Blockquote CSS override** |
-| `Highlight CSS` | **Highlight CSS override** |
-| `Bullet lists CSS` | **Bullet list CSS override** |
-| `Number list CSS` | **Ordered list CSS override** |
-| `link_adv`, `link_unvisited_adv`, etc. | **Link CSS override**, **Unvisited link CSS override**, etc. |
-| `CSS for base div // override` | **Base div CSS override** |
-
-#### All CSS override fields now:
-- Use **compact single-line inputs** (`long_text: false`) instead of large textareas, de-emphasizing them as advanced options
-- Have **clear documentation** explaining they inject raw CSS, that they override preceding properties (size, color, weight, etc.), include an example, and suggest using `arbitrary text` for more room
-
-### 📝 Preserve Attributes Fields Renamed
-
-| Before | After |
-|--------|-------|
-| `preserve_attributes` | **Preserve HTML attributes** |
-| `preserved_attributes` | **Preserved attributes (read-only)** |
-| `preserve_unknown_ta...` (truncated) | **Preserve unknown HTML tags** |
-
-All three fields now have documentation explaining what they do, how they relate to each other, and which HTML elements/attributes are affected.
-
-### 🗂️ Field Layout Reorganization
-
-The entire property panel has been reorganized into a clean hierarchy:
-- **Ranks 0–7**: General config (content, editable, delay, file uploads)
-- **Ranks 10–13**: Stylesheet (paragraph, base div CSS)
-- **Ranks 20–146**: Extensions (all toggles + related config)
-- **Ranks 200–210**: Collaboration
-- **Rank 220**: Debug mode
-
----
-
 ## v4.0.0
 
 ### ⚡ Tiptap v3 Upgrade
@@ -141,6 +77,47 @@ The server-side JWT action has been completely rewritten and renamed.
 - **`getSelection` fixed**: The `selectedHTML` state now uses `generateHTML` from the `window.tiptap` namespace with the editor's actual extensions, producing correct HTML output
 - **CSS loading condition**: Fixed a condition where editor styles weren't applied correctly
 - **Debounce timeout cleared on programmatic updates**: Prevents stale debounced writes from overwriting programmatic content changes
+
+### 🔧 Extensions Refactor
+
+The old error-prone comma-separated list of extension names has been replaced with individual yes/no toggles for each extension. Each toggle is organized into its own labeled section, making extensions easy to discover, toggle on/off, and control dynamically with Bubble expressions.
+
+- **29 individual yes/no toggles** replace the old text field where you had to type exact extension names
+- **Organized into sections** — Text Formatting, Highlight, Heading (with H1–H6 styling), Blockquote, Structure, Lists, Image, YouTube, Link, Table, Menus, Editor Behavior, Hard Break, Mention, Unique ID, Preserve Attributes
+- **Extensions with settings** have their related options grouped directly below the toggle (e.g., Table toggle + cell padding, border colors; Link toggle + link colors/CSS; Heading toggle + heading levels + H1–H6 styling)
+- **Every toggle has documentation** explaining what the extension does, how to use it, and relevant keyboard/markdown shortcuts
+
+### 🎨 CSS Override Fields Cleanup
+
+All advanced CSS override fields have been renamed, documented, and converted from large textareas to compact single-line inputs.
+
+| Before | After |
+|--------|-------|
+| `h1_adv` – `h6_adv` | **H1 CSS override** – **H6 CSS override** |
+| `p_adv` | **Paragraph CSS override** |
+| `Image properties` | **Image CSS override** |
+| `YouTube` (duplicate name) | **YouTube CSS override** |
+| `Blockquote styling` | **Blockquote CSS override** |
+| `Highlight CSS` | **Highlight CSS override** |
+| `Bullet lists CSS` / `Number list CSS` | **Bullet list CSS override** / **Ordered list CSS override** |
+| `link_adv`, `link_unvisited_adv`, etc. | **Link CSS override**, **Unvisited link CSS override**, etc. |
+| `CSS for base div // override` | **Base div CSS override** |
+
+All CSS override fields now use compact inputs (use `arbitrary text` for more room), and have documentation explaining that they inject raw CSS that overrides the preceding settings (size, color, weight, etc.).
+
+### 📝 Preserve Attributes Fields Renamed
+
+| Before | After |
+|--------|-------|
+| `preserve_attributes` | **Preserve HTML attributes** |
+| `preserved_attributes` | **Preserved attributes (read-only)** |
+| `preserve_unknown_ta...` (truncated) | **Preserve unknown HTML tags** |
+
+All three fields now have documentation explaining what they do and how they relate to each other.
+
+### 🗂️ Property Panel Reorganization
+
+The entire property panel has been reorganized into a clean hierarchy: General config → Stylesheet → Extensions (with toggles + related settings) → Collaboration → Debug mode.
 
 ### 🧹 Cleanup
 
