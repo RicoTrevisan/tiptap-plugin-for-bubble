@@ -741,12 +741,13 @@
       "rank": 59
     },
     "AGM": {
-      "caption": "preserve_attributes",
+      "caption": "Preserve HTML attributes",
       "default_val": true,
       "editor": "DynamicValue",
       "name": "preserve_attributes",
       "rank": 136,
-      "value": "boolean"
+      "value": "boolean",
+      "doc": "When enabled, the editor preserves class, style, id, and data-* attributes on HTML elements when parsing and rendering content. This is useful when your content comes from an external source and you want to keep its original styling and structure intact. Applies to block nodes (paragraphs, headings, blockquotes, tables, etc.) and inline marks (bold, italic, strike, code, links)."
     },
     "AEB": {
       "caption": "𝗖𝗢𝗟𝗟𝗔𝗕𝗢𝗥𝗔𝗧𝗜𝗢𝗡",
@@ -1344,12 +1345,13 @@
       "value": "boolean"
     },
     "AGN": {
-      "caption": "preserved_attributes",
+      "caption": "Preserved attributes (read-only)",
       "default_val": "class,style,id,data-*",
       "editor": "DynamicValue",
       "name": "preserved_attributes",
       "rank": 137,
-      "value": "text"
+      "value": "text",
+      "doc": "Shows which HTML attributes are preserved when the setting above is enabled. Currently hardcoded to: class, style, id, and data-* attributes. This field is informational — the preserved attributes are defined in the extension code."
     },
     "ADt": {
       "caption": "Paragraph CSS override",
@@ -1586,12 +1588,13 @@
       "value": "text"
     },
     "AGO": {
-      "caption": "preserve_unknown_tags",
+      "caption": "Preserve unknown HTML tags",
       "default_val": true,
       "editor": "DynamicValue",
       "name": "preserve_unknown_tags",
       "rank": 138,
-      "value": "boolean"
+      "value": "boolean",
+      "doc": "When enabled (and \"Preserve HTML attributes\" is also on), the editor will recognize <div> elements in your HTML content instead of stripping them. Useful when your content contains custom layouts or structures wrapped in divs. Without this, any <div> tags in the input HTML would be ignored."
     },
     "ext_blockquote": {
       "caption": "Blockquote",
