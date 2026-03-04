@@ -130,6 +130,90 @@ try {
         instance.triggerEvent("collab_status_changed");
     };
 
+    // ── Collab auth-failure retry mechanism ──────────────────
+    // When authentication fails (e.g. JWT not yet valid on server), tear down
+    // the editor + provider and let the next update() cycle re-create everything.
+    instance.data._collabRetryCount = 0;
+    const COLLAB_MAX_RETRIES = 5;
+    const COLLAB_RETRY_DELAYS = [1000, 2000, 4000, 8000, 16000]; // exponential backoff
+
+    instance.data.handleCollabAuthFailure = function (providerLabel, reason) {
+        instance.data._collabRetryCount++;
+        const attempt = instance.data._collabRetryCount;
+        const message =
+            providerLabel +
+            " authentication failed (attempt " +
+            attempt +
+            "/" +
+            COLLAB_MAX_RETRIES +
+            "): " +
+            reason;
+        instance.data.debug(message);
+        console.warn("[Tiptap]", message);
+
+        if (attempt >= COLLAB_MAX_RETRIES) {
+            const giveUpMsg =
+                providerLabel +
+                " authentication failed after " +
+                COLLAB_MAX_RETRIES +
+                " attempts. Giving up. Please check your JWT token configuration.";
+            instance.data.debug(giveUpMsg);
+            context.reportDebugger(giveUpMsg);
+            return;
+        }
+
+        // Clear the collab sync polling interval (set in onCreate)
+        if (instance.data._collabSyncPollInterval) {
+            clearInterval(instance.data._collabSyncPollInterval);
+            instance.data._collabSyncPollInterval = null;
+        }
+
+        // Tear down provider
+        if (instance.data.provider) {
+            try {
+                instance.data.provider.destroy();
+            } catch (e) {
+                instance.data.debug("error destroying provider during auth retry:", e);
+            }
+            instance.data.provider = null;
+        }
+
+        // Tear down editor
+        if (instance.data.editor) {
+            try {
+                instance.data.editor.destroy();
+            } catch (e) {
+                instance.data.debug("error destroying editor during auth retry:", e);
+            }
+            instance.data.editor = null;
+        }
+
+        // Remove the editor DOM element so setupEditor can recreate it
+        const editorEl = document.getElementById(instance.data.tiptapEditorID);
+        if (editorEl) editorEl.remove();
+
+        // Reset flags so the next update() cycle re-runs setupEditor
+        instance.data.isEditorSetup = false;
+        instance.data.editor_is_ready = false;
+        instance.publishState("is_ready", false);
+        instance.publishState("collab_synced", false);
+        instance.data.publishCollabStatus("disconnected");
+
+        // Schedule a re-trigger after a backoff delay.
+        // We call setupEditor directly because publishState does not trigger update() in Bubble.
+        const delay = COLLAB_RETRY_DELAYS[attempt - 1] || COLLAB_RETRY_DELAYS[COLLAB_RETRY_DELAYS.length - 1];
+        instance.data.debug("scheduling collab retry in " + delay + "ms");
+        instance.data._collabRetryPending = true;
+        instance.data._collabRetryTimer = setTimeout(() => {
+            instance.data._collabRetryPending = false;
+            instance.data.debug("collab retry timer fired — re-running setupEditor");
+            instance.data.publishCollabStatus("retrying");
+            if (instance.data._lastProperties && instance.data._lastContext) {
+                instance.data.setupEditor(instance.data._lastProperties, instance.data._lastContext);
+            }
+        }, delay);
+    };
+
     function maybeSetupCollaboration(instance, properties, options, extensions) {
         if (properties.collab_active === false) return;
         instance.data.debug("collaboration is active, provider:", properties.collabProvider);
@@ -183,10 +267,10 @@ try {
                 },
                 onAuthenticated() {
                     instance.data.debug("custom collab authenticated");
+                    instance.data._collabRetryCount = 0; // reset on success
                 },
                 onAuthenticationFailed: ({ reason }) => {
-                    instance.data.debug("custom collab authentication failed:", reason);
-                    context.reportDebugger("Custom collab authentication failed: " + reason);
+                    instance.data.handleCollabAuthFailure("Custom collab", reason);
                 },
                 onSynced: () => {
                     instance.data.debug("custom collab synced");
@@ -251,10 +335,10 @@ try {
                 },
                 onAuthenticated: () => {
                     instance.data.debug("Tiptap Cloud authenticated");
+                    instance.data._collabRetryCount = 0; // reset on success
                 },
                 onAuthenticationFailed: ({ reason }) => {
-                    instance.data.debug("Tiptap Cloud authentication failed:", reason);
-                    context.reportDebugger("Tiptap Cloud authentication failed: " + reason);
+                    instance.data.handleCollabAuthFailure("Tiptap Cloud", reason);
                 },
                 onStatus: ({ status }) => {
                     instance.data.publishCollabStatus(status);
@@ -576,6 +660,60 @@ instance.data.rgbToHex = function (colorString) {
     return hex;
 };
 
+// Publish all formatting-related active states for the current cursor/selection.
+// Called from both onTransaction and onSelectionUpdate to avoid duplication.
+function publishActiveStates(editor) {
+    instance.publishState("bold", editor.isActive("bold"));
+    instance.publishState("italic", editor.isActive("italic"));
+    instance.publishState("strike", editor.isActive("strike"));
+    instance.publishState("h1", editor.isActive("heading", { level: 1 }));
+    instance.publishState("h2", editor.isActive("heading", { level: 2 }));
+    instance.publishState("h3", editor.isActive("heading", { level: 3 }));
+    instance.publishState("h4", editor.isActive("heading", { level: 4 }));
+    instance.publishState("h5", editor.isActive("heading", { level: 5 }));
+    instance.publishState("h6", editor.isActive("heading", { level: 6 }));
+    instance.publishState("body", !editor.isActive("heading"));
+    instance.publishState("orderedList", editor.isActive("orderedList"));
+    instance.publishState("bulletList", editor.isActive("bulletList"));
+    instance.publishState("sinkListItem", editor.can().sinkListItem("listItem"));
+    instance.publishState("liftListItem", editor.can().liftListItem("listItem"));
+    instance.publishState("blockquote", editor.isActive("blockquote"));
+    instance.publishState("codeBlock", editor.isActive("codeBlock"));
+    instance.publishState("taskList", editor.isActive("taskList"));
+    instance.publishState("taskItem", editor.isActive("taskItem"));
+    instance.publishState("link", editor.isActive("link"));
+    instance.publishState("url", editor.getAttributes("link").href);
+    instance.publishState("align_left", editor.isActive({ textAlign: "left" }));
+    instance.publishState("align_center", editor.isActive({ textAlign: "center" }));
+    instance.publishState("align_right", editor.isActive({ textAlign: "right" }));
+    instance.publishState("align_justified", editor.isActive({ textAlign: "justify" }));
+    instance.publishState("highlight", editor.isActive("highlight"));
+    instance.publishState("underline", editor.isActive("underline"));
+    instance.publishState("table", editor.isActive("table"));
+
+    const textStyle = editor.getAttributes("textStyle");
+    if (textStyle && textStyle.color) {
+        const color = textStyle.color;
+        try {
+            const hexColor = instance.data.rgbToHex(color);
+            instance.data.textStyleColor = hexColor;
+        } catch (error) {
+            console.warn(`Failed to convert color to hex: ${color}`, error);
+            instance.data.textStyleColor = color; // Fallback to original color value
+        }
+    } else {
+        instance.data.textStyleColor = "";
+    }
+    instance.publishState("color", instance.data.textStyleColor);
+
+    if (textStyle && textStyle.fontFamily) {
+        instance.publishState("font_family", textStyle.fontFamily);
+    } else {
+        instance.publishState("font_family", "");
+    }
+}
+instance.data.publishActiveStates = publishActiveStates;
+
 function findParentBlock(state, pos) {
     const $pos = state.doc.resolve(pos);
     for (let depth = $pos.depth; depth > 0; depth--) {
@@ -588,7 +726,7 @@ function findParentBlock(state, pos) {
 }
 instance.data.findParentBlock = findParentBlock;
 
-function getSelection(editor, properties) {
+function getSelection(editor) {
     const { state, view } = editor;
     const { from, to } = view.state.selection;
     const text = state.doc.textBetween(from, to, "");
@@ -630,8 +768,8 @@ function getSelection(editor, properties) {
         const selectedJSON = selectedNode.toJSON();
         const content = selectedJSON.content;
 
-        // Get configured extensions
-        const extensions = instance.data.getConfiguredExtensions(instance, properties);
+        // Use the same extensions the editor was built with
+        const extensions = instance.data.editorExtensions;
 
         // Generate HTML from the JSON using the utility function
         let selectedHTML = window.tiptap.generateHTML({ type: "doc", content: content }, extensions);
@@ -649,77 +787,93 @@ function getSelection(editor, properties) {
         console.error("Error generating JSON or HTML:", error);
     }
 }
-
 instance.data.getSelection = getSelection;
 
-function getConfiguredExtensions(instance, properties) {
-    // pull the libraries from window.tiptap
+// ─────────────────────────────────────────────────────────────
+// setupEditor — called once from update.js on first property load
+// ─────────────────────────────────────────────────────────────
+instance.data.setupEditor = function (properties, context) {
+    instance.data.debug("starting editor setup");
+
+    let initialContent = properties.bubble.auto_binding() ? properties.autobinding : properties.initialContent;
+    instance.data.initialContent = initialContent;
+    let content = properties.content_is_json ? JSON.parse(initialContent) : initialContent;
+
+    let placeholder = properties.placeholder;
+    let bubbleMenu = properties.bubbleMenu;
+    let floatingMenu = properties.floatingMenu;
+
+    let preserveWhitespace =
+        properties.parseOptions_preserveWhitespace === "true" ? true : properties.parseOptions_preserveWhitespace === "false" ? false : "full";
+
+    // create the editor div
+    const randomId = (Math.random() + 1).toString(36).substring(3);
+    instance.data.randomId = randomId;
+    var d = document.createElement("div");
+    d.id = "tiptapEditor-" + randomId;
+    d.style = "flex-grow: 1; display: flex;";
+    instance.data.tiptapEditorID = d.id;
+    instance.canvas.append(d);
+
+    // pull libraries from window.tiptap
     const {
-        // Core
         Editor,
         Node,
         Extension,
         mergeAttributes,
-        generateHTML,
-
-        // Basic nodes
         Document,
         HardBreak,
         Paragraph,
         Text,
-
-        // Formatting
         Bold,
         Italic,
         Strike,
         Underline,
         Code,
-
-        // Block elements
         Heading,
         Blockquote,
         CodeBlock,
         HorizontalRule,
-
-        // Lists
         BulletList,
         OrderedList,
         ListItem,
         TaskList,
         TaskItem,
-
-        // Advanced
+        FontFamily,
+        Color,
+        TextStyle,
+        TextAlign,
+        Highlight,
         Image,
+        Resizable,
         Link,
         Youtube,
         Table,
         TableRow,
         TableHeader,
         TableCell,
-
-        // Styling
-        FontFamily,
-        Color,
-        TextStyle,
-        TextAlign,
-        Highlight,
-
-        // Interaction
-        BubbleMenu,
-        FloatingMenu,
         Mention,
-
-        // Utilities
         CharacterCount,
         Dropcursor,
         Gapcursor,
         UndoRedo,
         Placeholder,
+        BubbleMenu,
+        FloatingMenu,
         FileHandler,
         UniqueID,
     } = window.tiptap;
 
+    // parse heading levels
+    instance.data.headings = [];
+    properties.headings.split(",").map((item) => {
+        instance.data.headings.push(parseInt(item));
+    });
+
     instance.data.active_nodes = properties.nodes.split(",").map((item) => item.trim());
+    instance.data.debug("active nodes:", instance.data.active_nodes.join(", "));
+
+    // ── Build extensions ─────────────────────────────────────
 
     const extensions = [
         Document,
@@ -732,36 +886,562 @@ function getConfiguredExtensions(instance, properties) {
         }),
     ];
 
+    if (properties.extension_uniqueid) {
+        if (!properties.extension_uniqueid_types) {
+            context.reportDebugger("UniqueID extension is active but the types are empty. You could target `paragraph, heading`, for example.");
+            return;
+        }
+        let unique_id_types = properties.extension_uniqueid_types.split(",").map((item) => {
+            return item.trim();
+        });
+
+        if (unique_id_types.length === 0) {
+            context.reportDebugger(
+                "UniqueID extension is active but there are no types for it to target. You could target `paragraph, heading`, for example.",
+            );
+            return;
+        }
+
+        let attributeName = properties.extension_uniqueid_attrName || "id";
+        instance.data.debug("UniqueID attributeName:", attributeName);
+
+        extensions.push(
+            UniqueID.configure({
+                types: unique_id_types,
+                attributeName: attributeName,
+            }),
+        );
+    }
+
     if (instance.data.active_nodes.includes("Dropcursor")) extensions.push(Dropcursor);
     if (instance.data.active_nodes.includes("Gapcursor")) extensions.push(Gapcursor);
-    if (instance.data.active_nodes.includes("HardBreak")) extensions.push(HardBreak);
-    if (instance.data.active_nodes.includes("History")) extensions.push(UndoRedo);
+    if (instance.data.active_nodes.includes("HardBreak")) {
+        extensions.push(HardBreak.configure({ keepMarks: properties.hardBreakKeepMarks }));
+    }
+    if (instance.data.active_nodes.includes("History") && !properties.collab_active) extensions.push(UndoRedo);
     if (instance.data.active_nodes.includes("Bold")) extensions.push(Bold);
     if (instance.data.active_nodes.includes("Italic")) extensions.push(Italic);
     if (instance.data.active_nodes.includes("Strike")) extensions.push(Strike);
     if (instance.data.active_nodes.includes("FontFamily")) extensions.push(FontFamily);
     if (instance.data.active_nodes.includes("Color")) extensions.push(Color);
-    if (instance.data.active_nodes.includes("Heading")) extensions.push(Heading);
+    if (instance.data.active_nodes.includes("Heading")) extensions.push(Heading.configure({ levels: instance.data.headings }));
     if (instance.data.active_nodes.includes("BulletList")) extensions.push(BulletList);
     if (instance.data.active_nodes.includes("OrderedList")) extensions.push(OrderedList);
-    if (instance.data.active_nodes.includes("TaskList")) {
-        extensions.push(TaskList, TaskItem);
+    if (instance.data.active_nodes.includes("TaskList")) extensions.push(TaskList, TaskItem.configure({ nested: true }));
+
+    if (instance.data.active_nodes.includes("Mention")) {
+        if (!properties.mention_list) {
+            instance.data.debug("tried to use Mention extension, but mention_list is empty. Mention extension not loaded");
+        } else {
+            const suggestion_config = instance.data.configureSuggestion(instance, properties);
+            extensions.push(
+                Mention.configure({
+                    HTMLAttributes: {
+                        class: "mention",
+                    },
+                    renderHTML({ options, node }) {
+                        return [
+                            "a",
+                            mergeAttributes({ href: `${properties.mention_base_url}${node.attrs.id}` }, options.HTMLAttributes),
+                            `${options.suggestion.char}${node.attrs.label ?? node.attrs.id}`,
+                        ];
+                    },
+                    deleteTriggerWithBackspace: true,
+                    suggestion: suggestion_config,
+                }),
+            );
+        }
     }
+
     if (instance.data.active_nodes.includes("Highlight")) extensions.push(Highlight);
     if (instance.data.active_nodes.includes("Underline")) extensions.push(Underline);
     if (instance.data.active_nodes.includes("CodeBlock")) extensions.push(CodeBlock);
     if (instance.data.active_nodes.includes("Code")) extensions.push(Code);
     if (instance.data.active_nodes.includes("Blockquote")) extensions.push(Blockquote);
     if (instance.data.active_nodes.includes("HorizontalRule")) extensions.push(HorizontalRule);
-    if (instance.data.active_nodes.includes("Youtube")) extensions.push(Youtube);
-    if (instance.data.active_nodes.includes("Table")) {
-        extensions.push(Table, TableRow, TableHeader, TableCell);
+    if (instance.data.active_nodes.includes("Youtube")) extensions.push(Youtube.configure({ nocookie: true }));
+    if (instance.data.active_nodes.includes("Table")) extensions.push(Table.configure({ resizable: true }), TableRow, TableHeader, TableCell);
+    if (instance.data.active_nodes.includes("Image")) {
+        extensions.push(Image.configure({ inline: false, allowBase64: properties.allowBase64 }), Resizable);
     }
-    if (instance.data.active_nodes.includes("Image")) extensions.push(Image);
     if (instance.data.active_nodes.includes("Link")) extensions.push(Link);
-    if (instance.data.active_nodes.includes("Placeholder")) extensions.push(Placeholder);
-    if (instance.data.active_nodes.includes("TextAlign")) extensions.push(TextAlign);
+    if (instance.data.active_nodes.includes("Placeholder")) extensions.push(Placeholder.configure({ placeholder: placeholder }));
+    if (instance.data.active_nodes.includes("TextAlign")) extensions.push(TextAlign.configure({ types: ["heading", "paragraph"] }));
 
-    return extensions;
-}
-instance.data.getConfiguredExtensions = getConfiguredExtensions;
+    // ── PreserveAttributes extension ─────────────────────────
+
+    const PreserveAttributes = Extension.create({
+        name: "preserveAttributes",
+
+        addGlobalAttributes() {
+            return [
+                {
+                    // Apply to all block nodes
+                    types: ["paragraph", "heading", "blockquote", "codeBlock", "listItem", "table", "tableRow", "tableCell", "tableHeader"],
+                    attributes: {
+                        class: {
+                            default: null,
+                            parseHTML: (element) => element.getAttribute("class"),
+                            renderHTML: (attributes) => {
+                                if (!attributes.class) return {};
+                                return { class: attributes.class };
+                            },
+                        },
+                        style: {
+                            default: null,
+                            parseHTML: (element) => element.getAttribute("style"),
+                            renderHTML: (attributes) => {
+                                if (!attributes.style) return {};
+                                return { style: attributes.style };
+                            },
+                        },
+                        id: {
+                            default: null,
+                            parseHTML: (element) => element.getAttribute("id"),
+                            renderHTML: (attributes) => {
+                                if (!attributes.id) return {};
+                                return { id: attributes.id };
+                            },
+                        },
+                        "data-attributes": {
+                            default: null,
+                            parseHTML: (element) => {
+                                const dataAttrs = {};
+                                Array.from(element.attributes).forEach((attr) => {
+                                    if (attr.name.startsWith("data-")) {
+                                        dataAttrs[attr.name] = attr.value;
+                                    }
+                                });
+                                return Object.keys(dataAttrs).length ? dataAttrs : null;
+                            },
+                            renderHTML: (attributes) => {
+                                if (!attributes["data-attributes"]) return {};
+                                return attributes["data-attributes"];
+                            },
+                        },
+                    },
+                },
+                {
+                    // Apply to inline marks
+                    types: ["bold", "italic", "strike", "code", "link"],
+                    attributes: {
+                        class: {
+                            default: null,
+                            parseHTML: (element) => element.getAttribute("class"),
+                            renderHTML: (attributes) => {
+                                if (!attributes.class) return {};
+                                return { class: attributes.class };
+                            },
+                        },
+                        style: {
+                            default: null,
+                            parseHTML: (element) => element.getAttribute("style"),
+                            renderHTML: (attributes) => {
+                                if (!attributes.style) return {};
+                                return { style: attributes.style };
+                            },
+                        },
+                    },
+                },
+            ];
+        },
+    });
+
+    // ── CustomDiv extension ──────────────────────────────────
+
+    const CustomDivExtension = Node.create({
+        name: "customDiv",
+        group: "block",
+        content: "block*",
+        defining: true,
+
+        addAttributes() {
+            return {
+                class: {
+                    default: null,
+                    parseHTML: (element) => element.getAttribute("class"),
+                },
+                style: {
+                    default: null,
+                    parseHTML: (element) => element.getAttribute("style"),
+                },
+                id: {
+                    default: null,
+                    parseHTML: (element) => element.getAttribute("id"),
+                },
+                "data-attributes": {
+                    default: null,
+                    parseHTML: (element) => {
+                        const dataAttrs = {};
+                        Array.from(element.attributes).forEach((attr) => {
+                            if (attr.name.startsWith("data-")) {
+                                dataAttrs[attr.name] = attr.value;
+                            }
+                        });
+                        return Object.keys(dataAttrs).length ? dataAttrs : null;
+                    },
+                },
+            };
+        },
+
+        parseHTML() {
+            return [{ tag: "div" }];
+        },
+
+        renderHTML({ node, HTMLAttributes }) {
+            const attrs = { ...node.attrs };
+
+            // Merge data attributes
+            if (attrs["data-attributes"]) {
+                Object.assign(attrs, attrs["data-attributes"]);
+                delete attrs["data-attributes"];
+            }
+
+            // Remove null/undefined attributes
+            Object.keys(attrs).forEach((key) => {
+                if (attrs[key] === null || attrs[key] === undefined) {
+                    delete attrs[key];
+                }
+            });
+
+            return ["div", { ...attrs, ...HTMLAttributes }, 0];
+        },
+    });
+
+    if (properties.preserve_attributes) {
+        extensions.push(PreserveAttributes);
+
+        if (properties.preserve_unknown_tags) {
+            // Add custom div support
+            extensions.push(CustomDivExtension);
+        }
+    }
+
+    // ── File upload handling ─────────────────────────────────
+
+    function handleUpload(file, editor, pos) {
+        const attachFilesTo = properties.attachFilesTo || null;
+        return new Promise((resolve, reject) => {
+            if (!instance.canUploadFile(file)) {
+                const message = "Not allowed to upload this file";
+                context.reportDebugger(message);
+                instance.publishState("fileUploadErrorMessage", message);
+                reject(new Error(message));
+                return;
+            }
+            if (!properties.attachFilesTo) {
+                context.reportDebugger(
+                    "Uploading a file, but there's no object to attach to. This file could be accessible by anyone. Consider the privacy implications.",
+                );
+            }
+
+            instance.publishState("fileUploadProgress", 0);
+            const uploadedFile = instance.uploadFile(
+                file,
+                (err, url) => {
+                    if (err) {
+                        context.reportDebugger(err.message);
+                        instance.publishState("fileUploadErrorMessage", err.message);
+                        reject(err);
+                        return;
+                    }
+
+                    if (file.type.startsWith("image/")) {
+                        // Insert at the drop position
+                        if (pos) {
+                            editor.commands.insertContentAt(pos, {
+                                type: "image",
+                                attrs: { src: url },
+                            });
+                        } else {
+                            // Fallback to regular image insertion if no position specified
+                            editor.commands.setImage({ src: url });
+                        }
+                    }
+                    instance.data.fileUploadUrls.push(url);
+                    instance.triggerEvent("fileUploaded");
+                    instance.publishState("fileUploadUrls", instance.data.fileUploadUrls);
+                    resolve(url);
+                },
+                properties.attachFilesTo,
+                (progress) => {
+                    instance.publishState("fileUploadProgress", progress);
+                },
+            );
+        });
+    }
+
+    let allowedMimeTypes = undefined;
+    if (properties.allowedMimeTypes) {
+        allowedMimeTypes = properties.allowedMimeTypes.get(0, properties.allowedMimeTypes.length());
+    }
+
+    extensions.push(
+        FileHandler.configure({
+            onDrop: async (editor, files, pos) => {
+                instance.data.fileUploadUrls = [];
+                try {
+                    const uploadPromises = Array.from(files).map((file) => handleUpload(file, editor, pos));
+
+                    // Wait for all uploads to complete
+                    const urls = await Promise.all(uploadPromises);
+                    instance.data.debug("file upload URLs:", urls);
+                    instance.publishState("fileUploadUrls", urls);
+                } catch (error) {
+                    instance.triggerEvent("fileUploadError");
+                    console.error("Upload error:", error);
+                    context.reportDebugger(error.message);
+                    instance.publishState("fileUploadErrorMessage", error.message);
+                }
+            },
+
+            onPaste: async (editor, files, htmlContent) => {
+                instance.data.fileUploadUrls = [];
+                if (htmlContent) return;
+                try {
+                    const uploadPromises = Array.from(files).map((file) => handleUpload(file, editor));
+
+                    // Wait for all uploads to complete
+                    const urls = await Promise.all(uploadPromises);
+                    instance.publishState("fileUploadUrls", urls);
+                } catch (error) {
+                    instance.triggerEvent("fileUploadError");
+                    console.error("Upload error:", error);
+                    context.reportDebugger(error.message);
+                    instance.publishState("fileUploadErrorMessage", error.message);
+                }
+            },
+            allowedMimeTypes: allowedMimeTypes,
+        }),
+    );
+
+    // Store extensions for use by getSelection's generateHTML
+    instance.data.editorExtensions = extensions;
+
+    // ── Parse options ────────────────────────────────────────
+
+    const parseOptions = {
+        preserveWhitespace: preserveWhitespace,
+    };
+
+    // If attribute preservation is enabled, add custom parsing
+    if (properties.preserve_html_attributes) {
+        parseOptions.transformPastedHTML = (html) => {
+            // Pre-process HTML to ensure better attribute preservation
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+
+            // Find all div elements and ensure they're properly structured
+            const divs = doc.querySelectorAll("div");
+            divs.forEach((div) => {
+                // Mark divs for preservation
+                if (div.hasAttribute("style") || div.hasAttribute("class")) {
+                    div.setAttribute("data-preserve-div", "true");
+                }
+            });
+
+            return doc.body.innerHTML;
+        };
+    }
+
+    // ── Editor options & callbacks ───────────────────────────
+
+    const options = {
+        element: d,
+        editable: properties.isEditable,
+        content: content,
+        extensions: extensions,
+        parseOptions: parseOptions,
+        injectCSS: true,
+        onCreate({ editor }) {
+            instance.data.debug("editor created and ready");
+            instance.data.editor_is_ready = true;
+            instance.triggerEvent("is_ready");
+            instance.publishState("is_ready", true);
+
+            instance.publishState("contentHTML", editor.getHTML());
+            instance.publishState("contentText", editor.getText());
+            instance.publishState("contentJSON", JSON.stringify(instance.data.editor.getJSON()));
+            instance.publishState("isEditable", editor.isEditable);
+            instance.publishState("is_empty", editor.isEmpty);
+            instance.publishState("can_undo", editor.can().undo());
+            instance.publishState("can_redo", editor.can().redo());
+            if (instance.data.active_nodes.includes("CharacterCount")) {
+                instance.publishState("characterCount", editor.storage.characterCount.characters());
+                instance.publishState("wordCount", editor.storage.characterCount.words());
+            }
+
+            // If collaboration is active, try to set initial content
+            if (properties.collab_active && instance.data.maybeSetCollabInitialContent) {
+                // Try immediately (in case provider already synced)
+                instance.data.maybeSetCollabInitialContent();
+
+                // Poll as a fallback — onSynced may not fire reliably in all providers
+                if (instance.data.provider && !instance.data.collabInitialContentSet) {
+                    let pollAttempts = 0;
+                    const maxAttempts = 50; // 50 * 200ms = 10 seconds
+                    instance.data._collabSyncPollInterval = setInterval(() => {
+                        pollAttempts++;
+                        // Safety: stop polling if provider was destroyed (e.g. auth retry teardown)
+                        if (!instance.data.provider) {
+                            clearInterval(instance.data._collabSyncPollInterval);
+                            instance.data._collabSyncPollInterval = null;
+                            return;
+                        }
+                        const providerSynced = instance.data.provider.synced || instance.data.provider.isSynced;
+                        if (providerSynced && !instance.data.collabHasSynced) {
+                            instance.data.debug("collab sync detected via polling");
+                            instance.data.collabHasSynced = true;
+                            instance.publishState("collab_synced", true);
+                            instance.triggerEvent("collab_synced");
+                        }
+                        if (instance.data.collabHasSynced) {
+                            instance.data.maybeSetCollabInitialContent();
+                        }
+                        if (instance.data.collabInitialContentSet || pollAttempts >= maxAttempts) {
+                            clearInterval(instance.data._collabSyncPollInterval);
+                            instance.data._collabSyncPollInterval = null;
+                        }
+                    }, 200);
+                }
+            }
+        },
+        onUpdate({ editor }) {
+            const contentHTML = editor.getHTML();
+            instance.publishState("contentHTML", contentHTML);
+            instance.publishState("contentText", editor.getText());
+            instance.publishState("contentJSON", JSON.stringify(editor.getJSON()));
+            instance.publishState("isEditable", editor.isEditable);
+            instance.publishState("is_empty", editor.isEmpty);
+            instance.publishState("can_undo", editor.can().undo());
+            instance.publishState("can_redo", editor.can().redo());
+            instance.publishState("characterCount", editor.storage.characterCount.characters());
+            instance.publishState("wordCount", editor.storage.characterCount.words());
+
+            if (!instance.data.isProgrammaticUpdate) {
+                instance.data.updateContent(contentHTML);
+                instance.data.isDebouncingDone = false;
+            }
+        },
+        onFocus({ editor, event }) {
+            instance.data.debug("editor focused");
+            instance.triggerEvent("isFocused");
+            instance.publishState("isFocused", true);
+            instance.data.is_focused = true;
+        },
+        onBlur({ editor, event }) {
+            instance.data.debug("editor blurred");
+            instance.triggerEvent("isntFocused");
+            instance.publishState("isFocused", false);
+            instance.data.is_focused = false;
+            instance.publishAutobinding(editor.getHTML());
+        },
+        onTransaction({ editor, transaction }) {
+            instance.data.getSelection(editor);
+            instance.data.publishActiveStates(editor);
+            instance.publishState("is_empty", editor.isEmpty);
+            instance.publishState("can_undo", editor.can().undo());
+            instance.publishState("can_redo", editor.can().redo());
+            instance.publishState("characterCount", editor.storage.characterCount.characters());
+            instance.publishState("wordCount", editor.storage.characterCount.words());
+        },
+        onSelectionUpdate({ editor }) {
+            instance.data.getSelection(editor);
+            instance.data.publishActiveStates(editor);
+        },
+    };
+
+    // ── Menu setup ───────────────────────────────────────────
+
+    const menuErrorMessage = " not found. Is the entered id correct? FYI: the Bubble element should default to visible.";
+
+    // Helper: Tiptap v3 uses Floating UI instead of tippy.js for BubbleMenu/FloatingMenu.
+    // v3 does NOT initially hide the element (isVisible starts false, so hide() is a no-op).
+    // We must hide menu elements ourselves before passing them to the extension.
+    function hideMenuElement(el) {
+        el.style.visibility = "hidden";
+        el.style.opacity = "0";
+    }
+
+    if (bubbleMenu && instance.data.active_nodes.includes("BubbleMenu")) {
+        // Find all elements with the id matching properties.bubbleMenu
+        let bubbleMenuElements = document.querySelectorAll(`#${bubbleMenu}`);
+
+        // If no elements found, log an error
+        if (bubbleMenuElements.length === 0) {
+            const errorMessage = "BubbleMenu" + menuErrorMessage;
+            context.reportDebugger(errorMessage);
+            instance.data.debug(errorMessage);
+        } else if (bubbleMenuElements.length === 1) {
+            // If only one element is found, make that the bubble menu.
+            hideMenuElement(bubbleMenuElements[0]);
+            options.extensions.push(
+                BubbleMenu.configure({
+                    element: bubbleMenuElements[0],
+                    appendTo: () => document.body,
+                }),
+            );
+        } else if (bubbleMenuElements.length >= 2) {
+            // If multiple elements found, try to find the closest and warn the developer
+            const errorMessage = `Bubble Menu: found multiple elements with the same ID ${bubbleMenu}. Assuming that the closest one is the correct one. However, the developer should update the code to ensure that the IDs are unique. Tiptap ID: ${instance.data.randomId}.`;
+            context.reportDebugger(errorMessage);
+            instance.data.debug(errorMessage);
+            let bubbleMenuDiv = instance.data.findElement(bubbleMenu);
+            hideMenuElement(bubbleMenuDiv);
+            options.extensions.push(
+                BubbleMenu.configure({
+                    element: bubbleMenuDiv,
+                    appendTo: () => document.body,
+                }),
+            );
+        }
+    }
+
+    if (floatingMenu && instance.data.active_nodes.includes("FloatingMenu")) {
+        // Find all elements with the id matching properties.floatingMenu
+        let floatingMenuElements = document.querySelectorAll(`#${floatingMenu}`);
+
+        // If no elements found, log an error
+        if (floatingMenuElements.length === 0) {
+            const errorMessage = "FloatingMenu" + menuErrorMessage;
+            context.reportDebugger(errorMessage);
+            instance.data.debug(errorMessage);
+        } else if (floatingMenuElements.length === 1) {
+            // If only one element is found, make that the floating menu.
+            hideMenuElement(floatingMenuElements[0]);
+            options.extensions.push(
+                FloatingMenu.configure({
+                    element: floatingMenuElements[0],
+                    appendTo: () => document.body,
+                }),
+            );
+        } else if (floatingMenuElements.length >= 2) {
+            // If multiple elements found, try to find the closest and warn the developer
+            const errorMessage = `Floating Menu: found multiple elements with the same ID ${floatingMenu}. Assuming that the closest one is the correct one. However, the developer should update the code to ensure that the IDs are unique. Tiptap ID: ${instance.data.randomId}.`;
+            context.reportDebugger(errorMessage);
+            instance.data.debug(errorMessage);
+            let floatingMenuDiv = instance.data.findElement(floatingMenu);
+            hideMenuElement(floatingMenuDiv);
+            options.extensions.push(
+                FloatingMenu.configure({
+                    element: floatingMenuDiv,
+                    appendTo: () => document.body,
+                }),
+            );
+        }
+    }
+
+    // ── Collaboration ────────────────────────────────────────
+
+    instance.data.maybeSetupCollaboration(instance, properties, options, extensions);
+
+    // ── Create the editor ────────────────────────────────────
+
+    try {
+        instance.data.editor = new Editor(options);
+        instance.data.isEditorSetup = true;
+        instance.data.debug("editor instance created, waiting for onCreate");
+    } catch (error) {
+        console.error("[Tiptap] failed trying to create the Editor:", error);
+    }
+};
