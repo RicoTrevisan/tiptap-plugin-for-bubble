@@ -1010,6 +1010,8 @@ function publishActiveStates(editor) {
     instance.publishState("highlight", editor.isActive("highlight"));
     instance.publishState("underline", editor.isActive("underline"));
     instance.publishState("table", editor.isActive("table"));
+    instance.publishState("subscript", editor.isActive("subscript"));
+    instance.publishState("superscript", editor.isActive("superscript"));
 
     const textStyle = editor.getAttributes("textStyle");
     if (textStyle && textStyle.color) {
@@ -1030,6 +1032,12 @@ function publishActiveStates(editor) {
         instance.publishState("font_family", textStyle.fontFamily);
     } else {
         instance.publishState("font_family", "");
+    }
+
+    if (textStyle && textStyle.fontSize) {
+        instance.publishState("font_size", textStyle.fontSize);
+    } else {
+        instance.publishState("font_size", "");
     }
 }
 instance.data.publishActiveStates = publishActiveStates;
@@ -1185,6 +1193,11 @@ instance.data.setupEditor = function (properties, context) {
         FloatingMenu,
         FileHandler,
         UniqueID,
+        Subscript,
+        Superscript,
+        Typography,
+        ListKeymap,
+        FontSize,
     } = window.tiptap;
 
     // Store extension states for action files to reference
@@ -1218,6 +1231,9 @@ instance.data.setupEditor = function (properties, context) {
         hardbreak: properties.ext_hardbreak,
         mention: properties.ext_mention,
         uniqueid: properties.ext_uniqueid,
+        subscript: properties.ext_subscript,
+        superscript: properties.ext_superscript,
+        fontsize: properties.ext_fontsize,
     };
 
     // parse heading levels
@@ -1270,7 +1286,12 @@ instance.data.setupEditor = function (properties, context) {
 
     // ── Extension toggles (each controlled by its own yes/no property) ──
 
-    if (properties.ext_dropcursor) extensions.push(Dropcursor);
+    if (properties.ext_dropcursor) {
+        const dropcursorConfig = {};
+        if (properties.dropcursor_color) dropcursorConfig.color = properties.dropcursor_color;
+        if (properties.dropcursor_width) dropcursorConfig.width = properties.dropcursor_width;
+        extensions.push(Dropcursor.configure(dropcursorConfig));
+    }
     if (properties.ext_gapcursor) extensions.push(Gapcursor);
     if (properties.ext_trailingnode) extensions.push(TrailingNode);
     if (properties.ext_focus) extensions.push(Focus.configure({ className: "has-focus", mode: properties.ext_focus_mode || "deepest" }));
@@ -1285,8 +1306,14 @@ instance.data.setupEditor = function (properties, context) {
     if (properties.ext_fontfamily) extensions.push(FontFamily);
     if (properties.ext_color) extensions.push(Color);
     if (properties.ext_heading) extensions.push(Heading.configure({ levels: instance.data.headings }));
-    if (properties.ext_bulletlist) extensions.push(BulletList);
-    if (properties.ext_orderedlist) extensions.push(OrderedList);
+    if (properties.ext_bulletlist) extensions.push(BulletList.configure({
+        keepMarks: properties.list_keepMarks || false,
+        keepAttributes: properties.list_keepAttributes || false,
+    }));
+    if (properties.ext_orderedlist) extensions.push(OrderedList.configure({
+        keepMarks: properties.list_keepMarks || false,
+        keepAttributes: properties.list_keepAttributes || false,
+    }));
     if (properties.ext_tasklist) extensions.push(TaskList, TaskItem.configure({ nested: true }));
 
     if (properties.ext_mention) {
@@ -1313,20 +1340,56 @@ instance.data.setupEditor = function (properties, context) {
         }
     }
 
-    if (properties.ext_highlight) extensions.push(Highlight);
+    if (properties.ext_highlight) extensions.push(Highlight.configure({ multicolor: properties.highlight_multicolor !== false }));
     if (properties.ext_underline) extensions.push(Underline);
-    if (properties.ext_codeblock) extensions.push(CodeBlock);
+    if (properties.ext_codeblock) extensions.push(CodeBlock.configure({
+        exitOnTripleEnter: properties.codeblock_exitOnTripleEnter !== false,
+        exitOnArrowDown: properties.codeblock_exitOnArrowDown !== false,
+        defaultLanguage: properties.codeblock_defaultLanguage || null,
+    }));
     if (properties.ext_code) extensions.push(Code);
     if (properties.ext_blockquote) extensions.push(Blockquote);
     if (properties.ext_horizontalrule) extensions.push(HorizontalRule);
-    if (properties.ext_youtube) extensions.push(Youtube.configure({ nocookie: true }));
+    if (properties.ext_youtube) extensions.push(Youtube.configure({
+        nocookie: properties.youtube_nocookie !== false,
+        allowFullscreen: properties.youtube_allowFullscreen !== false,
+        addPasteHandler: properties.youtube_addPasteHandler !== false,
+    }));
     if (properties.ext_table) extensions.push(Table.configure({ resizable: true }), TableRow, TableHeader, TableCell);
     if (properties.ext_image) {
         extensions.push(Image.configure({ inline: false, allowBase64: properties.allowBase64 }), Resizable);
     }
-    if (properties.ext_link) extensions.push(Link);
-    if (properties.ext_placeholder) extensions.push(Placeholder.configure({ placeholder: placeholder }));
+    if (properties.ext_link) {
+        const linkConfig = {
+            openOnClick: properties.link_openOnClick || false,
+            autolink: properties.link_autolink !== false,
+            linkOnPaste: properties.link_linkOnPaste !== false,
+            defaultProtocol: properties.link_defaultProtocol || "https",
+            HTMLAttributes: {},
+        };
+        if (properties.link_target) {
+            linkConfig.HTMLAttributes.target = properties.link_target;
+        }
+        if (properties.link_rel) {
+            linkConfig.HTMLAttributes.rel = properties.link_rel;
+        }
+        extensions.push(Link.configure(linkConfig));
+    }
+    if (properties.ext_placeholder) extensions.push(Placeholder.configure({
+        placeholder: placeholder,
+        showOnlyWhenEditable: properties.placeholder_showOnlyWhenEditable !== false,
+        showOnlyCurrent: properties.placeholder_showOnlyCurrent !== false,
+        includeChildren: properties.placeholder_includeChildren || false,
+    }));
     if (properties.ext_textalign) extensions.push(TextAlign.configure({ types: ["heading", "paragraph"] }));
+
+    // ── Phase 2 extensions ───────────────────────────────────
+
+    if (properties.ext_subscript) extensions.push(Subscript);
+    if (properties.ext_superscript) extensions.push(Superscript);
+    if (properties.ext_fontsize) extensions.push(FontSize);
+    if (properties.ext_typography) extensions.push(Typography);
+    if (properties.ext_listkeymap) extensions.push(ListKeymap);
 
     // ── PreserveAttributes extension ─────────────────────────
 

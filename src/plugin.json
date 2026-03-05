@@ -39,6 +39,10 @@
     "AGU": {
       "name": "dist.js",
       "url": "//meta-q.cdn.bubble.io/f1772551593920x983290223326721800/dist.js"
+    },
+    "AGV": {
+      "name": "dist.js",
+      "url": "//meta-q.cdn.bubble.io/f1772627464058x861062283770089900/dist.js"
     }
   },
   "dependencies": {
