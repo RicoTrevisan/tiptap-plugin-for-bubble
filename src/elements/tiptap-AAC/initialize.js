@@ -271,7 +271,7 @@ try {
 
         .tiptap-drag-handle {
           align-items: center;
-          background: black;
+          background: white;
           border-radius: .25rem;
           border: 1px solid rgba(0, 0, 0, 0.1);
           cursor: grab;
@@ -279,6 +279,7 @@ try {
           height: 1.5rem;
           justify-content: center;
           width: 1.5rem;
+          ${properties.draghandle_adv || ""}
         }
 
             ${properties.baseDiv || ""}
@@ -1269,6 +1270,7 @@ instance.data.setupEditor = function (properties, context) {
         DetailsContent,
         DetailsSummary,
         InvisibleCharacters,
+        DragHandle,
     } = window.tiptap;
 
     // Store extension states for action files to reference
@@ -1307,6 +1309,7 @@ instance.data.setupEditor = function (properties, context) {
         fontsize: properties.ext_fontsize,
         details: properties.ext_details,
         invisiblecharacters: properties.ext_invisiblecharacters,
+        draghandle: properties.ext_draghandle,
     };
 
     // parse heading levels
@@ -1483,6 +1486,22 @@ instance.data.setupEditor = function (properties, context) {
         extensions.push(InvisibleCharacters.configure({
             visible: properties.invisiblecharacters_visible !== false,
         }));
+    }
+    if (properties.ext_draghandle) {
+        const dragHandleConfig = {
+            render() {
+                const el = document.createElement("div");
+                el.classList.add("tiptap-drag-handle");
+                el.innerHTML = "⠿";
+                return el;
+            },
+        };
+
+        if (properties.draghandle_nested) {
+            dragHandleConfig.nested = true;
+        }
+
+        extensions.push(DragHandle.configure(dragHandleConfig));
     }
 
     // ── PreserveAttributes extension ─────────────────────────

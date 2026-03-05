@@ -4,6 +4,17 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.4.0
+
+### ✨ New Extensions
+
+- **Drag Handle** — Adds a draggable grip icon to the left of blocks (paragraphs, headings, lists, tables, etc.) on hover. Users can click and drag to reorder content visually. Includes:
+  - Extension toggle: **Drag Handle** (checkbox, default off)
+  - **Nested drag** (checkbox, default off) — when enabled, the drag handle also targets nested content like individual list items, paragraphs inside blockquotes, etc.
+  - **Drag handle CSS override** — inject custom CSS for the handle element (class: `.tiptap-drag-handle`)
+
+---
+
 ## v4.3.0
 
 ### ✨ New Extensions
