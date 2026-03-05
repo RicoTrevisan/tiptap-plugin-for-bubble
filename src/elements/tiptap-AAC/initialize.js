@@ -146,6 +146,26 @@ try {
         	${properties.blockquote_adv}
         }
 
+        hr {
+            ${properties.hr_adv || ""}
+        }
+
+        :not(pre) > code {
+            ${properties.code_adv || ""}
+        }
+
+        pre {
+            ${properties.codeblock_adv || ""}
+        }
+
+        sub {
+            ${properties.sub_adv || ""}
+        }
+
+        sup {
+            ${properties.sup_adv || ""}
+        }
+
 		ul[data-type="taskList"] {
             list-style: none;
             padding: 0;
@@ -167,6 +187,10 @@ try {
 
 		ul[data-type="taskList"] li > div {
         	flex: 1 1 auto;
+        }
+
+        ul[data-type="taskList"] li > label input[type="checkbox"] {
+            ${properties.tasklist_checkbox_adv || ""}
         }
 
 		ul:not([data-type="taskList"]) {
@@ -863,6 +887,7 @@ instance.data.MentionList = class MentionList {
 
 function configureSuggestion(instance, properties) {
     return {
+        char: properties.mention_triggerChar || "@",
         items: ({ query }) => {
             if (typeof query !== "string") {
                 // console.log("thing passed to Mention is not a string, returning. Typeof query: ", typeof query);
@@ -1346,6 +1371,8 @@ instance.data.setupEditor = function (properties, context) {
         exitOnTripleEnter: properties.codeblock_exitOnTripleEnter !== false,
         exitOnArrowDown: properties.codeblock_exitOnArrowDown !== false,
         defaultLanguage: properties.codeblock_defaultLanguage || null,
+        enableTabIndentation: properties.codeblock_tabIndentation || false,
+        tabSize: properties.codeblock_tabSize || 4,
     }));
     if (properties.ext_code) extensions.push(Code);
     if (properties.ext_blockquote) extensions.push(Blockquote);
@@ -1354,10 +1381,12 @@ instance.data.setupEditor = function (properties, context) {
         nocookie: properties.youtube_nocookie !== false,
         allowFullscreen: properties.youtube_allowFullscreen !== false,
         addPasteHandler: properties.youtube_addPasteHandler !== false,
+        width: properties.youtube_defaultWidth || 640,
+        height: properties.youtube_defaultHeight || 480,
     }));
-    if (properties.ext_table) extensions.push(Table.configure({ resizable: true }), TableRow, TableHeader, TableCell);
+    if (properties.ext_table) extensions.push(Table.configure({ resizable: true, cellMinWidth: properties.table_cellMinWidth || 25 }), TableRow, TableHeader, TableCell);
     if (properties.ext_image) {
-        extensions.push(Image.configure({ inline: false, allowBase64: properties.allowBase64 }), Resizable);
+        extensions.push(Image.configure({ inline: properties.image_inline || false, allowBase64: properties.allowBase64 }), Resizable);
     }
     if (properties.ext_link) {
         const linkConfig = {
@@ -1372,6 +1401,11 @@ instance.data.setupEditor = function (properties, context) {
         }
         if (properties.link_rel) {
             linkConfig.HTMLAttributes.rel = properties.link_rel;
+        }
+        if (properties.link_protocols) {
+            const protocols = properties.link_protocols.split(",").map(p => p.trim()).filter(Boolean)
+                .map(p => ({ scheme: p, optionalSlashes: true }));
+            if (protocols.length > 0) linkConfig.protocols = protocols;
         }
         extensions.push(Link.configure(linkConfig));
     }

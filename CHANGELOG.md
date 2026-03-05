@@ -4,6 +4,28 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.2.0
+
+### ✨ New Options on Existing Extensions
+
+- **CodeBlock: Tab indentation** — New checkbox to allow the Tab key to indent inside code blocks instead of moving focus. Includes a configurable **Tab size** (default: 4 spaces).
+- **Link: Additional protocols** — New text field to specify additional protocols to recognize as valid links (e.g. `tel`, `mailto`, `ftp`). Comma-separated.
+- **YouTube: Default width & height** — New number fields to set the default pixel dimensions for embedded YouTube videos (defaults: 640×480).
+- **Mention: Trigger character** — New text field to change the character that triggers the mention popup (default: `@`). Use `#` for hashtags, etc.
+- **Image: Inline images** — New checkbox to make images flow inline with text instead of being block-level elements.
+- **Table: Cell min width** — New number field to set the minimum column width in pixels when resizing tables (default: 25px).
+
+### 🎨 New CSS Override Fields
+
+- **Horizontal rule CSS override** — Inject custom CSS for `<hr>` elements.
+- **Inline code CSS override** — Inject custom CSS for inline `<code>` elements (does not affect code inside code blocks).
+- **Code block CSS override** — Inject custom CSS for code block (`<pre>`) elements.
+- **Subscript CSS override** — Inject custom CSS for `<sub>` elements.
+- **Superscript CSS override** — Inject custom CSS for `<sup>` elements.
+- **Task list CSS override** — Inject custom CSS for task list checkboxes.
+
+---
+
 ## v4.1.1
 
 ### 🐛 Bug Fixes

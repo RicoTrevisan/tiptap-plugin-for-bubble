@@ -482,13 +482,13 @@
       "editor": "Color",
       "in_style": true,
       "name": "table_header_font_color",
-      "rank": 117
+      "rank": 129
     },
     "h2_info": {
       "caption": "     ----- H2 styling -----",
       "editor": "Label",
       "name": "stylesheet_info",
-      "rank": 37
+      "rank": 40
     },
     "AEj": {
       "caption": "Base div CSS override",
@@ -505,7 +505,7 @@
       "caption": "----- Ordered List -----",
       "editor": "Label",
       "name": "ext_orderedlist_label",
-      "rank": 79
+      "rank": 86
     },
     "AGH": {
       "caption": "Element types",
@@ -514,7 +514,7 @@
       "editor": "DynamicValue",
       "name": "extension_uniqueid_types",
       "optional": true,
-      "rank": 163,
+      "rank": 177,
       "value": "text"
     },
     "AEX": {
@@ -525,7 +525,7 @@
       "in_style": true,
       "name": "placeholder_color",
       "optional": true,
-      "rank": 131
+      "rank": 144
     },
     "ext_codeblock": {
       "caption": "Code Block",
@@ -533,7 +533,7 @@
       "doc": "Enables fenced code blocks (multi-line code). Users can create them via toolbar or by typing ``` at the start of a line.",
       "editor": "DynamicValue",
       "name": "ext_codeblock",
-      "rank": 72,
+      "rank": 76,
       "value": "boolean"
     },
     "AFy": {
@@ -551,7 +551,7 @@
       "editor": "Color",
       "in_style": true,
       "name": "h2_color",
-      "rank": 39
+      "rank": 42
     },
     "AFK": {
       "caption": "Highlight CSS override",
@@ -560,7 +560,7 @@
       "long_text": false,
       "name": "mark_adv",
       "optional": true,
-      "rank": 27,
+      "rank": 30,
       "value": "text"
     },
     "ADy": {
@@ -570,7 +570,7 @@
       "long_text": false,
       "name": "h5_adv",
       "optional": true,
-      "rank": 60,
+      "rank": 63,
       "value": "text"
     },
     "ext_bubblemenu": {
@@ -579,7 +579,7 @@
       "doc": "Enables the bubble menu — a floating toolbar that appears when the user selects text. Provide the Bubble element ID below.",
       "editor": "DynamicValue",
       "name": "ext_bubblemenu",
-      "rank": 121,
+      "rank": 134,
       "value": "boolean"
     },
     "ext_heading": {
@@ -588,7 +588,7 @@
       "doc": "Enables heading levels (H1–H6). Configure which levels are available with the 'headings' field below. Users can set headings via toolbar or markdown shortcuts (# , ## , etc.).",
       "editor": "DynamicValue",
       "name": "ext_heading",
-      "rank": 29,
+      "rank": 32,
       "value": "boolean"
     },
     "ext_bold": {
@@ -607,13 +607,13 @@
       "editor": "Color",
       "in_style": true,
       "name": "table_zebra_background",
-      "rank": 119
+      "rank": 131
     },
     "ext_preserve_label": {
       "caption": "----- Preserve Attributes -----",
       "editor": "Label",
       "name": "ext_preserve_label",
-      "rank": 165
+      "rank": 179
     },
     "AFO": {
       "caption": "Unvisited link CSS override",
@@ -622,14 +622,14 @@
       "long_text": false,
       "name": "link_unvisited_adv",
       "optional": true,
-      "rank": 108,
+      "rank": 120,
       "value": "text"
     },
     "ext_bulletlist_label": {
       "caption": "----- Bullet List -----",
       "editor": "Label",
       "name": "ext_bulletlist_label",
-      "rank": 76
+      "rank": 83
     },
     "AGI": {
       "caption": "Attribute name",
@@ -638,7 +638,7 @@
       "editor": "DynamicValue",
       "name": "extension_uniqueid_attrName",
       "optional": true,
-      "rank": 164,
+      "rank": 178,
       "value": "text"
     },
     "h4_color": {
@@ -647,7 +647,7 @@
       "editor": "Color",
       "in_style": true,
       "name": "h4_color",
-      "rank": 51
+      "rank": 54
     },
     "AGB": {
       "caption": "Keep marks after <br>",
@@ -655,14 +655,14 @@
       "doc": "Decides if to keep a mark after a hardbreak. When checked, and you're typing in bold, when you hit Shift+Enter, the next line will continue with bold. If unchecked, it will revert to normal text.",
       "editor": "Checkbox",
       "name": "hardBreakKeepMarks",
-      "rank": 151,
+      "rank": 164,
       "value": "boolean"
     },
     "ext_youtube_label": {
       "caption": "----- YouTube -----",
       "editor": "Label",
       "name": "ext_youtube_label",
-      "rank": 89
+      "rank": 98
     },
     "AED": {
       "caption": "user_name",
@@ -671,7 +671,7 @@
       "editor": "DynamicValue",
       "name": "collab_user_name",
       "optional": true,
-      "rank": 178,
+      "rank": 192,
       "value": "text"
     },
     "ext_history": {
@@ -680,7 +680,7 @@
       "doc": "Enables undo/redo (Ctrl/⌘+Z / Ctrl/⌘+Shift+Z). Automatically disabled when collaboration is active (collab has its own history).",
       "editor": "DynamicValue",
       "name": "ext_history",
-      "rank": 148,
+      "rank": 161,
       "value": "boolean"
     },
     "ext_fontfamily": {
@@ -689,7 +689,7 @@
       "doc": "Allows setting the font family on text selections. Use the 'Set font family' action to apply a font. Off by default.",
       "editor": "DynamicValue",
       "name": "ext_fontfamily",
-      "rank": 19,
+      "rank": 20,
       "value": "boolean"
     },
     "AFq": {
@@ -698,7 +698,7 @@
       "doc": "Allow images to be parsed as base64 strings. When off Base64 images will remain in the code, but it won't be displayed.",
       "editor": "Checkbox",
       "name": "allowBase64",
-      "rank": 88
+      "rank": 96
     },
     "ext_placeholder": {
       "caption": "Placeholder",
@@ -706,7 +706,7 @@
       "doc": "Enables placeholder text shown when the editor is empty. Configure the text and color below.",
       "editor": "DynamicValue",
       "name": "ext_placeholder",
-      "rank": 129,
+      "rank": 142,
       "value": "boolean"
     },
     "ADu": {
@@ -716,7 +716,7 @@
       "long_text": false,
       "name": "h1_adv",
       "optional": true,
-      "rank": 36,
+      "rank": 39,
       "value": "text"
     },
     "AEC": {
@@ -725,13 +725,13 @@
       "doc": "Enable real-time collaborative editing via a Y.js-based provider (Tiptap Cloud, Custom Hocuspocus, or Liveblocks). When collaboration is active, the shared Y.js document is the single source of truth. Note: auto-binding is automatically ignored while collaboration is active — the collaborative document takes priority to prevent conflicts.",
       "editor": "Checkbox",
       "name": "collab_active",
-      "rank": 171
+      "rank": 185
     },
     "ext_heading_label": {
       "caption": "----- Heading -----",
       "editor": "Label",
       "name": "ext_heading_label",
-      "rank": 28
+      "rank": 31
     },
     "h5_font_weight": {
       "caption": "H5 font-weight",
@@ -741,7 +741,7 @@
       "in_style": true,
       "name": "h5_font_weight",
       "options": "900,800,700,600,500,400",
-      "rank": 58
+      "rank": 61
     },
     "AAK": {
       "caption": "Initial content",
@@ -757,7 +757,7 @@
       "caption": "----- Link -----",
       "editor": "Label",
       "name": "ext_link_label",
-      "rank": 95
+      "rank": 106
     },
     "h6_color": {
       "caption": "H6 Color",
@@ -765,14 +765,14 @@
       "editor": "Color",
       "in_style": true,
       "name": "h6_color",
-      "rank": 63
+      "rank": 66
     },
     "AGM": {
       "caption": "Preserve HTML attributes",
       "default_val": true,
       "editor": "DynamicValue",
       "name": "preserve_attributes",
-      "rank": 166,
+      "rank": 180,
       "value": "boolean",
       "doc": "When enabled, the editor preserves class, style, id, and data-* attributes on HTML elements when parsing and rendering content. This is useful when your content comes from an external source and you want to keep its original styling and structure intact. Applies to block nodes (paragraphs, headings, blockquotes, tables, etc.) and inline marks (bold, italic, strike, code, links)."
     },
@@ -780,7 +780,7 @@
       "caption": "𝗖𝗢𝗟𝗟𝗔𝗕𝗢𝗥𝗔𝗧𝗜𝗢𝗡",
       "editor": "Label",
       "name": "collab_info",
-      "rank": 169
+      "rank": 183
     },
     "ext_dropcursor": {
       "caption": "Dropcursor",
@@ -788,14 +788,14 @@
       "doc": "Shows a cursor indicator when dragging content over the editor, helping users see where the drop will land.",
       "editor": "DynamicValue",
       "name": "ext_dropcursor",
-      "rank": 137,
+      "rank": 150,
       "value": "boolean"
     },
     "ext_bubblemenu_label": {
       "caption": "----- Bubble Menu -----",
       "editor": "Label",
       "name": "ext_bubblemenu_label",
-      "rank": 120
+      "rank": 133
     },
     "ADg": {
       "caption": "Link color",
@@ -803,7 +803,7 @@
       "editor": "Color",
       "in_style": true,
       "name": "link_color",
-      "rank": 103
+      "rank": 115
     },
     "ext_horizontalrule": {
       "caption": "Horizontal Rule",
@@ -811,7 +811,7 @@
       "doc": "Enables horizontal rule (divider line). Users can insert one via toolbar or by typing --- on an empty line.",
       "editor": "DynamicValue",
       "name": "ext_horizontalrule",
-      "rank": 71,
+      "rank": 74,
       "value": "boolean"
     },
     "ADc": {
@@ -820,7 +820,7 @@
       "editor": "Color",
       "in_style": true,
       "name": "table_th_background",
-      "rank": 118
+      "rank": 130
     },
     "h6_margin": {
       "caption": "H6 margin",
@@ -829,7 +829,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h6_margin",
-      "rank": 65
+      "rank": 68
     },
     "ADT": {
       "caption": "H1 margin",
@@ -838,7 +838,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h1_margin",
-      "rank": 35
+      "rank": 38
     },
     "h5_size": {
       "caption": "H5 Size",
@@ -846,7 +846,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h5_size",
-      "rank": 56
+      "rank": 59
     },
     "ext_image": {
       "caption": "Image",
@@ -854,19 +854,19 @@
       "doc": "Enables image support. Images can be inserted via the 'Insert image' action, drag-and-drop, or paste.",
       "editor": "DynamicValue",
       "name": "ext_image",
-      "rank": 86,
+      "rank": 94,
       "value": "boolean"
     },
     "ADq": {
       "caption": "YouTube CSS override",
       "default_val": "width: 100%; //overrides the default 640px",
       "doc": "Inject custom CSS for YouTube embeds (<iframe>). Example: width: 100%; aspect-ratio: 16/9; — Tip: use an 'arbitrary text' value for more room to write CSS.",
-      "editor": "StaticText",
-      "in_style": true,
+      "editor": "DynamicValue",
       "long_text": false,
       "name": "iframe",
-      "rank": 91,
-      "value": "text"
+      "rank": 100,
+      "value": "text",
+      "optional": true
     },
     "h4_font_weight": {
       "caption": "H4 font-weight",
@@ -876,7 +876,7 @@
       "in_style": true,
       "name": "h4_font_weight",
       "options": "900,800,700,600,500,400",
-      "rank": 52
+      "rank": 55
     },
     "ext_hardbreak": {
       "caption": "Hard Break",
@@ -884,7 +884,7 @@
       "doc": "Enables Shift+Enter line breaks (hard breaks) within a paragraph. Off by default — when off, Shift+Enter does nothing.",
       "editor": "DynamicValue",
       "name": "ext_hardbreak",
-      "rank": 150,
+      "rank": 163,
       "value": "boolean"
     },
     "ADa": {
@@ -893,7 +893,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "table_th_td_border_bottom",
-      "rank": 114
+      "rank": 126
     },
     "ADR": {
       "caption": "H1 Size",
@@ -901,7 +901,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h1_size",
-      "rank": 32
+      "rank": 35
     },
     "AEW": {
       "caption": "Max number of characters",
@@ -918,7 +918,7 @@
       "long_text": false,
       "name": "link_adv",
       "optional": true,
-      "rank": 107,
+      "rank": 119,
       "value": "text"
     },
     "ADl": {
@@ -927,7 +927,7 @@
       "editor": "Color",
       "in_style": true,
       "name": "link_color_visited",
-      "rank": 106
+      "rank": 118
     },
     "AEx": {
       "caption": "Type of content",
@@ -936,7 +936,7 @@
       "is_list": true,
       "name": "mention_list_type",
       "optional": "false",
-      "rank": 154,
+      "rank": 168,
       "value": "_any_thing_bindable"
     },
     "h2_font_weight": {
@@ -947,7 +947,7 @@
       "in_style": true,
       "name": "h2_font_weight",
       "options": "900,800,700,600,500,400",
-      "rank": 41
+      "rank": 44
     },
     "ext_highlight": {
       "caption": "Highlight",
@@ -955,7 +955,7 @@
       "doc": "Enables text highlighting (background color on text). Users can mark text with a highlight color via the toolbar.",
       "editor": "DynamicValue",
       "name": "ext_highlight",
-      "rank": 25,
+      "rank": 28,
       "value": "boolean"
     },
     "ACS": {
@@ -964,7 +964,7 @@
       "editor": "DynamicValue",
       "name": "floatingMenu",
       "optional": true,
-      "rank": 126,
+      "rank": 139,
       "value": "text"
     },
     "ADV": {
@@ -979,7 +979,7 @@
       "doc": "Allows setting the text color on selections. Use the 'Set color' action to apply a color. Off by default.",
       "editor": "DynamicValue",
       "name": "ext_color",
-      "rank": 20,
+      "rank": 21,
       "value": "boolean"
     },
     "h4_margin": {
@@ -989,7 +989,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h4_margin",
-      "rank": 53
+      "rank": 56
     },
     "ext_italic": {
       "caption": "Italic",
@@ -1008,13 +1008,13 @@
       "in_style": true,
       "name": "h1_font_weight",
       "options": "900,800,700,600,500,400",
-      "rank": 34
+      "rank": 37
     },
     "h1_info1": {
       "caption": "     ----- H1 styling -----",
       "editor": "Label",
       "name": "stylesheet_info",
-      "rank": 31
+      "rank": 34
     },
     "h6_size": {
       "caption": "H6 Size",
@@ -1022,7 +1022,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h6_size",
-      "rank": 62
+      "rank": 65
     },
     "ADk": {
       "caption": "Link color hover",
@@ -1030,7 +1030,7 @@
       "editor": "Color",
       "in_style": true,
       "name": "link_color_hover",
-      "rank": 104
+      "rank": 116
     },
     "ADv": {
       "caption": "H2 CSS override",
@@ -1039,14 +1039,14 @@
       "long_text": false,
       "name": "h2_adv",
       "optional": true,
-      "rank": 42,
+      "rank": 45,
       "value": "text"
     },
     "ext_placeholder_label": {
       "caption": "----- Placeholder -----",
       "editor": "Label",
       "name": "ext_placeholder_label",
-      "rank": 128
+      "rank": 141
     },
     "ADw": {
       "caption": "H3 CSS override",
@@ -1055,7 +1055,7 @@
       "long_text": false,
       "name": "h3_adv",
       "optional": true,
-      "rank": 48,
+      "rank": 51,
       "value": "text"
     },
     "ext_orderedlist": {
@@ -1064,7 +1064,7 @@
       "doc": "Enables ordered (numbered) lists. Users can create them via toolbar or by typing 1. at the start of a line.",
       "editor": "DynamicValue",
       "name": "ext_orderedlist",
-      "rank": 80,
+      "rank": 87,
       "value": "boolean"
     },
     "AFG": {
@@ -1080,7 +1080,7 @@
       "caption": "----- Mention -----",
       "editor": "Label",
       "name": "ext_mention_label",
-      "rank": 152
+      "rank": 165
     },
     "collab_url": {
       "caption": "Custom - URL",
@@ -1088,7 +1088,7 @@
       "doc": "Paste the collab URL here to enable collaborative editing. Leave empty to disable.",
       "editor": "StaticText",
       "name": "collab_url",
-      "rank": 174
+      "rank": 188
     },
     "AFP": {
       "caption": "Visited link CSS override",
@@ -1097,7 +1097,7 @@
       "long_text": false,
       "name": "link_visited_adv",
       "optional": true,
-      "rank": 109,
+      "rank": 121,
       "value": "text"
     },
     "AFB": {
@@ -1106,7 +1106,7 @@
       "doc": "Color of the border around the mention on the text",
       "editor": "Color",
       "name": "mention_border_color",
-      "rank": 159
+      "rank": 173
     },
     "ext_underline": {
       "caption": "Underline",
@@ -1121,7 +1121,7 @@
       "caption": "----- Structure -----",
       "editor": "Label",
       "name": "ext_structure_label",
-      "rank": 70
+      "rank": 73
     },
     "ADm": {
       "caption": "Hovered link CSS override",
@@ -1131,7 +1131,7 @@
       "in_style": true,
       "long_text": false,
       "name": "link_hover_adv",
-      "rank": 105
+      "rank": 117
     },
     "AGP": {
       "caption": "Debug mode",
@@ -1139,7 +1139,7 @@
       "doc": "When enabled, logs detailed information to the browser console. Useful for troubleshooting. Look for messages prefixed with [Tiptap].",
       "editor": "Checkbox",
       "name": "debug_mode",
-      "rank": 181
+      "rank": 195
     },
     "ext_bulletlist": {
       "caption": "Bullet List",
@@ -1147,7 +1147,7 @@
       "doc": "Enables unordered (bullet) lists. Users can create them via toolbar or by typing - or * at the start of a line.",
       "editor": "DynamicValue",
       "name": "ext_bulletlist",
-      "rank": 77,
+      "rank": 84,
       "value": "boolean"
     },
     "AEE": {
@@ -1157,7 +1157,7 @@
       "editor": "Color",
       "name": "collab_cursor_color",
       "optional": true,
-      "rank": 179,
+      "rank": 193,
       "value": "text"
     },
     "AEV": {
@@ -1168,7 +1168,7 @@
       "long_text": false,
       "name": "blockquote_adv",
       "optional": true,
-      "rank": 69,
+      "rank": 72,
       "value": "text"
     },
     "ADd": {
@@ -1177,7 +1177,7 @@
       "editor": "Color",
       "in_style": true,
       "name": "table_row_border_color",
-      "rank": 115
+      "rank": 127
     },
     "ext_strike": {
       "caption": "Strikethrough",
@@ -1194,20 +1194,20 @@
       "editor": "DynamicValue",
       "name": "bubbleMenu",
       "optional": true,
-      "rank": 122,
+      "rank": 135,
       "value": "text"
     },
     "ext_image_label": {
       "caption": "----- Image -----",
       "editor": "Label",
       "name": "ext_image_label",
-      "rank": 85
+      "rank": 93
     },
     "ext_table_label": {
       "caption": "----- Table -----",
       "editor": "Label",
       "name": "ext_table_label",
-      "rank": 111
+      "rank": 123
     },
     "h3_margin": {
       "caption": "H3 margin",
@@ -1216,7 +1216,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h3_margin",
-      "rank": 47
+      "rank": 50
     },
     "h2_margin": {
       "caption": "H2 margin",
@@ -1225,7 +1225,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h2_margin",
-      "rank": 40
+      "rank": 43
     },
     "h5_color": {
       "caption": "H5 Color",
@@ -1233,7 +1233,7 @@
       "editor": "Color",
       "in_style": true,
       "name": "h5_color",
-      "rank": 57
+      "rank": 60
     },
     "AEy": {
       "caption": "Label",
@@ -1241,7 +1241,7 @@
       "field_type_restriction": "text_image_file",
       "name": "mention_field_label",
       "optional": true,
-      "rank": 157
+      "rank": 171
     },
     "ext_formatting_label": {
       "caption": "----- Text Formatting -----",
@@ -1255,7 +1255,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h3_size",
-      "rank": 44
+      "rank": 47
     },
     "AEw": {
       "caption": "Data source",
@@ -1265,7 +1265,7 @@
       "is_list": true,
       "name": "mention_list",
       "optional": "true",
-      "rank": 155,
+      "rank": 169,
       "value": "_any_thing"
     },
     "h6_font_weight": {
@@ -1276,7 +1276,7 @@
       "in_style": true,
       "name": "h6_font_weight",
       "options": "900,800,700,600,500,400",
-      "rank": 64
+      "rank": 67
     },
     "ACZ": {
       "caption": "Content is JSON?",
@@ -1293,7 +1293,7 @@
       "editor": "DynamicValue",
       "name": "collab_doc_id",
       "optional": true,
-      "rank": 172,
+      "rank": 186,
       "value": "text"
     },
     "ext_mention": {
@@ -1302,7 +1302,7 @@
       "doc": "Enables @mentions. When a user types @ followed by a query, a suggestion list appears. Configure the data source and fields below.",
       "editor": "DynamicValue",
       "name": "ext_mention",
-      "rank": 153,
+      "rank": 166,
       "value": "boolean"
     },
     "AEH": {
@@ -1312,13 +1312,13 @@
       "editor": "StaticText",
       "name": "collab_app_id",
       "optional": true,
-      "rank": 175
+      "rank": 189
     },
     "ext_floatingmenu_label": {
       "caption": "----- Floating Menu -----",
       "editor": "Label",
       "name": "ext_floatingmenu_label",
-      "rank": 124
+      "rank": 137
     },
     "h3_color": {
       "caption": "H3 Color",
@@ -1326,7 +1326,7 @@
       "editor": "Color",
       "in_style": true,
       "name": "h3_color",
-      "rank": 45
+      "rank": 48
     },
     "AFQ": {
       "caption": "Focused link CSS override",
@@ -1335,7 +1335,7 @@
       "long_text": false,
       "name": "link_focus_adv",
       "optional": true,
-      "rank": 110,
+      "rank": 122,
       "value": "text"
     },
     "AEz": {
@@ -1344,13 +1344,13 @@
       "field_type_restriction": "text_image_file",
       "name": "mention_field_id",
       "optional": true,
-      "rank": 158
+      "rank": 172
     },
     "AEG": {
       "caption": "to use the collaboration function you first need an account with one of the providers: 𝗿𝗶𝗰𝗼.𝘄𝘁𝗳 (has free tier), 𝗰𝗼𝗹𝗹𝗮𝗯.𝘁𝗶𝗽𝘁𝗮𝗽.𝗱𝗲𝘃, or 𝗹𝗶𝘃𝗲𝗯𝗹𝗼𝗰𝗸𝘀.𝗶𝗼",
       "editor": "Label",
       "name": "collab_info_sub",
-      "rank": 170
+      "rank": 184
     },
     "ext_table": {
       "caption": "Table",
@@ -1358,7 +1358,7 @@
       "doc": "Enables table support with resizable columns. Use table actions to insert, add/remove rows and columns, merge cells, etc.",
       "editor": "DynamicValue",
       "name": "ext_table",
-      "rank": 112,
+      "rank": 124,
       "value": "boolean"
     },
     "ABs": {
@@ -1376,7 +1376,7 @@
       "default_val": "class,style,id,data-*",
       "editor": "DynamicValue",
       "name": "preserved_attributes",
-      "rank": 167,
+      "rank": 181,
       "value": "text",
       "doc": "Shows which HTML attributes are preserved when the setting above is enabled. Currently hardcoded to: class, style, id, and data-* attributes. This field is informational — the preserved attributes are defined in the extension code."
     },
@@ -1396,7 +1396,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "table_th_td_padding",
-      "rank": 113
+      "rank": 125
     },
     "ADx": {
       "caption": "H4 CSS override",
@@ -1405,7 +1405,7 @@
       "long_text": false,
       "name": "h4_adv",
       "optional": true,
-      "rank": 54,
+      "rank": 57,
       "value": "text"
     },
     "ext_floatingmenu": {
@@ -1414,14 +1414,14 @@
       "doc": "Enables the floating menu — a toolbar that appears on empty lines. Provide the Bubble element ID below.",
       "editor": "DynamicValue",
       "name": "ext_floatingmenu",
-      "rank": 125,
+      "rank": 138,
       "value": "boolean"
     },
     "h4_info": {
       "caption": "     ----- H4 styling -----",
       "editor": "Label",
       "name": "h4_info",
-      "rank": 49
+      "rank": 52
     },
     "ADQ": {
       "caption": "Floating Menu Theme",
@@ -1431,7 +1431,7 @@
       "in_style": true,
       "name": "floatingMenuTheme",
       "options": "translucent,light,light-border,material",
-      "rank": 127
+      "rank": 140
     },
     "ADp": {
       "caption": "headings",
@@ -1441,7 +1441,7 @@
       "in_style": true,
       "long_text": false,
       "name": "headings",
-      "rank": 30
+      "rank": 33
     },
     "h2_size": {
       "caption": "H2 Size",
@@ -1449,7 +1449,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h2_size",
-      "rank": 38
+      "rank": 41
     },
     "ext_textalign": {
       "caption": "Text Align",
@@ -1457,7 +1457,7 @@
       "doc": "Enables text alignment (left, center, right, justify). Use the 'Align text' action to change alignment.",
       "editor": "DynamicValue",
       "name": "ext_textalign",
-      "rank": 136,
+      "rank": 149,
       "value": "boolean"
     },
     "ext_link": {
@@ -1466,7 +1466,7 @@
       "doc": "Enables hyperlinks. Users can add links via the 'Set link' action. Configure link colors and styles below.",
       "editor": "DynamicValue",
       "name": "ext_link",
-      "rank": 96,
+      "rank": 107,
       "value": "boolean"
     },
     "ext_uniqueid": {
@@ -1475,7 +1475,7 @@
       "doc": "Adds unique IDs to specified node types (e.g. paragraphs, headings). Useful for deep-linking to specific parts of the document.",
       "editor": "DynamicValue",
       "name": "ext_uniqueid",
-      "rank": 162,
+      "rank": 176,
       "value": "boolean"
     },
     "AFC": {
@@ -1484,13 +1484,13 @@
       "doc": "Color of the background of the mention.",
       "editor": "Color",
       "name": "mention_background_color",
-      "rank": 160
+      "rank": 174
     },
     "h5_info": {
       "caption": "----- H5 styling -----",
       "editor": "Label",
       "name": "h5_info",
-      "rank": 55
+      "rank": 58
     },
     "ADz": {
       "caption": "H6 CSS override",
@@ -1499,7 +1499,7 @@
       "long_text": false,
       "name": "h6_adv",
       "optional": true,
-      "rank": 66,
+      "rank": 69,
       "value": "text"
     },
     "AEm": {
@@ -1508,7 +1508,7 @@
       "editor": "StaticText",
       "name": "liveblocksPublicApiKey",
       "optional": true,
-      "rank": 177
+      "rank": 191
     },
     "ext_section_label": {
       "caption": "𝗘𝗫𝗧𝗘𝗡𝗦𝗜𝗢𝗡𝗦",
@@ -1524,14 +1524,14 @@
       "long_text": false,
       "name": "ol_adv",
       "optional": true,
-      "rank": 81,
+      "rank": 88,
       "value": "text"
     },
     "h6_info": {
       "caption": "     ----- H6 styling -----",
       "editor": "Label",
       "name": "h6_info",
-      "rank": 61
+      "rank": 64
     },
     "ADb": {
       "caption": "Header font weight",
@@ -1541,7 +1541,7 @@
       "in_style": true,
       "name": "table_th_font_weight",
       "options": "900,800,700,600,500,400",
-      "rank": 116
+      "rank": 128
     },
     "ext_code": {
       "caption": "Code (inline)",
@@ -1560,14 +1560,14 @@
       "long_text": false,
       "name": "ul_adv",
       "optional": true,
-      "rank": 78,
+      "rank": 85,
       "value": "text"
     },
     "ext_highlight_label": {
       "caption": "----- Highlight -----",
       "editor": "Label",
       "name": "ext_highlight_label",
-      "rank": 24
+      "rank": 27
     },
     "h3_font_weight": {
       "caption": "H3 font-weight",
@@ -1577,7 +1577,7 @@
       "in_style": true,
       "name": "h3_font_weight",
       "options": "900,800,700,600,500,400",
-      "rank": 46
+      "rank": 49
     },
     "ext_youtube": {
       "caption": "YouTube",
@@ -1585,7 +1585,7 @@
       "doc": "Enables YouTube video embeds. Use the 'Add YouTube' action to insert a video by URL.",
       "editor": "DynamicValue",
       "name": "ext_youtube",
-      "rank": 90,
+      "rank": 99,
       "value": "boolean"
     },
     "AEN": {
@@ -1594,14 +1594,14 @@
       "editor": "DynamicValue",
       "name": "collab_jwt",
       "optional": true,
-      "rank": 176,
+      "rank": 190,
       "value": "text"
     },
     "ext_uniqueid_label": {
       "caption": "----- Unique ID -----",
       "editor": "Label",
       "name": "ext_uniqueid_label",
-      "rank": 161
+      "rank": 175
     },
     "ACA": {
       "caption": "Placeholder",
@@ -1611,7 +1611,7 @@
       "long_text": false,
       "name": "placeholder",
       "optional": true,
-      "rank": 130,
+      "rank": 143,
       "value": "text"
     },
     "AGO": {
@@ -1619,7 +1619,7 @@
       "default_val": true,
       "editor": "DynamicValue",
       "name": "preserve_unknown_tags",
-      "rank": 168,
+      "rank": 182,
       "value": "boolean",
       "doc": "When enabled (and \"Preserve HTML attributes\" is also on), the editor will recognize <div> elements in your HTML content instead of stripping them. Useful when your content contains custom layouts or structures wrapped in divs. Without this, any <div> tags in the input HTML would be ignored."
     },
@@ -1629,14 +1629,14 @@
       "doc": "Enables blockquote blocks. Users can create blockquotes via toolbar or by typing > at the start of a line.",
       "editor": "DynamicValue",
       "name": "ext_blockquote",
-      "rank": 68,
+      "rank": 71,
       "value": "boolean"
     },
     "ext_behavior_label": {
       "caption": "----- Editor Behavior -----",
       "editor": "Label",
       "name": "ext_behavior_label",
-      "rank": 135
+      "rank": 148
     },
     "AEv": {
       "caption": "Base URL",
@@ -1644,14 +1644,14 @@
       "editor": "DynamicValue",
       "name": "mention_base_url",
       "optional": true,
-      "rank": 156,
+      "rank": 170,
       "value": "text"
     },
     "h3_info": {
       "caption": "     ----- H3 styling -----",
       "editor": "Label",
       "name": "stylesheet_info",
-      "rank": 43
+      "rank": 46
     },
     "AEk": {
       "caption": "Provider",
@@ -1661,7 +1661,7 @@
       "name": "collabProvider",
       "optional": true,
       "options": "tiptap,liveblocks,custom",
-      "rank": 173
+      "rank": 187
     },
     "h4_size": {
       "caption": "H4 Size",
@@ -1669,7 +1669,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h4_size",
-      "rank": 50
+      "rank": 53
     },
     "ADP": {
       "caption": "Bubble menu theme",
@@ -1679,7 +1679,7 @@
       "in_style": true,
       "name": "bubbleMenuTheme",
       "options": "translucent,light,light-border,material",
-      "rank": 123
+      "rank": 136
     },
     "ext_gapcursor": {
       "caption": "Gapcursor",
@@ -1687,14 +1687,14 @@
       "doc": "Allows placing the cursor in gaps that would normally be inaccessible — for example, before or after a table or image.",
       "editor": "DynamicValue",
       "name": "ext_gapcursor",
-      "rank": 140,
+      "rank": 153,
       "value": "boolean"
     },
     "ext_blockquote_label": {
       "caption": "----- Blockquote -----",
       "editor": "Label",
       "name": "ext_blockquote_label",
-      "rank": 67
+      "rank": 70
     },
     "ADS": {
       "caption": "H1 Color",
@@ -1702,7 +1702,7 @@
       "editor": "Color",
       "in_style": true,
       "name": "h1_color",
-      "rank": 33
+      "rank": 36
     },
     "h5_margin": {
       "caption": "H5 margin",
@@ -1711,7 +1711,7 @@
       "editor": "StaticText",
       "in_style": true,
       "name": "h5_margin",
-      "rank": 59
+      "rank": 62
     },
     "ext_tasklist": {
       "caption": "Task List",
@@ -1719,7 +1719,7 @@
       "doc": "Enables task lists (checkboxes). Users can create them via toolbar or by typing [ ] or [x] at the start of a line.",
       "editor": "DynamicValue",
       "name": "ext_tasklist",
-      "rank": 84,
+      "rank": 91,
       "value": "boolean"
     },
     "AFF": {
@@ -1740,7 +1740,7 @@
       "long_text": false,
       "name": "image_css",
       "optional": true,
-      "rank": 87
+      "rank": 95
     },
     "ADW": {
       "caption": "paragraph",
@@ -1752,7 +1752,7 @@
       "caption": "----- Hard Break -----",
       "editor": "Label",
       "name": "ext_hardbreak_label",
-      "rank": 149
+      "rank": 162
     },
     "ext_trailingnode": {
       "caption": "Trailing Node",
@@ -1760,7 +1760,7 @@
       "doc": "Automatically inserts an empty paragraph at the end of the document when the last node is a block element (table, image, code block, etc.). Prevents users from getting trapped with no way to continue typing below block elements. Recommended to keep enabled.",
       "editor": "DynamicValue",
       "name": "ext_trailingnode",
-      "rank": 141,
+      "rank": 154,
       "value": "boolean"
     },
     "ext_focus": {
@@ -1769,7 +1769,7 @@
       "doc": "Adds a CSS class to the currently focused node in the editor. Use this to style the active block — e.g., add a background or left border to the paragraph/heading the cursor is in. The class name is `has-focus`. Style it via the Base div CSS override or your app's stylesheets. See the Focus Mode option below to control which node gets the class.",
       "editor": "DynamicValue",
       "name": "ext_focus",
-      "rank": 142,
+      "rank": 155,
       "value": "boolean"
     },
     "ext_focus_mode": {
@@ -1780,7 +1780,7 @@
       "name": "ext_focus_mode",
       "options": "deepest,shallowest,all",
       "optional": true,
-      "rank": 143
+      "rank": 156
     },
     "ext_selection": {
       "caption": "Selection",
@@ -1788,7 +1788,7 @@
       "doc": "Keeps the text selection visually highlighted when the editor loses focus. By default, browsers hide the selection highlight when focus moves to another element (e.g., clicking a toolbar button outside the editor). Enable this to maintain a visible selection. The highlight uses the CSS class `selection` — a default blue style is provided automatically.",
       "editor": "DynamicValue",
       "name": "ext_selection",
-      "rank": 144,
+      "rank": 157,
       "value": "boolean"
     },
     "ext_selection_css": {
@@ -1798,7 +1798,7 @@
       "long_text": false,
       "name": "ext_selection_css",
       "optional": true,
-      "rank": 145,
+      "rank": 158,
       "value": "text"
     },
     "collab_cursor_css": {
@@ -1808,7 +1808,7 @@
       "long_text": false,
       "name": "collab_cursor_css",
       "optional": true,
-      "rank": 180,
+      "rank": 194,
       "value": "text"
     },
     "link_openOnClick": {
@@ -1817,7 +1817,7 @@
       "doc": "When enabled, clicking a link in the editor navigates to the URL. When disabled (default), clicking a link selects it for editing instead. Users can always open links with Ctrl/⌘+click regardless of this setting.",
       "editor": "Checkbox",
       "name": "link_openOnClick",
-      "rank": 97,
+      "rank": 108,
       "value": "boolean"
     },
     "link_autolink": {
@@ -1826,7 +1826,7 @@
       "doc": "Automatically converts typed URLs into clickable links as you type. Disable if you want users to create links only via the Set link action.",
       "editor": "Checkbox",
       "name": "link_autolink",
-      "rank": 98,
+      "rank": 109,
       "value": "boolean"
     },
     "link_linkOnPaste": {
@@ -1835,7 +1835,7 @@
       "doc": "Automatically converts pasted URLs into clickable links. Disable to keep pasted URLs as plain text.",
       "editor": "Checkbox",
       "name": "link_linkOnPaste",
-      "rank": 99,
+      "rank": 110,
       "value": "boolean"
     },
     "link_defaultProtocol": {
@@ -1845,7 +1845,7 @@
       "editor": "Dropdown",
       "name": "link_defaultProtocol",
       "options": "https,http",
-      "rank": 100
+      "rank": 111
     },
     "link_target": {
       "caption": "Open link in",
@@ -1854,7 +1854,7 @@
       "editor": "Dropdown",
       "name": "link_target",
       "options": "_blank,_self",
-      "rank": 101
+      "rank": 112
     },
     "link_rel": {
       "caption": "Link rel attribute",
@@ -1863,7 +1863,7 @@
       "editor": "DynamicValue",
       "name": "link_rel",
       "optional": true,
-      "rank": 102,
+      "rank": 113,
       "value": "text"
     },
     "highlight_multicolor": {
@@ -1872,7 +1872,7 @@
       "doc": "When enabled, allows multiple different highlight colors in the same document. When disabled, only one highlight color can be used at a time.",
       "editor": "Checkbox",
       "name": "highlight_multicolor",
-      "rank": 26,
+      "rank": 29,
       "value": "boolean"
     },
     "codeblock_exitOnTripleEnter": {
@@ -1881,7 +1881,7 @@
       "doc": "Pressing Enter three times at the end of a code block exits it and creates a new paragraph below.",
       "editor": "Checkbox",
       "name": "codeblock_exitOnTripleEnter",
-      "rank": 73,
+      "rank": 77,
       "value": "boolean"
     },
     "codeblock_exitOnArrowDown": {
@@ -1890,7 +1890,7 @@
       "doc": "Pressing the down arrow at the last line of a code block exits it and moves the cursor below.",
       "editor": "Checkbox",
       "name": "codeblock_exitOnArrowDown",
-      "rank": 74,
+      "rank": 78,
       "value": "boolean"
     },
     "codeblock_defaultLanguage": {
@@ -1899,7 +1899,7 @@
       "editor": "DynamicValue",
       "name": "codeblock_defaultLanguage",
       "optional": true,
-      "rank": 75,
+      "rank": 79,
       "value": "text"
     },
     "list_keepMarks": {
@@ -1908,7 +1908,7 @@
       "doc": "When enabled, text formatting (bold, italic, etc.) is preserved when pressing Enter to create a new list item. Applies to both bullet and ordered lists.",
       "editor": "Checkbox",
       "name": "list_keepMarks",
-      "rank": 82,
+      "rank": 89,
       "value": "boolean"
     },
     "list_keepAttributes": {
@@ -1917,7 +1917,7 @@
       "doc": "When enabled, attributes like text alignment are preserved when pressing Enter to create a new list item. Applies to both bullet and ordered lists.",
       "editor": "Checkbox",
       "name": "list_keepAttributes",
-      "rank": 83,
+      "rank": 90,
       "value": "boolean"
     },
     "youtube_nocookie": {
@@ -1926,7 +1926,7 @@
       "doc": "Uses youtube-nocookie.com domain for embeds, which does not set tracking cookies until the user plays the video.",
       "editor": "Checkbox",
       "name": "youtube_nocookie",
-      "rank": 92,
+      "rank": 101,
       "value": "boolean"
     },
     "youtube_allowFullscreen": {
@@ -1935,7 +1935,7 @@
       "doc": "Allow YouTube embeds to be viewed in fullscreen mode.",
       "editor": "Checkbox",
       "name": "youtube_allowFullscreen",
-      "rank": 93,
+      "rank": 102,
       "value": "boolean"
     },
     "youtube_addPasteHandler": {
@@ -1944,7 +1944,7 @@
       "doc": "Automatically converts pasted YouTube URLs into embedded video players.",
       "editor": "Checkbox",
       "name": "youtube_addPasteHandler",
-      "rank": 94,
+      "rank": 103,
       "value": "boolean"
     },
     "placeholder_showOnlyWhenEditable": {
@@ -1953,7 +1953,7 @@
       "doc": "When enabled, the placeholder text is only shown when the editor is editable. Disable to show the placeholder even in read-only mode.",
       "editor": "Checkbox",
       "name": "placeholder_showOnlyWhenEditable",
-      "rank": 132,
+      "rank": 145,
       "value": "boolean"
     },
     "placeholder_showOnlyCurrent": {
@@ -1962,7 +1962,7 @@
       "doc": "When enabled, placeholder only appears on the first empty paragraph. When disabled, all empty paragraphs show the placeholder.",
       "editor": "Checkbox",
       "name": "placeholder_showOnlyCurrent",
-      "rank": 133,
+      "rank": 146,
       "value": "boolean"
     },
     "placeholder_includeChildren": {
@@ -1971,7 +1971,7 @@
       "doc": "When enabled, the placeholder also appears inside nested empty nodes (e.g., empty list items, table cells).",
       "editor": "Checkbox",
       "name": "placeholder_includeChildren",
-      "rank": 134,
+      "rank": 147,
       "value": "boolean"
     },
     "dropcursor_color": {
@@ -1981,7 +1981,7 @@
       "editor": "Color",
       "name": "dropcursor_color",
       "optional": true,
-      "rank": 138
+      "rank": 151
     },
     "dropcursor_width": {
       "caption": "Dropcursor width",
@@ -1990,7 +1990,7 @@
       "editor": "StaticNumber",
       "name": "dropcursor_width",
       "optional": true,
-      "rank": 139
+      "rank": 152
     },
     "ext_subscript": {
       "caption": "Subscript",
@@ -1998,7 +1998,7 @@
       "doc": "Enables subscript text formatting (<sub>). Useful for chemical formulas (H₂O), mathematical notation, and footnotes. Users can toggle it via the Subscript action.",
       "editor": "DynamicValue",
       "name": "ext_subscript",
-      "rank": 21,
+      "rank": 22,
       "value": "boolean"
     },
     "ext_superscript": {
@@ -2007,7 +2007,7 @@
       "doc": "Enables superscript text formatting (<sup>). Useful for exponents (x²), ordinal indicators (1st), and footnote references. Users can toggle it via the Superscript action.",
       "editor": "DynamicValue",
       "name": "ext_superscript",
-      "rank": 22,
+      "rank": 24,
       "value": "boolean"
     },
     "ext_fontsize": {
@@ -2016,7 +2016,7 @@
       "doc": "Allows setting the font size on text selections. Use the \"Set font size\" action to apply a size (e.g. \"16px\", \"1.2rem\"). Off by default.",
       "editor": "DynamicValue",
       "name": "ext_fontsize",
-      "rank": 23,
+      "rank": 26,
       "value": "boolean"
     },
     "ext_typography": {
@@ -2025,7 +2025,7 @@
       "doc": "Automatically replaces common text patterns with proper typographic characters as you type. Examples: -- → —, ... → …, (c) → ©, != → ≠, << → «, 1/2 → ½, and smart quotes. A nice polish for content-heavy editors.",
       "editor": "DynamicValue",
       "name": "ext_typography",
-      "rank": 146,
+      "rank": 159,
       "value": "boolean"
     },
     "ext_listkeymap": {
@@ -2034,8 +2034,142 @@
       "doc": "Improves keyboard behavior in lists. Pressing Backspace at the start of a list item properly lifts it out of the list instead of merging with the previous item. Recommended to keep enabled.",
       "editor": "DynamicValue",
       "name": "ext_listkeymap",
-      "rank": 147,
+      "rank": 160,
       "value": "boolean"
+    },
+    "code_adv": {
+      "caption": "Inline code CSS override",
+      "doc": "Inject custom CSS properties for inline <code> elements. — Tip: use an 'arbitrary text' value for more room to write CSS.",
+      "editor": "DynamicValue",
+      "long_text": false,
+      "name": "code_adv",
+      "optional": true,
+      "value": "text",
+      "rank": 19
+    },
+    "sub_adv": {
+      "caption": "Subscript CSS override",
+      "doc": "Inject custom CSS properties for <sub> (subscript) elements. — Tip: use an 'arbitrary text' value for more room to write CSS.",
+      "editor": "DynamicValue",
+      "long_text": false,
+      "name": "sub_adv",
+      "optional": true,
+      "value": "text",
+      "rank": 23
+    },
+    "sup_adv": {
+      "caption": "Superscript CSS override",
+      "doc": "Inject custom CSS properties for <sup> (superscript) elements. — Tip: use an 'arbitrary text' value for more room to write CSS.",
+      "editor": "DynamicValue",
+      "long_text": false,
+      "name": "sup_adv",
+      "optional": true,
+      "value": "text",
+      "rank": 25
+    },
+    "hr_adv": {
+      "caption": "Horizontal rule CSS override",
+      "doc": "Inject custom CSS properties for <hr> (horizontal rule) elements. Example: border: none; border-top: 2px dashed #ccc; margin: 2rem 0; — Tip: use an 'arbitrary text' value for more room to write CSS.",
+      "editor": "DynamicValue",
+      "long_text": false,
+      "name": "hr_adv",
+      "optional": true,
+      "value": "text",
+      "rank": 75
+    },
+    "codeblock_tabIndentation": {
+      "caption": "Tab indentation",
+      "default_val": false,
+      "doc": "Allow the Tab key to indent inside code blocks instead of moving focus to the next element.",
+      "editor": "Checkbox",
+      "name": "codeblock_tabIndentation",
+      "value": "boolean",
+      "rank": 80
+    },
+    "codeblock_tabSize": {
+      "caption": "Tab size",
+      "default_val": 4,
+      "doc": "Number of spaces per Tab when Tab indentation is enabled.",
+      "editor": "StaticNumber",
+      "name": "codeblock_tabSize",
+      "optional": true,
+      "rank": 81
+    },
+    "codeblock_adv": {
+      "caption": "Code block CSS override",
+      "doc": "Inject custom CSS properties for code block (<pre>) elements. — Tip: use an 'arbitrary text' value for more room to write CSS.",
+      "editor": "DynamicValue",
+      "long_text": false,
+      "name": "codeblock_adv",
+      "optional": true,
+      "value": "text",
+      "rank": 82
+    },
+    "tasklist_checkbox_adv": {
+      "caption": "Task list CSS override",
+      "doc": "Inject custom CSS properties for task list checkboxes. Example: width: 18px; height: 18px; accent-color: #7c3aed; — Tip: use an 'arbitrary text' value for more room to write CSS.",
+      "editor": "DynamicValue",
+      "long_text": false,
+      "name": "tasklist_checkbox_adv",
+      "optional": true,
+      "value": "text",
+      "rank": 92
+    },
+    "image_inline": {
+      "caption": "Inline images",
+      "default_val": false,
+      "doc": "When enabled, images flow inline with text instead of being block-level elements.",
+      "editor": "Checkbox",
+      "name": "image_inline",
+      "value": "boolean",
+      "rank": 97
+    },
+    "youtube_defaultWidth": {
+      "caption": "Default width",
+      "default_val": 640,
+      "doc": "Default width in pixels for embedded YouTube videos.",
+      "editor": "StaticNumber",
+      "name": "youtube_defaultWidth",
+      "optional": true,
+      "rank": 104
+    },
+    "youtube_defaultHeight": {
+      "caption": "Default height",
+      "default_val": 480,
+      "doc": "Default height in pixels for embedded YouTube videos.",
+      "editor": "StaticNumber",
+      "name": "youtube_defaultHeight",
+      "optional": true,
+      "rank": 105
+    },
+    "link_protocols": {
+      "caption": "Additional protocols",
+      "doc": "Comma-separated list of additional protocols to auto-detect as links (e.g. tel, spotify, custom-app). Both formats are recognized: tel:5551234 and tel://5551234. Standard protocols like http, https, ftp, and mailto are always recognized without needing to add them here.",
+      "editor": "DynamicValue",
+      "long_text": false,
+      "name": "link_protocols",
+      "optional": true,
+      "value": "text",
+      "rank": 114
+    },
+    "table_cellMinWidth": {
+      "caption": "Cell min width",
+      "default_val": 25,
+      "doc": "Minimum width in pixels for table columns when resizing. Default: 25.",
+      "editor": "StaticNumber",
+      "name": "table_cellMinWidth",
+      "optional": true,
+      "rank": 132
+    },
+    "mention_triggerChar": {
+      "caption": "Trigger character",
+      "default_val": "@",
+      "doc": "The character that triggers the mention suggestion popup. Default is @. Change to # for hashtag-style mentions, etc.",
+      "editor": "DynamicValue",
+      "name": "mention_triggerChar",
+      "optional": true,
+      "value": "text",
+      "rank": 167
     }
   },
   "has_reset_fn": false,
