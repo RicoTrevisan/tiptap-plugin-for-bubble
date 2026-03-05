@@ -166,6 +166,47 @@ try {
             ${properties.sup_adv || ""}
         }
 
+        [data-type="details"] {
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            ${properties.details_adv || ""}
+        }
+
+        [data-type="details"] > button {
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0.25rem 0;
+            background: none;
+            border: none;
+            font-size: 0.75rem;
+        }
+
+        [data-type="details"] > button::before {
+            content: "►";
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        [data-type="details"].is-open > button::before {
+            transform: rotate(90deg);
+        }
+
+        [data-type="details"] > div > [data-type="detailsSummary"] {
+            display: inline;
+            font-weight: 600;
+            ${properties.details_summary_adv || ""}
+        }
+
+        [data-type="details"].is-open > div > [data-type="detailsContent"] {
+            margin-top: 0.5rem;
+        }
+
+        .tiptap-invisible-character {
+            ${properties.invisiblecharacters_adv || ""}
+        }
+
 		ul[data-type="taskList"] {
             list-style: none;
             padding: 0;
@@ -1037,6 +1078,7 @@ function publishActiveStates(editor) {
     instance.publishState("table", editor.isActive("table"));
     instance.publishState("subscript", editor.isActive("subscript"));
     instance.publishState("superscript", editor.isActive("superscript"));
+    instance.publishState("details", editor.isActive("details"));
 
     const textStyle = editor.getAttributes("textStyle");
     if (textStyle && textStyle.color) {
@@ -1223,6 +1265,10 @@ instance.data.setupEditor = function (properties, context) {
         Typography,
         ListKeymap,
         FontSize,
+        Details,
+        DetailsContent,
+        DetailsSummary,
+        InvisibleCharacters,
     } = window.tiptap;
 
     // Store extension states for action files to reference
@@ -1259,6 +1305,8 @@ instance.data.setupEditor = function (properties, context) {
         subscript: properties.ext_subscript,
         superscript: properties.ext_superscript,
         fontsize: properties.ext_fontsize,
+        details: properties.ext_details,
+        invisiblecharacters: properties.ext_invisiblecharacters,
     };
 
     // parse heading levels
@@ -1424,6 +1472,18 @@ instance.data.setupEditor = function (properties, context) {
     if (properties.ext_fontsize) extensions.push(FontSize);
     if (properties.ext_typography) extensions.push(Typography);
     if (properties.ext_listkeymap) extensions.push(ListKeymap);
+    if (properties.ext_details) {
+        extensions.push(
+            Details.configure({ persist: properties.details_persist || false }),
+            DetailsContent,
+            DetailsSummary,
+        );
+    }
+    if (properties.ext_invisiblecharacters) {
+        extensions.push(InvisibleCharacters.configure({
+            visible: properties.invisiblecharacters_visible !== false,
+        }));
+    }
 
     // ── PreserveAttributes extension ─────────────────────────
 
@@ -1726,6 +1786,11 @@ instance.data.setupEditor = function (properties, context) {
             // CharacterCount is always loaded as a core extension
             instance.publishState("characterCount", editor.storage.characterCount.characters());
             instance.publishState("wordCount", editor.storage.characterCount.words());
+
+            // Publish initial invisible characters state
+            if (properties.ext_invisiblecharacters) {
+                instance.publishState("invisible_characters_visible", properties.invisiblecharacters_visible !== false);
+            }
 
             // If collaboration is active, try to set initial content
             if (properties.collab_active && instance.data.maybeSetCollabInitialContent) {

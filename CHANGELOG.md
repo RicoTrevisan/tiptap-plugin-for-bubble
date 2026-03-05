@@ -4,6 +4,30 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.3.0
+
+### ✨ New Extensions
+
+- **Details / Accordion** — Collapsible `<details>/<summary>` blocks for FAQs, toggleable sections, and accordion-style content. Includes:
+  - Extension toggle: **Details / Accordion** (checkbox, default off)
+  - **Persist open state** (checkbox, default off) — preserves open/closed state in the document
+  - CSS overrides: **Details CSS override** (details container) and **Details summary CSS override** (summary element)
+  - New action: **Toggle Details** — wraps/unwraps current selection in a details block
+  - New exposed state: **selection is details** (boolean) — whether cursor is inside a details block
+
+- **Invisible Characters** — Shows paragraph marks (¶), spaces (·), and hard breaks for power users who need to see whitespace. Includes:
+  - Extension toggle: **Invisible Characters** (checkbox, default off)
+  - **Start visible** (checkbox, default on)
+  - **Invisible characters CSS override** for character decorations
+  - New action: **Toggle Invisible Characters** — toggles visibility on/off
+  - New exposed state: **Invisible characters visible** (boolean)
+
+### 🔧 Bug Fixes
+
+- Fixed duplicate field names that could cause encoding issues
+
+---
+
 ## v4.2.0
 
 ### ✨ New Options on Existing Extensions

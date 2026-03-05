@@ -417,6 +417,14 @@
     "AHd": {
       "caption": "Unset font size",
       "doc": "Removes the font size from the current selection, reverting to the default."
+    },
+    "toggle_details": {
+      "caption": "Toggle Details",
+      "doc": "Wraps the current selection in a <details>/<summary> block, or unwraps it if already inside one."
+    },
+    "toggle_invisible_characters": {
+      "caption": "Toggle Invisible Characters",
+      "doc": "Toggles the visibility of invisible characters (paragraph marks, spaces, hard breaks)."
     }
   },
   "add_hover_pressed": true,
@@ -487,7 +495,7 @@
     "h2_info": {
       "caption": "     ----- H2 styling -----",
       "editor": "Label",
-      "name": "stylesheet_info",
+      "name": "stylesheet_info_h2",
       "rank": 40
     },
     "AEj": {
@@ -514,7 +522,7 @@
       "editor": "DynamicValue",
       "name": "extension_uniqueid_types",
       "optional": true,
-      "rank": 177,
+      "rank": 180,
       "value": "text"
     },
     "AEX": {
@@ -613,7 +621,7 @@
       "caption": "----- Preserve Attributes -----",
       "editor": "Label",
       "name": "ext_preserve_label",
-      "rank": 179
+      "rank": 182
     },
     "AFO": {
       "caption": "Unvisited link CSS override",
@@ -638,7 +646,7 @@
       "editor": "DynamicValue",
       "name": "extension_uniqueid_attrName",
       "optional": true,
-      "rank": 178,
+      "rank": 181,
       "value": "text"
     },
     "h4_color": {
@@ -655,7 +663,7 @@
       "doc": "Decides if to keep a mark after a hardbreak. When checked, and you're typing in bold, when you hit Shift+Enter, the next line will continue with bold. If unchecked, it will revert to normal text.",
       "editor": "Checkbox",
       "name": "hardBreakKeepMarks",
-      "rank": 164,
+      "rank": 167,
       "value": "boolean"
     },
     "ext_youtube_label": {
@@ -671,7 +679,7 @@
       "editor": "DynamicValue",
       "name": "collab_user_name",
       "optional": true,
-      "rank": 192,
+      "rank": 200,
       "value": "text"
     },
     "ext_history": {
@@ -680,7 +688,7 @@
       "doc": "Enables undo/redo (Ctrl/⌘+Z / Ctrl/⌘+Shift+Z). Automatically disabled when collaboration is active (collab has its own history).",
       "editor": "DynamicValue",
       "name": "ext_history",
-      "rank": 161,
+      "rank": 164,
       "value": "boolean"
     },
     "ext_fontfamily": {
@@ -725,7 +733,7 @@
       "doc": "Enable real-time collaborative editing via a Y.js-based provider (Tiptap Cloud, Custom Hocuspocus, or Liveblocks). When collaboration is active, the shared Y.js document is the single source of truth. Note: auto-binding is automatically ignored while collaboration is active — the collaborative document takes priority to prevent conflicts.",
       "editor": "Checkbox",
       "name": "collab_active",
-      "rank": 185
+      "rank": 193
     },
     "ext_heading_label": {
       "caption": "----- Heading -----",
@@ -772,7 +780,7 @@
       "default_val": true,
       "editor": "DynamicValue",
       "name": "preserve_attributes",
-      "rank": 180,
+      "rank": 183,
       "value": "boolean",
       "doc": "When enabled, the editor preserves class, style, id, and data-* attributes on HTML elements when parsing and rendering content. This is useful when your content comes from an external source and you want to keep its original styling and structure intact. Applies to block nodes (paragraphs, headings, blockquotes, tables, etc.) and inline marks (bold, italic, strike, code, links)."
     },
@@ -780,7 +788,7 @@
       "caption": "𝗖𝗢𝗟𝗟𝗔𝗕𝗢𝗥𝗔𝗧𝗜𝗢𝗡",
       "editor": "Label",
       "name": "collab_info",
-      "rank": 183
+      "rank": 191
     },
     "ext_dropcursor": {
       "caption": "Dropcursor",
@@ -884,7 +892,7 @@
       "doc": "Enables Shift+Enter line breaks (hard breaks) within a paragraph. Off by default — when off, Shift+Enter does nothing.",
       "editor": "DynamicValue",
       "name": "ext_hardbreak",
-      "rank": 163,
+      "rank": 166,
       "value": "boolean"
     },
     "ADa": {
@@ -936,7 +944,7 @@
       "is_list": true,
       "name": "mention_list_type",
       "optional": "false",
-      "rank": 168,
+      "rank": 171,
       "value": "_any_thing_bindable"
     },
     "h2_font_weight": {
@@ -1013,7 +1021,7 @@
     "h1_info1": {
       "caption": "     ----- H1 styling -----",
       "editor": "Label",
-      "name": "stylesheet_info",
+      "name": "stylesheet_info_h1",
       "rank": 34
     },
     "h6_size": {
@@ -1080,7 +1088,7 @@
       "caption": "----- Mention -----",
       "editor": "Label",
       "name": "ext_mention_label",
-      "rank": 165
+      "rank": 168
     },
     "collab_url": {
       "caption": "Custom - URL",
@@ -1088,7 +1096,7 @@
       "doc": "Paste the collab URL here to enable collaborative editing. Leave empty to disable.",
       "editor": "StaticText",
       "name": "collab_url",
-      "rank": 188
+      "rank": 196
     },
     "AFP": {
       "caption": "Visited link CSS override",
@@ -1106,7 +1114,7 @@
       "doc": "Color of the border around the mention on the text",
       "editor": "Color",
       "name": "mention_border_color",
-      "rank": 173
+      "rank": 176
     },
     "ext_underline": {
       "caption": "Underline",
@@ -1139,7 +1147,7 @@
       "doc": "When enabled, logs detailed information to the browser console. Useful for troubleshooting. Look for messages prefixed with [Tiptap].",
       "editor": "Checkbox",
       "name": "debug_mode",
-      "rank": 195
+      "rank": 203
     },
     "ext_bulletlist": {
       "caption": "Bullet List",
@@ -1157,7 +1165,7 @@
       "editor": "Color",
       "name": "collab_cursor_color",
       "optional": true,
-      "rank": 193,
+      "rank": 201,
       "value": "text"
     },
     "AEV": {
@@ -1241,7 +1249,7 @@
       "field_type_restriction": "text_image_file",
       "name": "mention_field_label",
       "optional": true,
-      "rank": 171
+      "rank": 174
     },
     "ext_formatting_label": {
       "caption": "----- Text Formatting -----",
@@ -1265,7 +1273,7 @@
       "is_list": true,
       "name": "mention_list",
       "optional": "true",
-      "rank": 169,
+      "rank": 172,
       "value": "_any_thing"
     },
     "h6_font_weight": {
@@ -1293,7 +1301,7 @@
       "editor": "DynamicValue",
       "name": "collab_doc_id",
       "optional": true,
-      "rank": 186,
+      "rank": 194,
       "value": "text"
     },
     "ext_mention": {
@@ -1302,7 +1310,7 @@
       "doc": "Enables @mentions. When a user types @ followed by a query, a suggestion list appears. Configure the data source and fields below.",
       "editor": "DynamicValue",
       "name": "ext_mention",
-      "rank": 166,
+      "rank": 169,
       "value": "boolean"
     },
     "AEH": {
@@ -1312,7 +1320,7 @@
       "editor": "StaticText",
       "name": "collab_app_id",
       "optional": true,
-      "rank": 189
+      "rank": 197
     },
     "ext_floatingmenu_label": {
       "caption": "----- Floating Menu -----",
@@ -1344,13 +1352,13 @@
       "field_type_restriction": "text_image_file",
       "name": "mention_field_id",
       "optional": true,
-      "rank": 172
+      "rank": 175
     },
     "AEG": {
       "caption": "to use the collaboration function you first need an account with one of the providers: 𝗿𝗶𝗰𝗼.𝘄𝘁𝗳 (has free tier), 𝗰𝗼𝗹𝗹𝗮𝗯.𝘁𝗶𝗽𝘁𝗮𝗽.𝗱𝗲𝘃, or 𝗹𝗶𝘃𝗲𝗯𝗹𝗼𝗰𝗸𝘀.𝗶𝗼",
       "editor": "Label",
       "name": "collab_info_sub",
-      "rank": 184
+      "rank": 192
     },
     "ext_table": {
       "caption": "Table",
@@ -1376,7 +1384,7 @@
       "default_val": "class,style,id,data-*",
       "editor": "DynamicValue",
       "name": "preserved_attributes",
-      "rank": 181,
+      "rank": 184,
       "value": "text",
       "doc": "Shows which HTML attributes are preserved when the setting above is enabled. Currently hardcoded to: class, style, id, and data-* attributes. This field is informational — the preserved attributes are defined in the extension code."
     },
@@ -1475,7 +1483,7 @@
       "doc": "Adds unique IDs to specified node types (e.g. paragraphs, headings). Useful for deep-linking to specific parts of the document.",
       "editor": "DynamicValue",
       "name": "ext_uniqueid",
-      "rank": 176,
+      "rank": 179,
       "value": "boolean"
     },
     "AFC": {
@@ -1484,7 +1492,7 @@
       "doc": "Color of the background of the mention.",
       "editor": "Color",
       "name": "mention_background_color",
-      "rank": 174
+      "rank": 177
     },
     "h5_info": {
       "caption": "----- H5 styling -----",
@@ -1508,7 +1516,7 @@
       "editor": "StaticText",
       "name": "liveblocksPublicApiKey",
       "optional": true,
-      "rank": 191
+      "rank": 199
     },
     "ext_section_label": {
       "caption": "𝗘𝗫𝗧𝗘𝗡𝗦𝗜𝗢𝗡𝗦",
@@ -1594,14 +1602,14 @@
       "editor": "DynamicValue",
       "name": "collab_jwt",
       "optional": true,
-      "rank": 190,
+      "rank": 198,
       "value": "text"
     },
     "ext_uniqueid_label": {
       "caption": "----- Unique ID -----",
       "editor": "Label",
       "name": "ext_uniqueid_label",
-      "rank": 175
+      "rank": 178
     },
     "ACA": {
       "caption": "Placeholder",
@@ -1619,7 +1627,7 @@
       "default_val": true,
       "editor": "DynamicValue",
       "name": "preserve_unknown_tags",
-      "rank": 182,
+      "rank": 185,
       "value": "boolean",
       "doc": "When enabled (and \"Preserve HTML attributes\" is also on), the editor will recognize <div> elements in your HTML content instead of stripping them. Useful when your content contains custom layouts or structures wrapped in divs. Without this, any <div> tags in the input HTML would be ignored."
     },
@@ -1644,13 +1652,13 @@
       "editor": "DynamicValue",
       "name": "mention_base_url",
       "optional": true,
-      "rank": 170,
+      "rank": 173,
       "value": "text"
     },
     "h3_info": {
       "caption": "     ----- H3 styling -----",
       "editor": "Label",
-      "name": "stylesheet_info",
+      "name": "stylesheet_info_h3",
       "rank": 46
     },
     "AEk": {
@@ -1661,7 +1669,7 @@
       "name": "collabProvider",
       "optional": true,
       "options": "tiptap,liveblocks,custom",
-      "rank": 187
+      "rank": 195
     },
     "h4_size": {
       "caption": "H4 Size",
@@ -1745,14 +1753,14 @@
     "ADW": {
       "caption": "paragraph",
       "editor": "Label",
-      "name": "stylesheet_info",
+      "name": "stylesheet_info_paragraph",
       "rank": 9
     },
     "ext_hardbreak_label": {
       "caption": "----- Hard Break -----",
       "editor": "Label",
       "name": "ext_hardbreak_label",
-      "rank": 162
+      "rank": 165
     },
     "ext_trailingnode": {
       "caption": "Trailing Node",
@@ -1808,7 +1816,7 @@
       "long_text": false,
       "name": "collab_cursor_css",
       "optional": true,
-      "rank": 194,
+      "rank": 202,
       "value": "text"
     },
     "link_openOnClick": {
@@ -2169,7 +2177,79 @@
       "name": "mention_triggerChar",
       "optional": true,
       "value": "text",
-      "rank": 167
+      "rank": 170
+    },
+    "ext_invisiblecharacters": {
+      "caption": "Invisible Characters",
+      "default_val": false,
+      "doc": "Shows invisible characters like paragraph marks (¶), spaces (·), and hard breaks. Useful for power users and content editors who need to see whitespace formatting.",
+      "editor": "DynamicValue",
+      "name": "ext_invisiblecharacters",
+      "rank": 161,
+      "value": "boolean"
+    },
+    "invisiblecharacters_visible": {
+      "caption": "Start visible",
+      "default_val": true,
+      "doc": "Whether invisible characters are visible when the extension loads. Can be toggled at runtime with the \"Toggle Invisible Characters\" action.",
+      "editor": "DynamicValue",
+      "name": "invisiblecharacters_visible",
+      "rank": 162,
+      "value": "boolean"
+    },
+    "invisiblecharacters_adv": {
+      "caption": "Invisible characters CSS override",
+      "doc": "Inject custom CSS for invisible character decorations (.tiptap-invisible-character). — Tip: use an \"arbitrary text\" value for more room to write CSS.",
+      "editor": "DynamicValue",
+      "long_text": false,
+      "name": "invisiblecharacters_adv",
+      "optional": true,
+      "rank": 163,
+      "value": "text"
+    },
+    "ext_details_label": {
+      "caption": "----- Details / Accordion -----",
+      "editor": "Label",
+      "name": "ext_details_label",
+      "rank": 186
+    },
+    "ext_details": {
+      "caption": "Details / Accordion",
+      "default_val": false,
+      "doc": "Adds collapsible <details>/<summary> blocks. Useful for FAQs, toggleable sections, and accordion-style content. Users can type a summary line and expand/collapse the body.",
+      "editor": "DynamicValue",
+      "name": "ext_details",
+      "rank": 187,
+      "value": "boolean"
+    },
+    "details_persist": {
+      "caption": "Persist open state",
+      "default_val": false,
+      "doc": "Keep <details> blocks open/closed state. When enabled, the open/closed state of each block is preserved in the document and will be restored when the editor is re-created.",
+      "editor": "DynamicValue",
+      "name": "details_persist",
+      "rank": 188,
+      "value": "boolean"
+    },
+    "details_adv": {
+      "caption": "Details CSS override",
+      "doc": "Inject custom CSS for <details> elements. Overrides the default border, padding, and margin. — Tip: use an \"arbitrary text\" value for more room to write CSS.",
+      "editor": "DynamicValue",
+      "long_text": false,
+      "name": "details_adv",
+      "optional": true,
+      "rank": 189,
+      "value": "text"
+    },
+    "details_summary_adv": {
+      "caption": "Details summary CSS override",
+      "doc": "Inject custom CSS for <summary> elements inside details blocks. — Tip: use an \"arbitrary text\" value for more room to write CSS.",
+      "editor": "DynamicValue",
+      "long_text": false,
+      "name": "details_summary_adv",
+      "optional": true,
+      "rank": 190,
+      "value": "text"
     }
   },
   "has_reset_fn": false,
@@ -2651,6 +2731,24 @@
       },
       "name": "font_size",
       "value": "text"
+    },
+    "details_state": {
+      "caption": "selection is details",
+      "doc": "Whether the cursor is currently inside a details/accordion block.",
+      "initialization_code": {
+        "fn": "function(properties, context) {}"
+      },
+      "name": "details",
+      "value": "boolean"
+    },
+    "invisible_characters_visible_state": {
+      "caption": "Invisible characters visible",
+      "doc": "Whether invisible characters are currently being shown in the editor.",
+      "initialization_code": {
+        "fn": "function(properties, context) {}"
+      },
+      "name": "invisible_characters_visible",
+      "value": "boolean"
     }
   },
   "support_autobinding": true
