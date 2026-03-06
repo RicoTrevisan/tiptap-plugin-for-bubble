@@ -4,6 +4,21 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.5.0
+
+### ✨ New Server-Side Action
+
+- **Convert webhook payload to HTML** — Converts Hocuspocus / Tiptap Cloud webhook payloads into clean HTML for storage in the database. When collaboration is active, the document lives on the collab server as a Y.js document and webhooks deliver changes as ProseMirror JSON — not HTML. This action bridges that gap.
+  - **Smart format detection** — Accepts three input formats automatically:
+    1. Full Hocuspocus webhook body (auto-extracts `payload.document`)
+    2. Document object with named fields (e.g. `{ "default": { "type": "doc", ... } }`)
+    3. Raw ProseMirror JSON (e.g. `{ "type": "doc", "content": [...] }`)
+  - **Field name** parameter (optional, default: `"default"`) — for custom Hocuspocus setups using a different Y.js field name
+  - Returns: `html` (text), `error` (text), `returned_an_error` (boolean)
+  - Supports all editor node/mark types: headings, bold, italic, underline, strike, code, blockquotes, lists, task lists, tables, images, YouTube embeds, links, highlights, text color, font family, font size, subscript, superscript, details/accordion, mentions, and horizontal rules
+
+---
+
 ## v4.4.0
 
 ### ✨ New Extensions

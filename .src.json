@@ -212,6 +212,68 @@
         }
       },
       "type": "server_side"
+    },
+    "convert_webhook": {
+      "category": "data (things)",
+      "code": {
+        "automatically_added_packages": "{\"node:util\":\"latest\"}",
+        "package": {
+          "fn": "{\n    \"dependencies\": {\n        \"jsdom\": \"latest\",\n        \"@tiptap/core\": \"^3.0.9\",\n        \"@tiptap/starter-kit\": \"^3.0.1\",\n        \"@tiptap/extension-text-style\": \"^3.0.9\",\n        \"@tiptap/extension-color\": \"^3.0.9\",\n        \"@tiptap/extension-font-family\": \"^3.0.9\",\n        \"@tiptap/extension-font-size\": \"^3.0.0-next.3\",\n        \"@tiptap/extension-highlight\": \"^3.0.9\",\n        \"@tiptap/extension-text-align\": \"^3.0.9\",\n        \"@tiptap/extension-image\": \"^3.0.9\",\n        \"@tiptap/extension-youtube\": \"^3.0.9\",\n        \"@tiptap/extension-table\": \"^3.0.9\",\n        \"@tiptap/extension-task-list\": \"^3.0.9\",\n        \"@tiptap/extension-task-item\": \"^3.0.9\",\n        \"@tiptap/extension-mention\": \"^3.0.9\",\n        \"@tiptap/extension-subscript\": \"^3.20.0\",\n        \"@tiptap/extension-superscript\": \"^3.20.0\",\n        \"@tiptap/extension-details\": \"^3.20.0\"\n    }\n}",
+          "invalid_package": false,
+          "package_hash": "",
+          "package_status": "to_install"
+        },
+        "package_hash": "",
+        "package_status": "to_install",
+        "package_used": true,
+        "server": {
+          "fn": "async function(properties, context) {\nconst { inspect } = require(\"node:util\");\n\ntry {\n    // ── 1. Set up a DOM environment for generateHTML ─────────────────\n    // Tiptap's generateHTML uses ProseMirror's DOMSerializer which requires\n    // a document object. On the server we provide one via jsdom.\n    const { JSDOM } = require(\"jsdom\");\n    const dom = new JSDOM(\"<!DOCTYPE html><html><body></body></html>\");\n    global.document = dom.window.document;\n    global.window = dom.window;\n    global.navigator = dom.window.navigator;\n\n    // ── 2. Import Tiptap libraries ───────────────────────────────────\n    const { generateHTML } = require(\"@tiptap/core\");\n    const { StarterKit } = require(\"@tiptap/starter-kit\");\n\n    // Extensions beyond StarterKit that the plugin supports\n    const { TextStyle } = require(\"@tiptap/extension-text-style\");\n    const Color = require(\"@tiptap/extension-color\").default;\n    const FontFamily = require(\"@tiptap/extension-font-family\").default;\n    const FontSize = require(\"@tiptap/extension-font-size\").default;\n    const Highlight = require(\"@tiptap/extension-highlight\").default;\n    const TextAlign = require(\"@tiptap/extension-text-align\").default;\n    const Image = require(\"@tiptap/extension-image\").default;\n    const Youtube = require(\"@tiptap/extension-youtube\").default;\n    const { Table, TableRow, TableHeader, TableCell } = require(\"@tiptap/extension-table\");\n    const TaskList = require(\"@tiptap/extension-task-list\").default;\n    const TaskItem = require(\"@tiptap/extension-task-item\").default;\n    const Mention = require(\"@tiptap/extension-mention\").default;\n    const Subscript = require(\"@tiptap/extension-subscript\").default;\n    const Superscript = require(\"@tiptap/extension-superscript\").default;\n    const Details = require(\"@tiptap/extension-details\").default;\n    const { DetailsContent, DetailsSummary } = require(\"@tiptap/extension-details\");\n\n    // ── 3. Build the extensions array ────────────────────────────────\n    // This mirrors the extensions available in the client-side editor so\n    // that every node/mark type can be serialized to HTML correctly.\n    const extensions = [\n        StarterKit,\n        TextStyle,\n        Color,\n        FontFamily,\n        FontSize,\n        Highlight.configure({ multicolor: true }),\n        TextAlign.configure({ types: [\"heading\", \"paragraph\"] }),\n        Image,\n        Youtube,\n        Table,\n        TableRow,\n        TableHeader,\n        TableCell,\n        TaskList,\n        TaskItem,\n        Mention,\n        Subscript,\n        Superscript,\n        Details,\n        DetailsContent,\n        DetailsSummary,\n    ];\n\n    // ── 4. Parse the input ───────────────────────────────────────────\n    const raw = properties.payload;\n    if (!raw || raw.trim() === \"\") {\n        return {\n            html: \"\",\n            error: \"The payload is empty. Pass the webhook body or the ProseMirror JSON document.\",\n            returned_an_error: true,\n        };\n    }\n\n    let parsed;\n    try {\n        parsed = JSON.parse(raw);\n    } catch (e) {\n        return {\n            html: \"\",\n            error: \"Failed to parse input as JSON: \" + e.message,\n            returned_an_error: true,\n        };\n    }\n\n    const fieldName = (properties.field_name || \"default\").trim();\n\n    // ── 5. Detect input format and extract ProseMirror JSON ──────────\n    //\n    // Supported formats:\n    //\n    // A) Full Hocuspocus webhook body:\n    //    { \"event\": \"change\", \"payload\": { \"document\": { \"default\": { \"type\": \"doc\", ... } }, \"documentName\": \"...\" } }\n    //\n    // B) Just the document object (multiple fields):\n    //    { \"default\": { \"type\": \"doc\", ... } }\n    //\n    // C) Raw ProseMirror JSON:\n    //    { \"type\": \"doc\", \"content\": [...] }\n\n    let prosemirrorJSON;\n\n    if (parsed.type === \"doc\") {\n        // Format C — raw ProseMirror JSON\n        prosemirrorJSON = parsed;\n    } else if (parsed.event && parsed.payload && parsed.payload.document) {\n        // Format A — full webhook body\n        const doc = parsed.payload.document;\n        if (doc[fieldName]) {\n            prosemirrorJSON = doc[fieldName];\n        } else if (doc.type === \"doc\") {\n            // The document itself is already the ProseMirror JSON (single-field setup)\n            prosemirrorJSON = doc;\n        } else {\n            // Try the first available field\n            const keys = Object.keys(doc);\n            if (keys.length === 1) {\n                prosemirrorJSON = doc[keys[0]];\n            } else {\n                return {\n                    html: \"\",\n                    error: `Could not find field \"${fieldName}\" in the webhook document. Available fields: ${keys.join(\", \")}. Set the \"Field name\" parameter to one of these.`,\n                    returned_an_error: true,\n                };\n            }\n        }\n    } else if (parsed[fieldName] && parsed[fieldName].type === \"doc\") {\n        // Format B — document object with named fields\n        prosemirrorJSON = parsed[fieldName];\n    } else {\n        // Last resort: check if any top-level key contains a doc\n        const keys = Object.keys(parsed);\n        const docKey = keys.find((k) => parsed[k] && parsed[k].type === \"doc\");\n        if (docKey) {\n            prosemirrorJSON = parsed[docKey];\n        } else {\n            return {\n                html: \"\",\n                error: 'Unrecognized input format. Expected a Hocuspocus webhook body, a document object with field names, or raw ProseMirror JSON (with \"type\": \"doc\"). Check that the correct JSON is being passed.',\n                returned_an_error: true,\n            };\n        }\n    }\n\n    // ── 6. Validate the ProseMirror JSON ─────────────────────────────\n    if (!prosemirrorJSON || prosemirrorJSON.type !== \"doc\" || !Array.isArray(prosemirrorJSON.content)) {\n        return {\n            html: \"\",\n            error: 'The extracted document JSON is invalid. Expected an object with \"type\": \"doc\" and a \"content\" array. Got: ' + JSON.stringify(prosemirrorJSON).substring(0, 200),\n            returned_an_error: true,\n        };\n    }\n\n    // ── 7. Generate HTML ─────────────────────────────────────────────\n    const html = generateHTML(prosemirrorJSON, extensions);\n\n    return {\n        html: html,\n        error: \"\",\n        returned_an_error: false,\n    };\n} catch (error) {\n    console.error(\"Error in convert-webhook-payload-to-html:\", inspect(error));\n    return {\n        html: \"\",\n        error: \"Unexpected error during conversion: \" + inspect(error),\n        returned_an_error: true,\n    };\n}\n\n}"
+        }
+      },
+      "display": "convert webhook payload to HTML",
+      "doc": "Converts a Hocuspocus / Tiptap Cloud webhook payload into clean HTML that you can store in your database.\n\nWhen collaboration is active, the document lives on the collab server as a Y.js document. Webhooks deliver document changes as ProseMirror JSON — not HTML. This action takes that JSON and produces the same HTML the editor would output.\n\nAccepts three input formats:\n• Full Hocuspocus webhook body (auto-extracts the document)\n• A document object with named fields (e.g. { \"default\": { \"type\": \"doc\", ... } })\n• Raw ProseMirror JSON (e.g. { \"type\": \"doc\", \"content\": [...] })",
+      "fields": {
+        "field_name": {
+          "caption": "Field name",
+          "default_val": "default",
+          "doc": "The Y.js field name used by the collaboration document. Tiptap's default is \"default\". Custom Hocuspocus setups may use a different field name (e.g. \"prosemirror\"). Only relevant when the payload contains multiple document fields.",
+          "editor": "DynamicValue",
+          "name": "field_name",
+          "optional": true,
+          "rank": 1,
+          "value": "text"
+        },
+        "payload": {
+          "caption": "Payload (JSON)",
+          "doc": "The incoming webhook body or the ProseMirror JSON document to convert. Accepts three formats:\n\n1. The full Hocuspocus webhook body — the action will auto-extract the document from payload.document\n2. A document object with named fields — e.g. { \"default\": { \"type\": \"doc\", ... } }\n3. Raw ProseMirror JSON — e.g. { \"type\": \"doc\", \"content\": [...] }\n\nIn a Bubble workflow triggered by an incoming webhook, use \"Request Data's body\" to pass the full body.",
+          "editor": "DynamicValue",
+          "long_text": true,
+          "name": "payload",
+          "rank": 0,
+          "value": "text"
+        }
+      },
+      "return_value": {
+        "rv_error": {
+          "caption": "error",
+          "name": "error",
+          "rank": 1,
+          "value": "text"
+        },
+        "rv_html": {
+          "caption": "html",
+          "name": "html",
+          "rank": 0,
+          "value": "text"
+        },
+        "rv_returned_an_error": {
+          "caption": "returned_an_error",
+          "name": "returned_an_error",
+          "rank": 2,
+          "value": "boolean"
+        }
+      },
+      "type": "server_side"
     }
   },
   "plugin_elements": {
