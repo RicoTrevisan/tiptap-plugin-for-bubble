@@ -1049,10 +1049,10 @@
     "AGU": {
       "caption": "Nested drag",
       "default_val": false,
+      "doc": "When enabled, the drag handle also appears for nested content — e.g. individual list items inside bullet/ordered lists, paragraphs inside blockquotes, etc. When disabled, only top-level blocks show a drag handle.",
       "editor": "Checkbox",
       "name": "draghandle_nested",
-      "rank": 167,
-      "doc": "When enabled, the drag handle also appears for nested content — e.g. individual list items inside bullet/ordered lists, paragraphs inside blockquotes, etc. When disabled, only top-level blocks show a drag handle."
+      "rank": 167
     },
     "ext_image": {
       "caption": "Image",
@@ -1536,10 +1536,10 @@
     "AGT": {
       "caption": "Drag Handle",
       "default_val": false,
+      "doc": "Enables the Drag Handle extension. When active, a small grip icon appears to the left of blocks (paragraphs, headings, lists, etc.) on hover. Users can click and drag it to reorder blocks in the editor.",
       "editor": "Checkbox",
       "name": "ext_draghandle",
-      "rank": 166,
-      "doc": "Enables the Drag Handle extension. When active, a small grip icon appears to the left of blocks (paragraphs, headings, lists, etc.) on hover. Users can click and drag it to reorder blocks in the editor."
+      "rank": 166
     },
     "h3_margin": {
       "caption": "H3 margin",
@@ -1674,10 +1674,10 @@
     },
     "AGS": {
       "caption": "----- Drag Handle -----",
+      "doc": "Shows a drag handle next to blocks, allowing users to reorder content by dragging.",
       "editor": "Label",
       "name": "ext_draghandle_label",
-      "rank": 165,
-      "doc": "Shows a drag handle next to blocks, allowing users to reorder content by dragging."
+      "rank": 165
     },
     "ext_fontsize": {
       "caption": "Font Size",
@@ -2098,12 +2098,12 @@
     },
     "AGV": {
       "caption": "Drag handle CSS override",
+      "doc": "Inject custom CSS for the drag handle element. The handle has the class `.tiptap-drag-handle`. Useful for changing the icon size, colors, hover effects, or positioning. — Tip: use an \"arbitrary text\" value for more room to write CSS.",
       "editor": "DynamicValue",
       "name": "draghandle_adv",
       "optional": true,
       "rank": 168,
-      "value": "text",
-      "doc": "Inject custom CSS for the drag handle element. The handle has the class `.tiptap-drag-handle`. Useful for changing the icon size, colors, hover effects, or positioning. — Tip: use an \"arbitrary text\" value for more room to write CSS."
+      "value": "text"
     },
     "AEv": {
       "caption": "Base URL",

@@ -15,15 +15,6 @@
   "display": "convert webhook payload to HTML",
   "doc": "Converts a Hocuspocus / Tiptap Cloud webhook payload into clean HTML that you can store in your database.\n\nWhen collaboration is active, the document lives on the collab server as a Y.js document. Webhooks deliver document changes as ProseMirror JSON — not HTML. This action takes that JSON and produces the same HTML the editor would output.\n\nAccepts three input formats:\n• Full Hocuspocus webhook body (auto-extracts the document)\n• A document object with named fields (e.g. { \"default\": { \"type\": \"doc\", ... } })\n• Raw ProseMirror JSON (e.g. { \"type\": \"doc\", \"content\": [...] })",
   "fields": {
-    "payload": {
-      "caption": "Payload (JSON)",
-      "doc": "The incoming webhook body or the ProseMirror JSON document to convert. Accepts three formats:\n\n1. The full Hocuspocus webhook body — the action will auto-extract the document from payload.document\n2. A document object with named fields — e.g. { \"default\": { \"type\": \"doc\", ... } }\n3. Raw ProseMirror JSON — e.g. { \"type\": \"doc\", \"content\": [...] }\n\nIn a Bubble workflow triggered by an incoming webhook, use \"Request Data's body\" to pass the full body.",
-      "editor": "DynamicValue",
-      "long_text": true,
-      "name": "payload",
-      "rank": 0,
-      "value": "text"
-    },
     "field_name": {
       "caption": "Field name",
       "default_val": "default",
@@ -33,19 +24,28 @@
       "optional": true,
       "rank": 1,
       "value": "text"
+    },
+    "payload": {
+      "caption": "Payload (JSON)",
+      "doc": "The incoming webhook body or the ProseMirror JSON document to convert. Accepts three formats:\n\n1. The full Hocuspocus webhook body — the action will auto-extract the document from payload.document\n2. A document object with named fields — e.g. { \"default\": { \"type\": \"doc\", ... } }\n3. Raw ProseMirror JSON — e.g. { \"type\": \"doc\", \"content\": [...] }\n\nIn a Bubble workflow triggered by an incoming webhook, use \"Request Data's body\" to pass the full body.",
+      "editor": "DynamicValue",
+      "long_text": true,
+      "name": "payload",
+      "rank": 0,
+      "value": "text"
     }
   },
   "return_value": {
-    "rv_html": {
-      "caption": "html",
-      "name": "html",
-      "rank": 0,
-      "value": "text"
-    },
     "rv_error": {
       "caption": "error",
       "name": "error",
       "rank": 1,
+      "value": "text"
+    },
+    "rv_html": {
+      "caption": "html",
+      "name": "html",
+      "rank": 0,
       "value": "text"
     },
     "rv_returned_an_error": {
