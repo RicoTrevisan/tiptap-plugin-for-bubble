@@ -5,3 +5,6 @@ lib/dist*.js
 erl_crash.dump
 .src.json
 dist/
+.plugin_id
+.claude/*local*
+plans
