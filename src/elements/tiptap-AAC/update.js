@@ -43,6 +43,29 @@ if (!instance.data.isEditorSetup) {
     instance.data.setupEditor(properties, context);
 }
 
+// If the collab document name rotates (dynamic field), rebuild editor/provider
+// so the new collaborative document is loaded.
+if (
+    properties.collab_active &&
+    instance.data.isEditorSetup &&
+    instance.data._activeCollabDocId &&
+    properties.collab_doc_id !== instance.data._activeCollabDocId
+) {
+    instance.data.debug(
+        "collab document changed from",
+        instance.data._activeCollabDocId,
+        "to",
+        properties.collab_doc_id,
+        "- reinitializing collab",
+    );
+
+    instance.data.publishCollabStatus("loading");
+    instance.data.teardownEditorAndProvider();
+    instance.data.setupEditor(properties, context);
+    instance.data.applyStylesheet(properties);
+    return;
+}
+
 /*
     PROPERTY CHANGE HANDLERS
     (run on every update after the editor is ready)
