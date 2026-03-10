@@ -1435,7 +1435,19 @@ instance.data.setupEditor = function (properties, context) {
         width: properties.youtube_defaultWidth || 640,
         height: properties.youtube_defaultHeight || 480,
     }));
-    if (properties.ext_table) extensions.push(Table.configure({ resizable: true, cellMinWidth: properties.table_cellMinWidth || 25 }), TableRow, TableHeader, TableCell);
+    if (properties.ext_table) {
+        const tableResizable = properties.table_resizable !== false;
+        extensions.push(
+            Table.configure({
+                resizable: tableResizable,
+                handleWidth: properties.table_handleWidth || 5,
+                cellMinWidth: properties.table_cellMinWidth || 25,
+                lastColumnResizable: properties.table_lastColumnResizable !== false,
+                allowTableNodeSelection: properties.table_allowNodeSelection || false,
+            }),
+            TableRow, TableHeader, TableCell
+        );
+    }
     if (properties.ext_image) {
         extensions.push(Image.configure({ inline: properties.image_inline || false, allowBase64: properties.allowBase64 }), Resizable);
     }

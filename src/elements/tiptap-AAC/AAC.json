@@ -510,7 +510,7 @@
       "long_text": false,
       "name": "details_adv",
       "optional": true,
-      "rank": 193,
+      "rank": 197,
       "value": "text"
     },
     "ADe": {
@@ -544,7 +544,7 @@
       "doc": "Adds a CSS class to the currently focused node in the editor. Use this to style the active block — e.g., add a background or left border to the paragraph/heading the cursor is in. The class name is `has-focus`. Style it via the Base div CSS override or your app's stylesheets. See the Focus Mode option below to control which node gets the class.",
       "editor": "DynamicValue",
       "name": "ext_focus",
-      "rank": 155,
+      "rank": 159,
       "value": "boolean"
     },
     "ext_orderedlist_label": {
@@ -560,7 +560,7 @@
       "editor": "DynamicValue",
       "name": "extension_uniqueid_types",
       "optional": true,
-      "rank": 184,
+      "rank": 188,
       "value": "text"
     },
     "AEX": {
@@ -571,7 +571,7 @@
       "in_style": true,
       "name": "placeholder_color",
       "optional": true,
-      "rank": 144
+      "rank": 148
     },
     "image_inline": {
       "caption": "Inline images",
@@ -597,7 +597,7 @@
       "doc": "Whether invisible characters are visible when the extension loads. Can be toggled at runtime with the \"Toggle Invisible Characters\" action.",
       "editor": "DynamicValue",
       "name": "invisiblecharacters_visible",
-      "rank": 162,
+      "rank": 166,
       "value": "boolean"
     },
     "mention_triggerChar": {
@@ -607,7 +607,7 @@
       "editor": "DynamicValue",
       "name": "mention_triggerChar",
       "optional": true,
-      "rank": 174,
+      "rank": 178,
       "value": "text"
     },
     "AFy": {
@@ -633,7 +633,7 @@
       "doc": "When enabled, the placeholder also appears inside nested empty nodes (e.g., empty list items, table cells).",
       "editor": "Checkbox",
       "name": "placeholder_includeChildren",
-      "rank": 147,
+      "rank": 151,
       "value": "boolean"
     },
     "codeblock_adv": {
@@ -682,7 +682,7 @@
       "doc": "Enables the bubble menu — a floating toolbar that appears when the user selects text. Provide the Bubble element ID below.",
       "editor": "DynamicValue",
       "name": "ext_bubblemenu",
-      "rank": 134,
+      "rank": 138,
       "value": "boolean"
     },
     "ext_heading": {
@@ -716,7 +716,7 @@
       "caption": "----- Preserve Attributes -----",
       "editor": "Label",
       "name": "ext_preserve_label",
-      "rank": 186
+      "rank": 190
     },
     "AFO": {
       "caption": "Unvisited link CSS override",
@@ -741,7 +741,7 @@
       "long_text": false,
       "name": "invisiblecharacters_adv",
       "optional": true,
-      "rank": 163,
+      "rank": 167,
       "value": "text"
     },
     "AGI": {
@@ -751,7 +751,7 @@
       "editor": "DynamicValue",
       "name": "extension_uniqueid_attrName",
       "optional": true,
-      "rank": 185,
+      "rank": 189,
       "value": "text"
     },
     "h4_color": {
@@ -768,7 +768,7 @@
       "doc": "Decides if to keep a mark after a hardbreak. When checked, and you're typing in bold, when you hit Shift+Enter, the next line will continue with bold. If unchecked, it will revert to normal text.",
       "editor": "Checkbox",
       "name": "hardBreakKeepMarks",
-      "rank": 171,
+      "rank": 175,
       "value": "boolean"
     },
     "ext_youtube_label": {
@@ -785,7 +785,7 @@
       "name": "ext_focus_mode",
       "optional": true,
       "options": "deepest,shallowest,all",
-      "rank": 156
+      "rank": 160
     },
     "AED": {
       "caption": "user_name",
@@ -794,7 +794,7 @@
       "editor": "DynamicValue",
       "name": "collab_user_name",
       "optional": true,
-      "rank": 204,
+      "rank": 208,
       "value": "text"
     },
     "ext_history": {
@@ -803,7 +803,7 @@
       "doc": "Enables undo/redo (Ctrl/⌘+Z / Ctrl/⌘+Shift+Z). Automatically disabled when collaboration is active (collab has its own history).",
       "editor": "DynamicValue",
       "name": "ext_history",
-      "rank": 164,
+      "rank": 168,
       "value": "boolean"
     },
     "ext_fontfamily": {
@@ -829,7 +829,7 @@
       "doc": "Enables placeholder text shown when the editor is empty. Configure the text and color below.",
       "editor": "DynamicValue",
       "name": "ext_placeholder",
-      "rank": 142,
+      "rank": 146,
       "value": "boolean"
     },
     "ADu": {
@@ -848,7 +848,7 @@
       "doc": "Enable real-time collaborative editing via a Y.js-based provider (Tiptap Cloud, Custom Hocuspocus, or Liveblocks). When collaboration is active, the shared Y.js document is the single source of truth. Note: auto-binding is automatically ignored while collaboration is active — the collaborative document takes priority to prevent conflicts.",
       "editor": "Checkbox",
       "name": "collab_active",
-      "rank": 197
+      "rank": 201
     },
     "link_target": {
       "caption": "Open link in",
@@ -892,7 +892,7 @@
       "long_text": false,
       "name": "collab_cursor_css",
       "optional": true,
-      "rank": 206,
+      "rank": 210,
       "value": "text"
     },
     "ext_link_label": {
@@ -924,14 +924,14 @@
       "doc": "When enabled, the editor preserves class, style, id, and data-* attributes on HTML elements when parsing and rendering content. This is useful when your content comes from an external source and you want to keep its original styling and structure intact. Applies to block nodes (paragraphs, headings, blockquotes, tables, etc.) and inline marks (bold, italic, strike, code, links).",
       "editor": "DynamicValue",
       "name": "preserve_attributes",
-      "rank": 187,
+      "rank": 191,
       "value": "boolean"
     },
     "AEB": {
       "caption": "𝗖𝗢𝗟𝗟𝗔𝗕𝗢𝗥𝗔𝗧𝗜𝗢𝗡",
       "editor": "Label",
       "name": "collab_info",
-      "rank": 195
+      "rank": 199
     },
     "ext_typography": {
       "caption": "Typography",
@@ -939,7 +939,7 @@
       "doc": "Automatically replaces common text patterns with proper typographic characters as you type. Examples: -- → —, ... → …, (c) → ©, != → ≠, << → «, 1/2 → ½, and smart quotes. A nice polish for content-heavy editors.",
       "editor": "DynamicValue",
       "name": "ext_typography",
-      "rank": 159,
+      "rank": 163,
       "value": "boolean"
     },
     "codeblock_exitOnArrowDown": {
@@ -957,7 +957,7 @@
       "doc": "Shows a cursor indicator when dragging content over the editor, helping users see where the drop will land.",
       "editor": "DynamicValue",
       "name": "ext_dropcursor",
-      "rank": 150,
+      "rank": 154,
       "value": "boolean"
     },
     "details_summary_adv": {
@@ -967,14 +967,14 @@
       "long_text": false,
       "name": "details_summary_adv",
       "optional": true,
-      "rank": 194,
+      "rank": 198,
       "value": "text"
     },
     "ext_bubblemenu_label": {
       "caption": "----- Bubble Menu -----",
       "editor": "Label",
       "name": "ext_bubblemenu_label",
-      "rank": 133
+      "rank": 137
     },
     "link_linkOnPaste": {
       "caption": "Link on paste",
@@ -1052,7 +1052,7 @@
       "doc": "When enabled, the drag handle also appears for nested content — e.g. individual list items inside bullet/ordered lists, paragraphs inside blockquotes, etc. When disabled, only top-level blocks show a drag handle.",
       "editor": "Checkbox",
       "name": "draghandle_nested",
-      "rank": 167
+      "rank": 171
     },
     "ext_image": {
       "caption": "Image",
@@ -1108,7 +1108,7 @@
       "doc": "Enables Shift+Enter line breaks (hard breaks) within a paragraph. Off by default — when off, Shift+Enter does nothing.",
       "editor": "DynamicValue",
       "name": "ext_hardbreak",
-      "rank": 170,
+      "rank": 174,
       "value": "boolean"
     },
     "ADa": {
@@ -1160,7 +1160,7 @@
       "is_list": true,
       "name": "mention_list_type",
       "optional": "false",
-      "rank": 175,
+      "rank": 179,
       "value": "_any_thing_bindable"
     },
     "h2_font_weight": {
@@ -1188,7 +1188,7 @@
       "editor": "DynamicValue",
       "name": "floatingMenu",
       "optional": true,
-      "rank": 139,
+      "rank": 143,
       "value": "text"
     },
     "ADV": {
@@ -1288,7 +1288,7 @@
       "caption": "----- Placeholder -----",
       "editor": "Label",
       "name": "ext_placeholder_label",
-      "rank": 141
+      "rank": 145
     },
     "ADw": {
       "caption": "H3 CSS override",
@@ -1316,7 +1316,7 @@
       "editor": "Color",
       "name": "dropcursor_color",
       "optional": true,
-      "rank": 151
+      "rank": 155
     },
     "AFG": {
       "caption": "preserveWhitespace",
@@ -1331,7 +1331,7 @@
       "caption": "----- Mention -----",
       "editor": "Label",
       "name": "ext_mention_label",
-      "rank": 172
+      "rank": 176
     },
     "collab_url": {
       "caption": "Custom - URL",
@@ -1339,7 +1339,7 @@
       "doc": "Paste the collab URL here to enable collaborative editing. Leave empty to disable.",
       "editor": "StaticText",
       "name": "collab_url",
-      "rank": 200
+      "rank": 204
     },
     "AFP": {
       "caption": "Visited link CSS override",
@@ -1366,7 +1366,7 @@
       "doc": "Color of the border around the mention on the text",
       "editor": "Color",
       "name": "mention_border_color",
-      "rank": 180
+      "rank": 184
     },
     "ext_underline": {
       "caption": "Underline",
@@ -1399,7 +1399,7 @@
       "doc": "When enabled, logs detailed information to the browser console. Useful for troubleshooting. Look for messages prefixed with [Tiptap].",
       "editor": "Checkbox",
       "name": "debug_mode",
-      "rank": 207
+      "rank": 211
     },
     "ext_bulletlist": {
       "caption": "Bullet List",
@@ -1426,7 +1426,7 @@
       "editor": "Color",
       "name": "collab_cursor_color",
       "optional": true,
-      "rank": 205,
+      "rank": 209,
       "value": "text"
     },
     "codeblock_tabSize": {
@@ -1465,7 +1465,7 @@
       "long_text": false,
       "name": "ext_selection_css",
       "optional": true,
-      "rank": 158,
+      "rank": 162,
       "value": "text"
     },
     "ADd": {
@@ -1491,7 +1491,7 @@
       "editor": "DynamicValue",
       "name": "bubbleMenu",
       "optional": true,
-      "rank": 135,
+      "rank": 139,
       "value": "text"
     },
     "placeholder_showOnlyCurrent": {
@@ -1500,7 +1500,7 @@
       "doc": "When enabled, placeholder only appears on the first empty paragraph. When disabled, all empty paragraphs show the placeholder.",
       "editor": "Checkbox",
       "name": "placeholder_showOnlyCurrent",
-      "rank": 146,
+      "rank": 150,
       "value": "boolean"
     },
     "ext_listkeymap": {
@@ -1509,7 +1509,7 @@
       "doc": "Improves keyboard behavior in lists. Pressing Backspace at the start of a list item properly lifts it out of the list instead of merging with the previous item. Recommended to keep enabled.",
       "editor": "DynamicValue",
       "name": "ext_listkeymap",
-      "rank": 160,
+      "rank": 164,
       "value": "boolean"
     },
     "ext_selection": {
@@ -1518,7 +1518,7 @@
       "doc": "Keeps the text selection visually highlighted when the editor loses focus. By default, browsers hide the selection highlight when focus moves to another element (e.g., clicking a toolbar button outside the editor). Enable this to maintain a visible selection. The highlight uses the CSS class `selection` — a default blue style is provided automatically.",
       "editor": "DynamicValue",
       "name": "ext_selection",
-      "rank": 157,
+      "rank": 161,
       "value": "boolean"
     },
     "ext_image_label": {
@@ -1539,7 +1539,7 @@
       "doc": "Enables the Drag Handle extension. When active, a small grip icon appears to the left of blocks (paragraphs, headings, lists, etc.) on hover. Users can click and drag it to reorder blocks in the editor.",
       "editor": "Checkbox",
       "name": "ext_draghandle",
-      "rank": 166
+      "rank": 170
     },
     "h3_margin": {
       "caption": "H3 margin",
@@ -1583,7 +1583,7 @@
       "field_type_restriction": "text_image_file",
       "name": "mention_field_label",
       "optional": true,
-      "rank": 178
+      "rank": 182
     },
     "ext_formatting_label": {
       "caption": "----- Text Formatting -----",
@@ -1607,7 +1607,7 @@
       "is_list": true,
       "name": "mention_list",
       "optional": "true",
-      "rank": 176,
+      "rank": 180,
       "value": "_any_thing"
     },
     "h6_font_weight": {
@@ -1645,7 +1645,7 @@
       "editor": "DynamicValue",
       "name": "collab_doc_id",
       "optional": true,
-      "rank": 198,
+      "rank": 202,
       "value": "text"
     },
     "ext_mention": {
@@ -1654,7 +1654,7 @@
       "doc": "Enables @mentions. When a user types @ followed by a query, a suggestion list appears. Configure the data source and fields below.",
       "editor": "DynamicValue",
       "name": "ext_mention",
-      "rank": 173,
+      "rank": 177,
       "value": "boolean"
     },
     "AEH": {
@@ -1664,20 +1664,20 @@
       "editor": "StaticText",
       "name": "collab_app_id",
       "optional": true,
-      "rank": 201
+      "rank": 205
     },
     "ext_floatingmenu_label": {
       "caption": "----- Floating Menu -----",
       "editor": "Label",
       "name": "ext_floatingmenu_label",
-      "rank": 137
+      "rank": 141
     },
     "AGS": {
       "caption": "----- Drag Handle -----",
       "doc": "Shows a drag handle next to blocks, allowing users to reorder content by dragging.",
       "editor": "Label",
       "name": "ext_draghandle_label",
-      "rank": 165
+      "rank": 169
     },
     "ext_fontsize": {
       "caption": "Font Size",
@@ -1712,13 +1712,13 @@
       "field_type_restriction": "text_image_file",
       "name": "mention_field_id",
       "optional": true,
-      "rank": 179
+      "rank": 183
     },
     "AEG": {
       "caption": "to use the collaboration function you first need an account with one of the providers: 𝗿𝗶𝗰𝗼.𝘄𝘁𝗳 (has free tier), 𝗰𝗼𝗹𝗹𝗮𝗯.𝘁𝗶𝗽𝘁𝗮𝗽.𝗱𝗲𝘃, or 𝗹𝗶𝘃𝗲𝗯𝗹𝗼𝗰𝗸𝘀.𝗶𝗼",
       "editor": "Label",
       "name": "collab_info_sub",
-      "rank": 196
+      "rank": 200
     },
     "ext_table": {
       "caption": "Table",
@@ -1745,7 +1745,7 @@
       "doc": "Shows which HTML attributes are preserved when the setting above is enabled. Currently hardcoded to: class, style, id, and data-* attributes. This field is informational — the preserved attributes are defined in the extension code.",
       "editor": "DynamicValue",
       "name": "preserved_attributes",
-      "rank": 188,
+      "rank": 192,
       "value": "text"
     },
     "ADt": {
@@ -1782,7 +1782,7 @@
       "doc": "Keep <details> blocks open/closed state. When enabled, the open/closed state of each block is preserved in the document and will be restored when the editor is re-created.",
       "editor": "DynamicValue",
       "name": "details_persist",
-      "rank": 192,
+      "rank": 196,
       "value": "boolean"
     },
     "ext_floatingmenu": {
@@ -1791,7 +1791,7 @@
       "doc": "Enables the floating menu — a toolbar that appears on empty lines. Provide the Bubble element ID below.",
       "editor": "DynamicValue",
       "name": "ext_floatingmenu",
-      "rank": 138,
+      "rank": 142,
       "value": "boolean"
     },
     "h4_info": {
@@ -1806,7 +1806,7 @@
       "doc": "When enabled, the placeholder text is only shown when the editor is editable. Disable to show the placeholder even in read-only mode.",
       "editor": "Checkbox",
       "name": "placeholder_showOnlyWhenEditable",
-      "rank": 145,
+      "rank": 149,
       "value": "boolean"
     },
     "ADQ": {
@@ -1817,7 +1817,7 @@
       "in_style": true,
       "name": "floatingMenuTheme",
       "options": "translucent,light,light-border,material",
-      "rank": 140
+      "rank": 144
     },
     "ADp": {
       "caption": "headings",
@@ -1843,7 +1843,7 @@
       "doc": "Enables text alignment (left, center, right, justify). Use the 'Align text' action to change alignment.",
       "editor": "DynamicValue",
       "name": "ext_textalign",
-      "rank": 149,
+      "rank": 153,
       "value": "boolean"
     },
     "ext_link": {
@@ -1870,7 +1870,7 @@
       "doc": "Adds unique IDs to specified node types (e.g. paragraphs, headings). Useful for deep-linking to specific parts of the document.",
       "editor": "DynamicValue",
       "name": "ext_uniqueid",
-      "rank": 183,
+      "rank": 187,
       "value": "boolean"
     },
     "AFC": {
@@ -1879,7 +1879,7 @@
       "doc": "Color of the background of the mention.",
       "editor": "Color",
       "name": "mention_background_color",
-      "rank": 181
+      "rank": 185
     },
     "h5_info": {
       "caption": "----- H5 styling -----",
@@ -1893,7 +1893,7 @@
       "doc": "Automatically inserts an empty paragraph at the end of the document when the last node is a block element (table, image, code block, etc.). Prevents users from getting trapped with no way to continue typing below block elements. Recommended to keep enabled.",
       "editor": "DynamicValue",
       "name": "ext_trailingnode",
-      "rank": 154,
+      "rank": 158,
       "value": "boolean"
     },
     "ADz": {
@@ -1912,7 +1912,7 @@
       "editor": "StaticText",
       "name": "liveblocksPublicApiKey",
       "optional": true,
-      "rank": 203
+      "rank": 207
     },
     "ext_section_label": {
       "caption": "𝗘𝗫𝗧𝗘𝗡𝗦𝗜𝗢𝗡𝗦",
@@ -2034,14 +2034,14 @@
       "editor": "DynamicValue",
       "name": "collab_jwt",
       "optional": true,
-      "rank": 202,
+      "rank": 206,
       "value": "text"
     },
     "ext_uniqueid_label": {
       "caption": "----- Unique ID -----",
       "editor": "Label",
       "name": "ext_uniqueid_label",
-      "rank": 182
+      "rank": 186
     },
     "ACA": {
       "caption": "Placeholder",
@@ -2051,7 +2051,7 @@
       "long_text": false,
       "name": "placeholder",
       "optional": true,
-      "rank": 143,
+      "rank": 147,
       "value": "text"
     },
     "AGO": {
@@ -2060,7 +2060,7 @@
       "doc": "When enabled (and \"Preserve HTML attributes\" is also on), the editor will recognize <div> elements in your HTML content instead of stripping them. Useful when your content contains custom layouts or structures wrapped in divs. Without this, any <div> tags in the input HTML would be ignored.",
       "editor": "DynamicValue",
       "name": "preserve_unknown_tags",
-      "rank": 189,
+      "rank": 193,
       "value": "boolean"
     },
     "ext_invisiblecharacters": {
@@ -2069,7 +2069,7 @@
       "doc": "Shows invisible characters like paragraph marks (¶), spaces (·), and hard breaks. Useful for power users and content editors who need to see whitespace formatting.",
       "editor": "DynamicValue",
       "name": "ext_invisiblecharacters",
-      "rank": 161,
+      "rank": 165,
       "value": "boolean"
     },
     "ext_subscript": {
@@ -2094,7 +2094,7 @@
       "caption": "----- Editor Behavior -----",
       "editor": "Label",
       "name": "ext_behavior_label",
-      "rank": 148
+      "rank": 152
     },
     "AGV": {
       "caption": "Drag handle CSS override",
@@ -2102,7 +2102,7 @@
       "editor": "DynamicValue",
       "name": "draghandle_adv",
       "optional": true,
-      "rank": 168,
+      "rank": 172,
       "value": "text"
     },
     "AEv": {
@@ -2111,7 +2111,7 @@
       "editor": "DynamicValue",
       "name": "mention_base_url",
       "optional": true,
-      "rank": 177,
+      "rank": 181,
       "value": "text"
     },
     "h3_info": {
@@ -2128,7 +2128,7 @@
       "name": "collabProvider",
       "optional": true,
       "options": "tiptap,liveblocks,custom",
-      "rank": 199
+      "rank": 203
     },
     "highlight_multicolor": {
       "caption": "Multicolor",
@@ -2155,7 +2155,7 @@
       "in_style": true,
       "name": "bubbleMenuTheme",
       "options": "translucent,light,light-border,material",
-      "rank": 136
+      "rank": 140
     },
     "dropcursor_width": {
       "caption": "Dropcursor width",
@@ -2164,7 +2164,7 @@
       "editor": "StaticNumber",
       "name": "dropcursor_width",
       "optional": true,
-      "rank": 152
+      "rank": 156
     },
     "ext_gapcursor": {
       "caption": "Gapcursor",
@@ -2172,7 +2172,7 @@
       "doc": "Allows placing the cursor in gaps that would normally be inaccessible — for example, before or after a table or image.",
       "editor": "DynamicValue",
       "name": "ext_gapcursor",
-      "rank": 153,
+      "rank": 157,
       "value": "boolean"
     },
     "ext_blockquote_label": {
@@ -2193,7 +2193,7 @@
       "caption": "----- Details / Accordion -----",
       "editor": "Label",
       "name": "ext_details_label",
-      "rank": 190
+      "rank": 194
     },
     "h5_margin": {
       "caption": "H5 margin",
@@ -2268,7 +2268,7 @@
       "doc": "Adds collapsible <details>/<summary> blocks. Useful for FAQs, toggleable sections, and accordion-style content. Users can type a summary line and expand/collapse the body.",
       "editor": "DynamicValue",
       "name": "ext_details",
-      "rank": 191,
+      "rank": 195,
       "value": "boolean"
     },
     "ADW": {
@@ -2281,7 +2281,40 @@
       "caption": "----- Hard Break -----",
       "editor": "Label",
       "name": "ext_hardbreak_label",
-      "rank": 169
+      "rank": 173
+    },
+    "table_resizable": {
+      "caption": "Resizable columns",
+      "default_val": true,
+      "doc": "Allow table columns to be resized by dragging column borders. When disabled, columns have equal width and no resize handles appear.",
+      "editor": "Checkbox",
+      "name": "table_resizable",
+      "rank": 133
+    },
+    "table_allowNodeSelection": {
+      "caption": "Allow table node selection",
+      "default_val": false,
+      "doc": "Controls what happens when the table itself is selected (e.g. by clicking near its border). When disabled (default), the selection is converted to a cell selection covering all cells — which may cause the entire table to appear highlighted. When enabled, the table is selected as a single block, which is less disruptive.",
+      "editor": "Checkbox",
+      "name": "table_allowNodeSelection",
+      "rank": 134
+    },
+    "table_lastColumnResizable": {
+      "caption": "Last column resizable",
+      "default_val": true,
+      "doc": "Whether the rightmost column of the table can be resized. Disabling this can prevent unexpected table expansion when resizing the last column.",
+      "editor": "Checkbox",
+      "name": "table_lastColumnResizable",
+      "rank": 135
+    },
+    "table_handleWidth": {
+      "caption": "Resize handle width",
+      "default_val": 5,
+      "doc": "Width in pixels of the invisible resize handle zone on column borders. A larger value makes resizing easier to trigger; a smaller value reduces accidental resize activation. Default: 5.",
+      "editor": "StaticNumber",
+      "name": "table_handleWidth",
+      "optional": true,
+      "rank": 136
     }
   },
   "has_reset_fn": false,

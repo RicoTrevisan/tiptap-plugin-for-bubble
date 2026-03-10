@@ -6,6 +6,22 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ## v4.5.0
 
+### 🐛 Bug Fix — Table selection
+
+Fixed an issue where selecting text inside a table cell with the mouse could cause the entire table to appear highlighted instead of just the text within the cell. This happened because `prosemirror-tables` converts accidental table-level selections into a cell selection covering all cells. A new **Allow table node selection** option lets users control this behavior.
+
+### ✨ New Table Options
+
+Four new configuration options for the Table extension:
+
+- **Resizable columns** (checkbox, default on) — Controls whether table columns can be resized by dragging column borders. Previously hardcoded to `true`. Disable for simpler tables with equal-width columns and no resize handles.
+- **Allow table node selection** (checkbox, default off) — Controls what happens when the table itself is selected (e.g. by clicking near its border). When off (default, previous behavior), the selection is converted to a cell selection covering all cells — which can cause the entire table to appear highlighted. When on, the table is selected as a single block, which is less disruptive and easier to dismiss.
+- **Last column resizable** (checkbox, default on) — Whether the rightmost column of the table can be resized. Disabling this prevents unexpected table expansion when dragging the last column border.
+- **Resize handle width** (number, default 5) — Width in pixels of the invisible resize handle zone on column borders. A larger value makes resizing easier to trigger; a smaller value reduces accidental resize activation near cell edges.
+
+---
+
+
 ### ✨ New Server-Side Action
 
 - **Convert webhook payload to HTML** — Converts Hocuspocus / Tiptap Cloud webhook payloads into clean HTML for storage in the database. When collaboration is active, the document lives on the collab server as a Y.js document and webhooks deliver changes as ProseMirror JSON — not HTML. This action bridges that gap.
