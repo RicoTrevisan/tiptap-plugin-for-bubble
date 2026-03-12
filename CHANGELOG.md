@@ -4,6 +4,24 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.6.0
+
+### ✨ Editor Rebuild on Document ID Change
+
+When the collaborative document ID (`collab_doc_id`) changes at runtime, the editor now automatically tears down and rebuilds with a new provider connected to the new document. Previously, changing the document ID required a page reload.
+
+- **Automatic teardown & rebuild** — When `collab_doc_id` changes while the editor is active in collaboration mode, the existing provider and editor are cleanly destroyed (connections closed, timers cleared, DOM removed) and a fresh editor is created for the new document.
+- **New event: `Collaboration document changed`** — Fires just before the teardown begins, allowing workflows to react to the document switch (e.g., save state, show a loading indicator).
+- **Shared teardown function** — Introduced a reusable `teardownEditor()` helper that handles full cleanup: collab sync polling, retry timers, debounce timeouts, provider destruction, editor destruction, DOM removal, and state reset. Used by document ID change detection, collab auth failure retries, and element reset — eliminating duplicated teardown logic.
+- **Improved reset cleanup** — `reset.js` now uses the shared teardown for complete resource cleanup instead of only clearing timers.
+
+### 🔧 Minor Improvements
+
+- **App ID → Doc Server ID** — The `app_id` collaboration field has been renamed to match Tiptap's current naming: **Doc Server ID**.
+- **Collab status values in inspector** — The possible `collab_status` values (`disconnected → connecting → connected → synced`) are now documented directly in the plugin property panel for easy reference.
+
+---
+
 ## v4.5.0
 
 ### 🐛 Bug Fix — Table selection

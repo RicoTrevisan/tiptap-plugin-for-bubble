@@ -32,6 +32,32 @@ if (properties.collab_active && properties.bubble.auto_binding() && !instance.da
     );
 }
 
+// Detect collab_doc_id change and rebuild editor if needed
+if (
+    instance.data.editor_is_ready &&
+    properties.collab_active &&
+    instance.data._currentCollabDocId &&
+    properties.collab_doc_id &&
+    instance.data._currentCollabDocId !== properties.collab_doc_id
+) {
+    instance.data.debug(
+        "collab_doc_id changed from",
+        instance.data._currentCollabDocId,
+        "to",
+        properties.collab_doc_id,
+        "— rebuilding editor"
+    );
+
+    // Trigger the document change event before teardown
+    instance.triggerEvent("collab_doc_changed");
+
+    // Teardown the current editor
+    instance.data.teardownEditor("collab_doc_id changed");
+
+    // The next update cycle (or continuation of this one) will re-setup
+    // because isEditorSetup is now false
+}
+
 // First run: set up the editor (defined in initialize.js)
 // Also re-runs after a collab auth failure retry (isEditorSetup is reset to false)
 if (!instance.data.isEditorSetup) {

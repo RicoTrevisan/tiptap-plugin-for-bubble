@@ -24,7 +24,7 @@
       "value": "text"
     },
     "AEY": {
-      "caption": "App ID",
+      "caption": "Doc Server ID",
       "doc": "Your Tiptap Cloud or custom collab app ID. For Tiptap Cloud, this is included as the 'aud' (audience) claim in the token.",
       "editor": "DynamicValue",
       "name": "appId",

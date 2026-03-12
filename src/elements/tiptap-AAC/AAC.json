@@ -471,6 +471,10 @@
     "collab_synced": {
       "caption": "Collaboration synced",
       "name": "collab_synced"
+    },
+    "collab_doc_changed": {
+      "caption": "Collaboration document changed",
+      "name": "collab_doc_changed"
     }
   },
   "fields": {
@@ -582,6 +586,14 @@
       "rank": 97,
       "value": "boolean"
     },
+    "table_allowNodeSelection": {
+      "caption": "Allow table node selection",
+      "default_val": false,
+      "doc": "Controls what happens when the table itself is selected (e.g. by clicking near its border). When disabled (default), the selection is converted to a cell selection covering all cells — which may cause the entire table to appear highlighted. When enabled, the table is selected as a single block, which is less disruptive.",
+      "editor": "Checkbox",
+      "name": "table_allowNodeSelection",
+      "rank": 134
+    },
     "ext_codeblock": {
       "caption": "Code Block",
       "default_val": true,
@@ -599,6 +611,14 @@
       "name": "invisiblecharacters_visible",
       "rank": 166,
       "value": "boolean"
+    },
+    "table_lastColumnResizable": {
+      "caption": "Last column resizable",
+      "default_val": true,
+      "doc": "Whether the rightmost column of the table can be resized. Disabling this can prevent unexpected table expansion when resizing the last column.",
+      "editor": "Checkbox",
+      "name": "table_lastColumnResizable",
+      "rank": 135
     },
     "mention_triggerChar": {
       "caption": "Trigger character",
@@ -900,6 +920,12 @@
       "editor": "Label",
       "name": "ext_link_label",
       "rank": 106
+    },
+    "collab_status_docs": {
+      "caption": "𝗦𝘁𝗮𝘁𝘂𝘀 𝘃𝗮𝗹𝘂𝗲𝘀: disconnected → connecting → connected → synced",
+      "editor": "Label",
+      "name": "collab_status_docs",
+      "rank": 211
     },
     "h6_color": {
       "caption": "H6 Color",
@@ -1399,7 +1425,7 @@
       "doc": "When enabled, logs detailed information to the browser console. Useful for troubleshooting. Look for messages prefixed with [Tiptap].",
       "editor": "Checkbox",
       "name": "debug_mode",
-      "rank": 211
+      "rank": 212
     },
     "ext_bulletlist": {
       "caption": "Bullet List",
@@ -1577,6 +1603,15 @@
       "name": "h5_color",
       "rank": 60
     },
+    "table_handleWidth": {
+      "caption": "Resize handle width",
+      "default_val": 5,
+      "doc": "Width in pixels of the invisible resize handle zone on column borders. A larger value makes resizing easier to trigger; a smaller value reduces accidental resize activation. Default: 5.",
+      "editor": "StaticNumber",
+      "name": "table_handleWidth",
+      "optional": true,
+      "rank": 136
+    },
     "AEy": {
       "caption": "Label",
       "editor": "custom_field_AEx",
@@ -1658,9 +1693,9 @@
       "value": "boolean"
     },
     "AEH": {
-      "caption": "app_id",
+      "caption": "Doc Server ID",
       "default_val": "",
-      "doc": "Required for both Tiptap Cloud or Custom. Get the app id from 𝗵𝘁𝘁𝗽𝘀://𝗿𝗶𝗰𝗼.𝘄𝘁𝗳 or 𝗵𝘁𝘁𝗽𝘀://𝗰𝗼𝗹𝗹𝗮𝗯.𝘁𝗶𝗽𝘁𝗮𝗽.𝗱𝗲𝘃",
+      "doc": "Required for both Tiptap Cloud or Custom. Get the app id from 𝗵𝘁𝘁𝗽𝘀://𝘁𝗶𝗽𝘁𝗮𝗽.𝗿𝗶𝗰𝗼.𝘄𝘁𝗳 or 𝗵𝘁𝘁𝗽𝘀://𝗰𝗼𝗹𝗹𝗮𝗯.𝘁𝗶𝗽𝘁𝗮𝗽.𝗱𝗲𝘃",
       "editor": "StaticText",
       "name": "collab_app_id",
       "optional": true,
@@ -1715,7 +1750,7 @@
       "rank": 183
     },
     "AEG": {
-      "caption": "to use the collaboration function you first need an account with one of the providers: 𝗿𝗶𝗰𝗼.𝘄𝘁𝗳 (has free tier), 𝗰𝗼𝗹𝗹𝗮𝗯.𝘁𝗶𝗽𝘁𝗮𝗽.𝗱𝗲𝘃, or 𝗹𝗶𝘃𝗲𝗯𝗹𝗼𝗰𝗸𝘀.𝗶𝗼",
+      "caption": "to use the collaboration function you first need an account with one of the providers: 𝘁𝗶𝗽𝘁𝗮𝗽.𝗿𝗶𝗰𝗼.𝘄𝘁𝗳 (has free tier), 𝗰𝗼𝗹𝗹𝗮𝗯.𝘁𝗶𝗽𝘁𝗮𝗽.𝗱𝗲𝘃, or 𝗹𝗶𝘃𝗲𝗯𝗹𝗼𝗰𝗸𝘀.𝗶𝗼",
       "editor": "Label",
       "name": "collab_info_sub",
       "rank": 200
@@ -2105,6 +2140,14 @@
       "rank": 172,
       "value": "text"
     },
+    "table_resizable": {
+      "caption": "Resizable columns",
+      "default_val": true,
+      "doc": "Allow table columns to be resized by dragging column borders. When disabled, columns have equal width and no resize handles appear.",
+      "editor": "Checkbox",
+      "name": "table_resizable",
+      "rank": 133
+    },
     "AEv": {
       "caption": "Base URL",
       "doc": "generally `Website home URL/[users profile]` ",
@@ -2282,39 +2325,6 @@
       "editor": "Label",
       "name": "ext_hardbreak_label",
       "rank": 173
-    },
-    "table_resizable": {
-      "caption": "Resizable columns",
-      "default_val": true,
-      "doc": "Allow table columns to be resized by dragging column borders. When disabled, columns have equal width and no resize handles appear.",
-      "editor": "Checkbox",
-      "name": "table_resizable",
-      "rank": 133
-    },
-    "table_allowNodeSelection": {
-      "caption": "Allow table node selection",
-      "default_val": false,
-      "doc": "Controls what happens when the table itself is selected (e.g. by clicking near its border). When disabled (default), the selection is converted to a cell selection covering all cells — which may cause the entire table to appear highlighted. When enabled, the table is selected as a single block, which is less disruptive.",
-      "editor": "Checkbox",
-      "name": "table_allowNodeSelection",
-      "rank": 134
-    },
-    "table_lastColumnResizable": {
-      "caption": "Last column resizable",
-      "default_val": true,
-      "doc": "Whether the rightmost column of the table can be resized. Disabling this can prevent unexpected table expansion when resizing the last column.",
-      "editor": "Checkbox",
-      "name": "table_lastColumnResizable",
-      "rank": 135
-    },
-    "table_handleWidth": {
-      "caption": "Resize handle width",
-      "default_val": 5,
-      "doc": "Width in pixels of the invisible resize handle zone on column borders. A larger value makes resizing easier to trigger; a smaller value reduces accidental resize activation. Default: 5.",
-      "editor": "StaticNumber",
-      "name": "table_handleWidth",
-      "optional": true,
-      "rank": 136
     }
   },
   "has_reset_fn": false,

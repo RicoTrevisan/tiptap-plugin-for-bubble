@@ -4,7 +4,7 @@ lib/dist*.js
 .envrc
 erl_crash.dump
 .src.json
-dist/
+dist*
 .plugin_id
 .claude/*local*
 plans

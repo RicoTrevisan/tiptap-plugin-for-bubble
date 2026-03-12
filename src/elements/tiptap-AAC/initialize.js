@@ -522,6 +522,72 @@ try {
     const COLLAB_MAX_RETRIES = 5;
     const COLLAB_RETRY_DELAYS = [1000, 2000, 4000, 8000, 16000]; // exponential backoff
 
+    instance.data.teardownEditor = function (reason) {
+        instance.data.debug("tearing down editor:", reason);
+
+        // Clear the collab sync polling interval
+        if (instance.data._collabSyncPollInterval) {
+            clearInterval(instance.data._collabSyncPollInterval);
+            instance.data._collabSyncPollInterval = null;
+        }
+
+        // Clear any pending collab retry timer
+        if (instance.data._collabRetryTimer) {
+            clearTimeout(instance.data._collabRetryTimer);
+            instance.data._collabRetryTimer = null;
+        }
+
+        // Clear debounce timeout
+        if (instance.data.debounceTimeout) {
+            clearTimeout(instance.data.debounceTimeout);
+            instance.data.debounceTimeout = null;
+        }
+
+        // Tear down provider (if in collab mode)
+        if (instance.data.provider) {
+            try {
+                instance.data.provider.destroy();
+            } catch (e) {
+                instance.data.debug("error destroying provider:", e);
+            }
+            instance.data.provider = null;
+        }
+
+        // Tear down editor
+        if (instance.data.editor) {
+            try {
+                instance.data.editor.destroy();
+            } catch (e) {
+                instance.data.debug("error destroying editor:", e);
+            }
+            instance.data.editor = null;
+        }
+
+        // Remove the editor DOM element so setupEditor can recreate it
+        const editorEl = document.getElementById(instance.data.tiptapEditorID);
+        if (editorEl) editorEl.remove();
+
+        // Reset collab state
+        instance.data.collabHasSynced = false;
+        instance.data.collabInitialContentSet = false;
+        instance.data._collabRetryCount = 0;
+        instance.data._collabRetryPending = false;
+        instance.data._currentCollabDocId = null;
+
+        // Reset flags for re-initialization
+        instance.data.isEditorSetup = false;
+        instance.data.editor_is_ready = false;
+
+        // Publish states - reset to initial values
+        instance.publishState("is_ready", false);
+        instance.publishState("is_empty", true);
+        instance.publishState("can_undo", false);
+        instance.publishState("can_redo", false);
+        instance.publishState("collab_synced", false);
+        instance.publishState("collab_connected_users", 0);
+        instance.data.publishCollabStatus("disconnected");
+    };
+
     instance.data.handleCollabAuthFailure = function (providerLabel, reason) {
         instance.data._collabRetryCount++;
         const attempt = instance.data._collabRetryCount;
@@ -547,42 +613,8 @@ try {
             return;
         }
 
-        // Clear the collab sync polling interval (set in onCreate)
-        if (instance.data._collabSyncPollInterval) {
-            clearInterval(instance.data._collabSyncPollInterval);
-            instance.data._collabSyncPollInterval = null;
-        }
-
-        // Tear down provider
-        if (instance.data.provider) {
-            try {
-                instance.data.provider.destroy();
-            } catch (e) {
-                instance.data.debug("error destroying provider during auth retry:", e);
-            }
-            instance.data.provider = null;
-        }
-
-        // Tear down editor
-        if (instance.data.editor) {
-            try {
-                instance.data.editor.destroy();
-            } catch (e) {
-                instance.data.debug("error destroying editor during auth retry:", e);
-            }
-            instance.data.editor = null;
-        }
-
-        // Remove the editor DOM element so setupEditor can recreate it
-        const editorEl = document.getElementById(instance.data.tiptapEditorID);
-        if (editorEl) editorEl.remove();
-
-        // Reset flags so the next update() cycle re-runs setupEditor
-        instance.data.isEditorSetup = false;
-        instance.data.editor_is_ready = false;
-        instance.publishState("is_ready", false);
-        instance.publishState("collab_synced", false);
-        instance.data.publishCollabStatus("disconnected");
+        // Use shared teardown
+        instance.data.teardownEditor("collab auth failure, attempt " + attempt);
 
         // Schedule a re-trigger after a backoff delay.
         // We call setupEditor directly because publishState does not trigger update() in Bubble.
@@ -1998,6 +2030,7 @@ instance.data.setupEditor = function (properties, context) {
     try {
         instance.data.editor = new Editor(options);
         instance.data.isEditorSetup = true;
+        instance.data._currentCollabDocId = properties.collab_doc_id;
         instance.data.debug("editor instance created, waiting for onCreate");
     } catch (error) {
         console.error("[Tiptap] failed trying to create the Editor:", error);
