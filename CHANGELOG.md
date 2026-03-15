@@ -4,6 +4,20 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.6.1
+
+### Bug Fix — Image resize not persisting
+
+Fixed a bug where resizing an image would not persist after page refresh. The resized image would revert to its original size when the page was reloaded.
+
+**Root cause:** The `tiptap-extension-resizable` extension was directly mutating the ProseMirror node's `attrs.width` property instead of dispatching a proper transaction. ProseMirror uses immutable data structures, so direct mutations are not recorded in the document state and `editor.getHTML()` would not include the resized width.
+
+**Fix:** The extension now uses `editor.chain().updateAttributes('image', { width })` on mouseup to properly persist the width change via a ProseMirror transaction.
+
+**Note:** The `tiptap-extension-resizable` npm package has been vendored to `lib/vendor/tiptap-extension-resizable.js` to preserve the fix across `npm install`.
+
+---
+
 ## v4.6.0
 
 ### ✨ Editor Rebuild on Document ID Change
