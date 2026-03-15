@@ -8,3 +8,4 @@ dist*
 .plugin_id
 .claude/*local*
 plans
+.claude/
