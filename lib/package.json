@@ -4,7 +4,7 @@
     "main": "index.js",
     "scripts": {
         "build": "esbuild index.js --bundle --minify --outfile=dist.js",
-        "test": "npm run build && node tests/ai-editor-context-lifecycle.mjs && node tests/text-style-lineheight-backgroundcolor.mjs"
+        "test": "npm run build && node tests/ai-editor-context-lifecycle.mjs && node tests/text-style-lineheight-backgroundcolor.mjs && node tests/undo-redo-history-guard.mjs"
     },
     "keywords": [],
     "author": "Rico Trevisan",
@@ -72,6 +72,7 @@
         "yjs": "^13.6.27"
     },
     "devDependencies": {
+        "esbuild": "^0.28.2",
         "happy-dom": "^20.11.2"
     }
 }

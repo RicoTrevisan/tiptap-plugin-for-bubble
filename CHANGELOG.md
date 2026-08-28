@@ -4,6 +4,15 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.10.2
+
+### 🐛 Undo/redo states no longer break the editor when History is disabled (#27)
+
+- Turning off the **History (Undo/Redo)** toggle previously broke editor setup: the lifecycle callbacks unconditionally called `editor.can().undo()` / `editor.can().redo()`, which throw when the UndoRedo extension isn't installed — aborting the ready callback and making later edits/transactions throw.
+- The `can_undo` / `can_redo` states are now guarded: they publish `false` whenever undo/redo commands aren't installed, and report real availability when the commands are supplied by either the History or collaboration extension.
+
+---
+
 ## v4.8.0
 
 ### Line height & background color (#10)
