@@ -4,6 +4,16 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.10.3
+
+### 🐛 Webhook-to-HTML conversion works on Bubble's Node 18 runtime (#30)
+
+- Pinned `jsdom` to Node 18-compatible version `22.1.0` instead of resolving the incompatible latest release.
+- Built and recorded the Bubble server-action deployment package as `up_to_date`.
+- Added a Node 18 smoke test for representative ProseMirror JSON and malformed input.
+
+---
+
 ## v4.10.2
 
 ### 🐛 Undo/redo states no longer break the editor when History is disabled (#27)
