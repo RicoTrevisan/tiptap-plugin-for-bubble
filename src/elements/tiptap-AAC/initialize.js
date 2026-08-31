@@ -1636,7 +1636,25 @@ instance.data.setupEditor = function (properties, context) {
         );
     }
     if (properties.ext_image) {
-        extensions.push(Image.configure({ inline: properties.image_inline || false, allowBase64: properties.allowBase64 }), Resizable);
+        const ImageExtension = properties.ext_textalign
+            ? Image.extend({
+                renderHTML({ HTMLAttributes }) {
+                    const alignment = /text-align:\s*(left|center|right)/.exec(HTMLAttributes.style || "")?.[1];
+                    const margins = {
+                        left: "margin-left: 0; margin-right: auto",
+                        center: "margin-left: auto; margin-right: auto",
+                        right: "margin-left: auto; margin-right: 0",
+                    }[alignment];
+                    const alignedAttributes = margins
+                        ? mergeAttributes(HTMLAttributes, { style: `display: block; ${margins}` })
+                        : HTMLAttributes;
+
+                    return ["img", mergeAttributes(this.options.HTMLAttributes, alignedAttributes)];
+                },
+            })
+            : Image;
+
+        extensions.push(ImageExtension.configure({ inline: properties.image_inline || false, allowBase64: properties.allowBase64 }), Resizable);
     }
     if (properties.ext_link) {
         const linkConfig = {
@@ -1665,7 +1683,11 @@ instance.data.setupEditor = function (properties, context) {
         showOnlyCurrent: properties.placeholder_showOnlyCurrent !== false,
         includeChildren: properties.placeholder_includeChildren || false,
     }));
-    if (properties.ext_textalign) extensions.push(TextAlign.configure({ types: ["heading", "paragraph"] }));
+    if (properties.ext_textalign) {
+        const alignableTypes = ["heading", "paragraph"];
+        if (properties.ext_image) alignableTypes.push("image");
+        extensions.push(TextAlign.configure({ types: alignableTypes }));
+    }
 
     // ── Phase 2 extensions ───────────────────────────────────
 

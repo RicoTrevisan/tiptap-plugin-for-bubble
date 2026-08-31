@@ -45,9 +45,11 @@
           "editor": "Dropdown",
           "name": "alignment",
           "options": "left,center,right,justify,reset",
-          "rank": 0
+          "rank": 0,
+          "doc": "Choose left, center, right, justify, or reset. When an image is selected, use left, center, right, or reset."
         }
-      }
+      },
+      "doc": "Aligns the selected paragraphs, headings, or image. Images support left, center, right, and reset; justify remains text-only."
     },
     "ABI": {
       "caption": "Outdent item"
@@ -987,7 +989,7 @@
     "ext_textalign": {
       "caption": "Text Align",
       "default_val": true,
-      "doc": "Enables text alignment (left, center, right, justify). Use the 'Align text' action to change alignment.",
+      "doc": "Enables alignment for paragraphs, headings, and selected images. Use the Align text action to change alignment.",
       "editor": "DynamicValue",
       "name": "ext_textalign",
       "rank": 153,
@@ -2557,7 +2559,7 @@
       "value": "boolean"
     },
     "ACh": {
-      "caption": "Text is right aligned",
+      "caption": "Selection is right aligned",
       "initialization_code": {
         "fn": "function(properties, context) {}"
       },
@@ -2599,7 +2601,7 @@
       "value": "number"
     },
     "AFJ": {
-      "caption": "Test is justified",
+      "caption": "Selection is justified",
       "initialization_code": {
         "fn": "function(properties, context) {}"
       },
@@ -2666,7 +2668,7 @@
       "value": "boolean"
     },
     "ACf": {
-      "caption": "Text is left aligned",
+      "caption": "Selection is left aligned",
       "initialization_code": {
         "fn": "function(properties, context) {}"
       },
@@ -2708,7 +2710,7 @@
       "value": "boolean"
     },
     "ACg": {
-      "caption": "Text is center aligned",
+      "caption": "Selection is center aligned",
       "initialization_code": {
         "fn": "function(properties, context) {}"
       },

@@ -4,6 +4,17 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.10.4
+
+### ✨ Align selected images with the existing Align text action (#33)
+
+- Left, Center, and Right now align only the selected image; Reset removes the image alignment.
+- Existing paragraph and heading alignment behavior, including Justify, is unchanged.
+- Image alignment persists through HTML/JSON serialization, content reloads, and width changes from image resizing.
+- The webhook-to-HTML server action now preserves aligned-image markup too.
+
+---
+
 ## v4.10.3
 
 ### 🐛 Webhook-to-HTML conversion works on Bubble's Node 18 runtime (#30)

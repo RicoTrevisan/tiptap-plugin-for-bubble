@@ -4,7 +4,7 @@
     "main": "index.js",
     "scripts": {
         "build": "esbuild index.js --bundle --minify --outfile=dist.js",
-        "test": "npm run build && node tests/ai-editor-context-lifecycle.mjs && node tests/text-style-lineheight-backgroundcolor.mjs && node tests/undo-redo-history-guard.mjs && node tests/webhook-html-node18-compatibility.mjs"
+        "test": "npm run build && node tests/ai-editor-context-lifecycle.mjs && node tests/text-style-lineheight-backgroundcolor.mjs && node tests/undo-redo-history-guard.mjs && node tests/webhook-html-node18-compatibility.mjs && node tests/image-alignment-action.mjs"
     },
     "keywords": [],
     "author": "Rico Trevisan",

@@ -11,7 +11,7 @@ try {
     global.navigator = dom.window.navigator;
 
     // ── 2. Import Tiptap libraries ───────────────────────────────────
-    const { generateHTML } = require("@tiptap/core");
+    const { generateHTML, mergeAttributes } = require("@tiptap/core");
     const { StarterKit } = require("@tiptap/starter-kit");
 
     // Extensions beyond StarterKit that the plugin supports
@@ -32,6 +32,22 @@ try {
     const Details = require("@tiptap/extension-details").default;
     const { DetailsContent, DetailsSummary } = require("@tiptap/extension-details");
 
+    const AlignableImage = Image.extend({
+        renderHTML({ HTMLAttributes }) {
+            const alignment = /text-align:\s*(left|center|right)/.exec(HTMLAttributes.style || "")?.[1];
+            const margins = {
+                left: "margin-left: 0; margin-right: auto",
+                center: "margin-left: auto; margin-right: auto",
+                right: "margin-left: auto; margin-right: 0",
+            }[alignment];
+            const alignedAttributes = margins
+                ? mergeAttributes(HTMLAttributes, { style: `display: block; ${margins}` })
+                : HTMLAttributes;
+
+            return ["img", mergeAttributes(this.options.HTMLAttributes, alignedAttributes)];
+        },
+    });
+
     // ── 3. Build the extensions array ────────────────────────────────
     // This mirrors the extensions available in the client-side editor so
     // that every node/mark type can be serialized to HTML correctly.
@@ -42,8 +58,8 @@ try {
         FontFamily,
         FontSize,
         Highlight.configure({ multicolor: true }),
-        TextAlign.configure({ types: ["heading", "paragraph"] }),
-        Image,
+        TextAlign.configure({ types: ["heading", "paragraph", "image"] }),
+        AlignableImage,
         Youtube,
         Table,
         TableRow,
