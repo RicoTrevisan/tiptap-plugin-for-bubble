@@ -4,6 +4,16 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.10.6
+
+### 🐛 Table of contents supports documents that do not start with H1
+
+- Switching to content whose first heading is H2–H6 now renders the table of contents instead of clearing it.
+- Heading levels are normalized into a valid visual outline when a document skips levels.
+- The Table of Contents element now initializes safely if Bubble calls its update lifecycle after rebuilding or resetting the element.
+
+---
+
 ## v4.10.5
 
 ### 🐛 Table of contents refreshes after content is replaced
