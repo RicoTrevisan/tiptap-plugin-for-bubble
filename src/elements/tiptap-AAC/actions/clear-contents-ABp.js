@@ -3,6 +3,7 @@ if (!instance.data.editor_is_ready)
 
   try {
     instance.data.editor.chain().clearContent(true).run();
+    instance.data.refreshTableOfContents();
   } catch (error) {
     context.reportToDebugger(
       "There was an error running clearContent.\n" + error.message

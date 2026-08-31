@@ -38,18 +38,18 @@
     },
     "ACd": {
       "caption": "Align text",
+      "doc": "Aligns the selected paragraphs, headings, or image. Images support left, center, right, and reset; justify remains text-only.",
       "fields": {
         "ACe": {
           "caption": "Alignment",
           "default_val": "left",
+          "doc": "Choose left, center, right, justify, or reset. When an image is selected, use left, center, right, or reset.",
           "editor": "Dropdown",
           "name": "alignment",
           "options": "left,center,right,justify,reset",
-          "rank": 0,
-          "doc": "Choose left, center, right, justify, or reset. When an image is selected, use left, center, right, or reset."
+          "rank": 0
         }
-      },
-      "doc": "Aligns the selected paragraphs, headings, or image. Images support left, center, right, and reset; justify remains text-only."
+      }
     },
     "ABI": {
       "caption": "Outdent item"
@@ -1034,7 +1034,7 @@
     },
     "AAK": {
       "caption": "Initial content",
-      "doc": "Content in Plain Text or HTML format. If JSON make sure the \"Content is JSON?\" is set to \"yes\".",
+      "doc": "Content loaded when the editor initializes. If this value changes later, the editor content is replaced automatically when auto-binding and collaboration are disabled. An empty value does not clear the editor; use the Clear contents action instead. Use HTML or plain text, or enable Content is JSON? when passing Tiptap JSON.",
       "editor": "DynamicValue",
       "long_text": true,
       "name": "initialContent",

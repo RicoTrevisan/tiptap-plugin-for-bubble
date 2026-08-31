@@ -4,7 +4,7 @@
     "main": "index.js",
     "scripts": {
         "build": "esbuild index.js --bundle --minify --outfile=dist.js",
-        "test": "npm run build && node tests/ai-editor-context-lifecycle.mjs && node tests/text-style-lineheight-backgroundcolor.mjs && node tests/undo-redo-history-guard.mjs && node tests/webhook-html-node18-compatibility.mjs && node tests/image-alignment-action.mjs"
+        "test": "npm run build && node tests/ai-editor-context-lifecycle.mjs && node tests/text-style-lineheight-backgroundcolor.mjs && node tests/undo-redo-history-guard.mjs && node tests/webhook-html-node18-compatibility.mjs && node tests/image-alignment-action.mjs && node tests/table-of-contents-content-switch.mjs"
     },
     "keywords": [],
     "author": "Rico Trevisan",
@@ -56,6 +56,7 @@
         "@tiptap/extension-subscript": "^3.20.0",
         "@tiptap/extension-superscript": "^3.20.0",
         "@tiptap/extension-table": "^3.0.9",
+        "@tiptap/extension-table-of-contents": "^3.24.0",
         "@tiptap/extension-task-item": "^3.0.9",
         "@tiptap/extension-task-list": "^3.0.9",
         "@tiptap/extension-text": "^3.0.9",

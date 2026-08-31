@@ -4,6 +4,15 @@ All notable changes to the Rich Text Editor (Tiptap.dev) Bubble plugin will be d
 
 ---
 
+## v4.10.5
+
+### 🐛 Table of contents refreshes after content is replaced
+
+- Programmatic content changes (Initial content, auto-binding, Set Content, and Clear Contents) now recompute and republish **Table of contents (JSON)**.
+- Previously the outline rendered on first load, then could vanish or stay stale when the editor was switched to a different document.
+
+---
+
 ## v4.10.4
 
 ### ✨ Align selected images with the existing Align text action (#33)

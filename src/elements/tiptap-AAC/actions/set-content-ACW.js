@@ -18,9 +18,11 @@ if (!instance.data.editor_is_ready)
       preserveWhitespace
     );
 
-    instance.data.editor.commands.setContent(content, true, {
-      preserveWhitespace: preserveWhitespace,
+    instance.data.editor.commands.setContent(content, {
+      emitUpdate: true,
+      parseOptions: { preserveWhitespace: preserveWhitespace },
     });
+    instance.data.refreshTableOfContents();
   } catch (error) {
     context.reportToDebugger(
       "There was an error running setContent.\n" + error.message

@@ -127,13 +127,14 @@ if (
         // Save cursor position before setContent
         const { from, to } = instance.data.editor.state.selection;
 
-        instance.data.editor.commands.setContent(content, true);
+        instance.data.editor.commands.setContent(content, { emitUpdate: true });
 
         // Restore cursor position (clamped to document bounds)
         const docSize = instance.data.editor.state.doc.content.size;
         const newFrom = Math.min(from, Math.max(1, docSize - 1));
         const newTo = Math.min(to, Math.max(1, docSize - 1));
         instance.data.editor.commands.setTextSelection({ from: newFrom, to: newTo });
+        instance.data.refreshTableOfContents();
     } else {
         instance.data.debug("initialContent has changed but collaboration is active -- not updating content");
     }
@@ -158,7 +159,7 @@ if (
     // Save cursor position before setContent
     const { from, to } = editor.state.selection;
 
-    editor.commands.setContent(properties.autobinding, false);
+    editor.commands.setContent(properties.autobinding, { emitUpdate: true });
 
     // Restore cursor position (clamped to document bounds)
     const docSize = editor.state.doc.content.size;
@@ -173,6 +174,7 @@ if (
     instance.publishState("isEditable", editor.isEditable);
     instance.publishState("characterCount", editor.storage.characterCount.characters());
     instance.publishState("wordCount", editor.storage.characterCount.words());
+    instance.data.refreshTableOfContents();
 }
 
 if (!!instance.data.editor_is_ready) {

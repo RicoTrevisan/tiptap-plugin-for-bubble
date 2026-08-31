@@ -534,6 +534,7 @@ try {
             instance.data.debug("collab document is empty after sync — setting initial content");
             instance.data.collabInitialContentSet = true;
             instance.data.editor.commands.setContent(instance.data.collabInitialContent);
+            instance.data.refreshTableOfContents();
         } else {
             instance.data.collabInitialContentSet = true; // prevent further checks
         }
@@ -1170,6 +1171,19 @@ function publishTableOfContentsState(editor, anchors, forceEvent = false) {
     }
 }
 instance.data.publishTableOfContentsState = publishTableOfContentsState;
+
+instance.data.refreshTableOfContents = function (forceEvent = false) {
+    const editor = instance.data.editor;
+    if (!editor || !instance.data.ext?.tableofcontents) return;
+    try {
+        if (typeof editor.commands.updateTableOfContents === "function") {
+            editor.commands.updateTableOfContents();
+        }
+    } catch (error) {
+        instance.data.debug("updateTableOfContents failed", error);
+    }
+    instance.data.publishTableOfContentsState(editor, null, forceEvent);
+};
 
 function scrollToTableOfContentsHeading(headingId, options) {
     const headings = instance.data.editor.storage.tableOfContents?.content || [];
