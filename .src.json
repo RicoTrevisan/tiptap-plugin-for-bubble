@@ -377,7 +377,7 @@
         "ACd": {
           "caption": "Align text",
           "code": {
-            "fn": "function(instance, properties, context) {\nif (!instance.data.editor_is_ready) {\n  return instance.data.returnAndReportErrorIfEditorNotReady(\"Align Text\");\n}\n\nif (instance.data.ext.textalign) {\n  const editor = instance.data.editor;\n  const alignment = properties.alignment;\n  const selectedImage = editor.state.selection.node?.type.name === \"image\";\n\n  if (selectedImage && alignment === \"justify\") {\n    return;\n  }\n\n  if (alignment === \"reset\") {\n    editor.chain().focus().unsetTextAlign().run();\n  } else {\n    editor.chain().focus().setTextAlign(alignment).run();\n  }\n} else {\n  console.log(\"tried to TextAlign, but extension is not active.\");\n}\n\n}"
+            "fn": "function(instance, properties, context) {\nif (!instance.data.editor_is_ready) {\n  return instance.data.returnAndReportErrorIfEditorNotReady(\"Align Text\");\n}\n\nif (instance.data.ext.textalign) {\n  const editor = instance.data.editor;\n  const alignment = properties.alignment;\n  const selectedImage = editor.state.selection.node?.type.name === \"image\";\n\n  if (selectedImage && alignment === \"justify\") {\n    return;\n  }\n\n  if (alignment === \"reset\") {\n    editor.chain().focus().unsetTextAlign().run();\n  } else {\n    editor.chain().focus().setTextAlign(alignment).run();\n  }\n} else {\n  console.log(\"tried to TextAlign, but extension is not active.\");\n}\n}"
           },
           "doc": "Aligns the selected paragraphs, headings, or image. Images support left, center, right, and reset; justify remains text-only.",
           "fields": {
