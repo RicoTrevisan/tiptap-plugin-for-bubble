@@ -169,3 +169,32 @@ See [CHANGELOG.md](CHANGELOG.md) for release history.
 ## License
 
 This plugin is available on the [Bubble plugin marketplace](https://bubble.io/plugin/rich-text-editor-tiptapdev-1670612027178x122079323974008830). Fork and modify freely.
+
+## Continuous integration
+
+GitHub Actions runs `.github/workflows/ci.yml` on every pull request, pushes to
+`main`, and manual dispatch. It uses the Node version in `.node-version` and the
+locked dependencies in `lib/package-lock.json`. Run the same checks locally:
+
+```sh
+cd lib
+npm ci
+npm run validate:plugin
+npm run test:validator
+npm test
+```
+
+Plugin validation parses every `src/` JSON file and embedded server package
+manifest, checks JavaScript as Bubble function bodies without executing it,
+checks element action declarations against their files in both directions,
+and checks literal `instance.publishState` / `instance.triggerEvent` names
+against the owning element's metadata. It also checks required lifecycle and
+server bodies and duplicate state/event names. Computed state/event names are
+reported as unchecked; this is static validation, not full Bubble schema or
+runtime validation. The validator's tests include invalid-source fixtures to
+verify these checks fail when expected.
+
+`npm test` builds `lib/dist.js` and runs the existing regression suite. CI needs
+no Bubble credentials and does not upload bundles or push plugin changes.
+The GitHub check is named **Build, tests, and plugin validation**; it can be
+selected as a required check in the repository's branch protection settings.
