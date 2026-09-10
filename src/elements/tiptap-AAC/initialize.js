@@ -464,13 +464,74 @@ try {
         };
     };
 
+    // A Bubble save targets the currently bound Thing, not the Thing that was
+    // bound when a debounce started. Invalidate callbacks before replacing data.
+    instance.data._contentGeneration = 0;
+    instance.data._pendingContent = null;
+    instance.data._boundRecordId = undefined;
+    instance.data._lastBoundContent = undefined;
+    instance.data._autobindingEchoes = new Set();
+    // Store compact fingerprints rather than retaining a full document for
+    // every save. Four independently mixed words plus length keep accidental
+    // matches negligible; this is echo detection, not an authentication hash.
+    instance.data.contentFingerprint = function (value) {
+        const text = typeof value === "string" ? value : "";
+        let a = 0x811c9dc5, b = 0x9e3779b9, c = 0x85ebca6b, d = 0xc2b2ae35;
+        for (let i = 0; i < text.length; i++) {
+            const code = text.charCodeAt(i);
+            a = Math.imul(a ^ code, 16777619);
+            b = Math.imul(b ^ code, 2246822519);
+            c = Math.imul(c ^ code, 3266489917);
+            d = Math.imul(d ^ code, 668265263);
+        }
+        return `${text.length}:${a >>> 0}:${b >>> 0}:${c >>> 0}:${d >>> 0}`;
+    };
     instance.data.isDebouncingDone = true;
-    instance.data.updateContent = instance.data.debounce((content) => {
-        instance.data.debug("debounce done, updating content");
-        instance.publishAutobinding(content);
-        instance.triggerEvent("contentUpdated");
+
+    instance.data.cancelPendingContent = function () {
+        clearTimeout(instance.data.debounceTimeout);
+        instance.data.debounceTimeout = null;
+        instance.data._pendingContent = null;
+        instance.data._contentGeneration++;
         instance.data.isDebouncingDone = true;
-    }, instance.data.delay);
+    };
+
+    instance.data.publishBoundContent = function (content) {
+        // Retain values until the bound record changes: Bubble can echo several
+        // older saves after the most recent one, including after focus is lost.
+        instance.data._autobindingEchoes.add(instance.data.contentFingerprint(content));
+        instance.publishAutobinding(content);
+    };
+
+    instance.data.flushPendingContent = function () {
+        const pending = instance.data._pendingContent;
+        if (!pending || pending.generation !== instance.data._contentGeneration ||
+            !instance.data.editor_is_ready || instance.data.editor?.isDestroyed ||
+            instance.canvas[0]?.isConnected === false) {
+            instance.data.cancelPendingContent();
+            return;
+        }
+        clearTimeout(instance.data.debounceTimeout);
+        instance.data.debounceTimeout = null;
+        instance.data._pendingContent = null;
+        instance.data.isDebouncingDone = true;
+        const current = instance.data._lastProperties;
+        if (current?.collab_active) return;
+        if (current?.bubble.auto_binding()) instance.data.publishBoundContent(pending.content);
+        // Settle state before triggering a workflow: it may switch records or
+        // queue another edit synchronously.
+        instance.triggerEvent("contentUpdated");
+    };
+
+    instance.data.updateContent = function (content) {
+        clearTimeout(instance.data.debounceTimeout);
+        instance.data._pendingContent = { content, generation: instance.data._contentGeneration };
+        instance.data.isDebouncingDone = false;
+        const generation = instance.data._contentGeneration;
+        instance.data.debounceTimeout = setTimeout(() => {
+            if (generation === instance.data._contentGeneration) instance.data.flushPendingContent();
+        }, instance.data.delay);
+    };
 
     // throttle function: to take it easy on the autobinding.
     // 1. writes to autobinding
@@ -569,11 +630,7 @@ try {
             instance.data._collabRetryTimer = null;
         }
 
-        // Clear debounce timeout
-        if (instance.data.debounceTimeout) {
-            clearTimeout(instance.data.debounceTimeout);
-            instance.data.debounceTimeout = null;
-        }
+        instance.data.cancelPendingContent();
 
         // Tear down provider (if in collab mode)
         if (instance.data.provider) {
@@ -1335,6 +1392,10 @@ instance.data.getSelection = getSelection;
 instance.data.setupEditor = function (properties, context) {
     instance.data.debug("starting editor setup");
 
+    instance.data._lastProperties = properties;
+    instance.data.delay = properties.update_delay ?? 300;
+    instance.data._boundRecordId = properties.autobinding_record_id || "";
+    instance.data._lastBoundContent = properties.autobinding;
     let initialContent = properties.bubble.auto_binding() ? properties.autobinding : properties.initialContent;
 
     // A runtime AI Toolkit toggle tears down the editor and rebuilds it with a
@@ -2106,6 +2167,7 @@ instance.data.setupEditor = function (properties, context) {
             }
         },
         onUpdate({ editor }) {
+            if (editor !== instance.data.editor || editor.isDestroyed) return;
             const contentHTML = editor.getHTML();
             instance.publishState("contentHTML", contentHTML);
             instance.publishState("contentText", editor.getText());
@@ -2122,7 +2184,6 @@ instance.data.setupEditor = function (properties, context) {
                 } else {
                     instance.triggerEvent("contentUpdated");
                 }
-                instance.data.isDebouncingDone = false;
             }
         },
         onFocus({ editor, event }) {
@@ -2136,8 +2197,8 @@ instance.data.setupEditor = function (properties, context) {
             instance.triggerEvent("isntFocused");
             instance.publishState("isFocused", false);
             instance.data.is_focused = false;
-            if (!properties.collab_active) {
-                instance.publishAutobinding(editor.getHTML());
+            if (!instance.data._lastProperties?.collab_active) {
+                instance.data.flushPendingContent();
             }
         },
         onTransaction({ editor, transaction }) {

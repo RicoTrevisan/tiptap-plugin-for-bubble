@@ -625,6 +625,15 @@
     }
   },
   "fields": {
+    "autobinding_record_id": {
+      "caption": "Autobinding record ID",
+      "name": "autobinding_record_id",
+      "editor": "DynamicValue",
+      "value": "text",
+      "optional": true,
+      "rank": 4.5,
+      "doc": "For an autobound editor that switches records, bind this to the same parent Thing's unique ID. A change cancels the previous record's pending edit and loads the new record, even when their text is identical. To save the final pending edit, keep the old Thing bound until Content updated fires before switching. This event means the save was submitted, not that the database confirmed it. Leave blank for an editor permanently bound to one record."
+    },
     "AGH": {
       "caption": "Element types",
       "default_val": "heading, paragraph",
