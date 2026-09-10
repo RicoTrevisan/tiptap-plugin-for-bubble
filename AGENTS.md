@@ -7,8 +7,8 @@ Plugin-specific facts:
 - Two code piles: `src/` — decoded Bubble plugin source (Pled uploads this); `lib/` — bundled Tiptap runtime and lifecycle tests.
 - From `lib/`: `npm ci && npm test` — builds `lib/dist.js`, then runs lifecycle tests.
 - When runtime dependencies or `lib/index.js` change, release the rebuilt bundle: unique versioned filename, `pled upload`, update `src/elements/tiptap-AAC/headers.html` to the new CDN URL, then `pled push`.
-- Dev app: `tiptap-plugin`. Changes in the plugin auto-reload page code.
+- Dev app: `tiptap-plugin` uses the plugin development version (Testing). Plugin changes immediately update this app; refresh the app/editor when needed to expose new fields.
 - Run-mode login (not a real secret): **tippy** / **tappy**
 - Demo page: `tiptap-demo` — one page, each demo is a reusable — `https://tippy:tappy@tiptap-plugin.bubbleapps.io/version-test/tiptap-demo`
-- The demo page uses the plugin version published in the Bubble marketplace. It shows off the plugin in simple user-facing language, assuming a medior Bubble developer.
+- The demo page uses that development plugin version. It shows off the plugin in simple user-facing language, assuming a medior Bubble developer.
 - In every Bubble editor element, always set **File uploads enabled** to an explicit option (`yes` or `no`); never leave it empty.
